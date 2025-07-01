@@ -1,0 +1,309 @@
+/* Transport Booking System Theme */
+body {
+    background: #fffbe6;
+    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+}
+.navbar {
+    border-bottom: 3px solid #e53935;
+    background: #fff;
+}
+.navbar .navbar-brand, .navbar .nav-link {
+    color: #e53935 !important;
+    font-weight: 600;
+}
+.navbar .nav-link.active, .navbar .nav-link:focus, .navbar .nav-link:hover {
+    color: #fff !important;
+    background: #e53935 !important;
+    border-radius: 5px;
+}
+.btn-primary, .btn-success {
+    background: #e53935;
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+.btn-primary:hover, .btn-success:hover {
+    background: #b71c1c;
+    box-shadow: 0 2px 8px rgba(229,57,53,0.15);
+}
+.btn-warning, .btn-outline-danger, .btn-outline-success, .btn-outline-secondary {
+    font-weight: 600;
+}
+.btn-warning {
+    background: #fffde7;
+    color: #e53935;
+    border: 1px solid #e53935;
+}
+.btn-warning:hover {
+    background: #ffe082;
+    color: #b71c1c;
+}
+.card {
+    background: #fffde7;
+    border: 1px solid #ffe082;
+    box-shadow: 0 2px 8px rgba(255,224,130,0.15);
+    border-radius: 10px;
+}
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #fff8e1;
+}
+.table-bordered th, .table-bordered td {
+    border-color: #ffe082 !important;
+}
+.alert-info {
+    background: #fffde7;
+    color: #e53935;
+    border-color: #ffe082;
+    font-weight: 500;
+}
+h1, h2, h3, h4 {
+    color: #e53935;
+    font-weight: 700;
+}
+.icon-red {
+    color: #e53935;
+}
+.icon-yellow {
+    color: #ffe082;
+}
+.card-admin {
+    background: #fff3f3;
+    border: 1px solid #ffcdd2;
+    box-shadow: 0 2px 8px rgba(229,57,53,0.10);
+}
+.btn-admin {
+    background: #212121;
+    color: #fff;
+    font-weight: 600;
+    border: none;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+.btn-admin:hover {
+    background: #b71c1c;
+    color: #fff;
+}
+.form-control {
+    margin-bottom: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ffe082;
+    box-shadow: none;
+}
+.form-control:focus {
+    border-color: #e53935;
+    box-shadow: 0 0 0 0.2rem rgba(229,57,53,0.10);
+}
+label {
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+}
+.form-text, .helptext {
+    font-size: 0.95em;
+    color: #b71c1c;
+    margin-top: 0.2rem;
+    margin-bottom: 0.7rem;
+    display: block;
+}
+.required-asterisk {
+    color: #e53935;
+    font-weight: bold;
+    margin-left: 2px;
+}
+.search-bar-card {
+    background: #fff;
+    border-radius: 2.5rem;
+    box-shadow: 0 4px 24px rgba(229,57,53,0.08);
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    gap: 0.2rem;
+    overflow-x: auto;
+    max-width: 1100px;
+    width: 100%;
+}
+.search-bar-card .search-segment {
+    flex: 1 1 0;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    position: relative;
+    min-width: 160px;
+    max-width: 300px;
+    padding-right: 0.5rem;
+    margin-right: 0;
+}
+.search-bar-card .search-segment:nth-child(2) {
+    padding-left: 0.2rem;
+    padding-right: 0.2rem;
+}
+/* Second divider: before the date */
+.search-bar-card .search-segment:nth-child(3)::after {
+    content: '';
+    position: absolute;
+    top: 0%;
+    right: 10px;
+    width: 1.5px;
+    height: 100%;
+    background: #ffe082;
+    z-index: 2;
+}
+.search-bar-card .search-segment:last-child {
+    padding-right: 0;
+}
+.search-bar-card .form-control, .search-bar-card select {
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    font-size: 1.1rem;
+    width: 100%;
+    min-width: 0;
+}
+.search-bar-card .form-control:focus, .search-bar-card select:focus {
+    outline: none;
+    box-shadow: none;
+}
+.search-bar-card label {
+    font-size: 1rem;
+    color: #b71c1c;
+    font-weight: 500;
+    margin-bottom: 0;
+}
+.search-bar-card .icon-swap {
+    background: #fffbe6;
+    border-radius: 50%;
+    padding: 0.5rem;
+    font-size: 1.3rem;
+    color: #e53935;
+    border: 1px solid #ffe082;
+    margin: 0 0.5rem;
+}
+.search-bar-card .btn-search {
+    background: #e53935;
+    color: #fff;
+    font-weight: 700;
+    border-radius: 2rem;
+    font-size: 1.1rem;
+    padding: 0.8rem 2.2rem;
+    border: none;
+    transition: background 0.2s;
+}
+.search-bar-card .btn-search:hover {
+    background: #b71c1c;
+}
+@media (max-width: 900px) {
+    .search-bar-card {
+        flex-direction: column;
+        border-radius: 1.5rem;
+        gap: 1rem;
+    }
+    .search-bar-card .search-segment {
+        border-right: none;
+        border-bottom: 1px solid #ffe082;
+        padding-right: 0;
+        padding-bottom: 1rem;
+        max-width: 100%;
+    }
+    .search-bar-card .search-segment:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+}
+
+/* Custom date picker display styles */
+#date-picker-display {
+    background: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0.5rem;
+    min-height: 48px;
+    padding: 0.3rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    transition: box-shadow 0.2s, border-color 0.2s;
+    margin-left: 0.1rem;
+    width: 100%;
+}
+#date-picker-display:focus, #date-picker-display:hover {
+    border-color: #e53935;
+    box-shadow: 0 0 0 2px #ffe082;
+    outline: none;
+}
+#date-main {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #212529;
+}
+#date-year {
+    font-size: 1rem;
+    color: #888;
+    margin-top: -2px;
+}
+
+/* Calendar icon alignment */
+.search-segment .bi-calendar2-week {
+    align-self: flex-start;
+    margin-top: 1.7rem;
+    margin-right: 0.7rem;
+}
+
+/* Ensure date picker popup appears under the segment (browser default, but ensure no overflow) */
+.search-segment[style*="position:relative"] {
+    overflow: visible;
+}
+
+/* Booking history cards and section separation */
+.card.shadow.border-success, .card.shadow.border-primary {
+    border-width: 2px;
+    border-radius: 1.2rem;
+    margin-bottom: 2rem;
+}
+.card-header.bg-success, .card-header.bg-primary {
+    border-top-left-radius: 1.2rem;
+    border-top-right-radius: 1.2rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px #ffe08233;
+}
+.card-body.bg-light {
+    background: linear-gradient(90deg, #fffbe7 0%, #fff 100%);
+    border-bottom-left-radius: 1.2rem;
+    border-bottom-right-radius: 1.2rem;
+}
+/* Animated cancel button */
+.btn-danger.animate__animated {
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+}
+/* Filter buttons */
+.card-header .btn-outline-light, .card-header .btn-outline-success, .card-header .btn-outline-danger {
+    border-width: 2px;
+    font-size: 1rem;
+    margin-left: 0.3rem;
+    margin-right: 0.3rem;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.card-header .btn-outline-light.active, .card-header .btn-outline-success.active, .card-header .btn-outline-danger.active {
+    background: #ffe082;
+    color: #e53935;
+    box-shadow: 0 2px 8px #ffe08255;
+    border-color: #ffe082;
+}
+.card-header .btn-outline-light:hover, .card-header .btn-outline-success:hover, .card-header .btn-outline-danger:hover {
+    background: #fff8e7;
+    color: #e53935;
+    border-color: #ffe082;
+}
+/* Responsive table */
+.table-responsive {
+    border-radius: 0.7rem;
+    overflow: hidden;
+}
+/* Section icons */
+.card-header .bi {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+} 
