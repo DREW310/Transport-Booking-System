@@ -1,6 +1,6 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) session_start();
 require_once('../views/header.php');
-session_start();
 if (!isset($_SESSION['user']) || (!$_SESSION['user']['is_staff'] && !$_SESSION['user']['is_superuser'])) {
     header('Location: ../public/login.php');
     exit();
@@ -53,8 +53,10 @@ if ($stmt) {
                         <td><?php echo htmlspecialchars($fb['review']); ?></td>
                         <td><?php echo htmlspecialchars($fb['date']); ?></td>
                         <td>
-                            <a href="admin_feedback_edit.php?id=<?php echo $fb['id']; ?>" class="btn btn-success btn-sm"><i class="fa fa-edit"></i> Edit</a>
-                            <a href="admin_feedback_delete.php?id=<?php echo $fb['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this feedback? This action cannot be undone.');"><i class="fa fa-trash"></i> Delete</a>
+                            <div class="bus-action-group">
+                                <a href="admin_feedback_edit.php?id=<?php echo $fb['id']; ?>" class="bus-action-btn"><i class="fa fa-edit"></i> Edit</a>
+                                <a href="admin_feedback_delete.php?id=<?php echo $fb['id']; ?>" class="bus-action-btn" onclick="return confirm('Are you sure you want to delete this feedback? This action cannot be undone.');"><i class="fa fa-trash"></i> Delete</a>
+                            </div>
                         </td>
                     </tr>
                     <?php endforeach; ?>

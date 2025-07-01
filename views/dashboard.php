@@ -1,7 +1,7 @@
 <?php
 require_once('../controllers/bookingController.php');
 require_once('../controllers/feedbackController.php');
-session_start();
+if (session_status() === PHP_SESSION_NONE) session_start();
 
 if (!isset($_SESSION['user'])) {
     header('Location: ../public/login.php');

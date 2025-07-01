@@ -1,7 +1,7 @@
 <?php
 require_once('../includes/db.php');
 require_once('header.php');
-session_start();
+if (session_status() === PHP_SESSION_NONE) session_start();
 if (!isset($_SESSION['user'])) {
     header('Location: ../public/login.php');
     exit();
@@ -9,7 +9,7 @@ if (!isset($_SESSION['user'])) {
 $db = getDB();
 $user_id = $_SESSION['user']['id'];
 // Eligible for feedback: completed bookings without feedback
-$sql_eligible = 'SELECT b.booking_id, bu.bus_number, r.source, r.destination, s.departure_time, b.seat_number
+$sql_eligible = 'SELECT b.id, b.booking_id, bu.bus_number, r.source, r.destination, s.departure_time, b.seat_number
     FROM bookings b
     JOIN schedules s ON b.schedule_id = s.id
     JOIN buses bu ON s.bus_id = bu.id
@@ -57,7 +57,7 @@ $previous = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                             <td><?php echo htmlspecialchars($row['source'] . ' → ' . $row['destination']); ?></td>
                             <td><?php echo htmlspecialchars($row['departure_time']); ?></td>
                             <td><?php echo htmlspecialchars($row['seat_number']); ?></td>
-                            <td><a href="feedback_submit.php?booking_id=<?php echo urlencode($row['booking_id']); ?>" class="btn btn-primary btn-sm"><i class="fa fa-comment"></i> Feedback</a></td>
+                            <td><a href="feedback_submit.php?booking_id=<?php echo urlencode($row['id']); ?>" class="btn btn-primary btn-sm"><i class="fa fa-comment"></i> Feedback</a></td>
                         </tr>
                         <?php endforeach; endif; ?>
                     </tbody>

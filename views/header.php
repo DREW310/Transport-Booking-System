@@ -12,13 +12,13 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 </head>
 <body>
     <header>
-        <nav class="navbar">
+        <nav class="navbar main-navbar">
             <?php if (isset($_SESSION['user'])): ?>
-                <div style="display:flex;align-items:center;">
+                <div class="navbar-left">
                     <span class="icon-red" style="font-size:1.3rem;margin-right:8px;"><i class="fa fa-user-circle"></i></span>
                     <span style="font-weight:600;color:#e53935;">Welcome, <?php echo htmlspecialchars($_SESSION['user']['username']); ?>!</span>
                 </div>
-                <div style="float:right;">
+                <div class="navbar-right">
                     <?php if ((isset($_SESSION['user']['is_staff']) && $_SESSION['user']['is_staff']) || (isset($_SESSION['user']['is_superuser']) && $_SESSION['user']['is_superuser'])): ?>
                         <a class="nav-link" href="admin_dashboard.php"><i class="fa fa-cogs"></i> Admin Dashboard</a>
                     <?php endif; ?>
@@ -29,14 +29,14 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                     <a class="nav-link" href="../public/logout.php" onclick="return confirm('Are you sure you want to logout?');"><i class="fa fa-sign-out-alt"></i> Logout</a>
                 </div>
             <?php else: ?>
-                <div style="display:flex;align-items:center;">
+                <div class="navbar-left">
                     <span class="icon-red" style="font-size:1.5rem;margin-right:8px;"><i class="fa fa-bus"></i></span>
                     <span style="font-weight:700;color:#e53935;font-size:1.5rem;">Welcome!</span>
                 </div>
-                <div style="float:right;">
-                    <a class="nav-link" href="../views/schedule.php"><i class="fa fa-calendar-alt"></i> View Schedule</a>
-                    <a class="nav-link" href="../public/register.php"><i class="fa fa-user-plus"></i> Register</a>
-                    <a class="nav-link" href="../public/user_login.php"><i class="fa fa-sign-in-alt"></i> Login</a>
+                <div class="navbar-right btn-nav-row">
+                    <a class="btn btn-nav" href="../views/schedule.php"><i class="fa fa-calendar-alt"></i> View Schedule</a>
+                    <a class="btn btn-nav" href="../public/register.php"><i class="fa fa-user-plus"></i> Register</a>
+                    <a class="btn btn-nav" href="../public/user_login.php"><i class="fa fa-sign-in-alt"></i> Login</a>
                 </div>
             <?php endif; ?>
         </nav>

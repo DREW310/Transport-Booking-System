@@ -1,7 +1,7 @@
 <?php
 require_once('../includes/db.php');
 require_once('header.php');
-session_start();
+if (session_status() === PHP_SESSION_NONE) session_start();
 if (!isset($_SESSION['user'])) {
     header('Location: login.php');
     exit();
@@ -30,7 +30,7 @@ if (!$booking) {
 }
 // Check if feedback already exists
 $stmt = $db->prepare('SELECT 1 FROM feedback WHERE booking_id = ? AND user_id = ?');
-$stmt->execute([$booking_id, $user_id]);
+$stmt->execute([$booking['id'], $user_id]);
 if ($stmt->fetch()) {
     echo '<main><div class="alert alert-info">You have already submitted feedback for this booking.</div></main>';
     require_once('footer.php');

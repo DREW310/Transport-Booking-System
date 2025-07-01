@@ -2,10 +2,26 @@
 body {
     background: #fffbe6;
     font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
 }
-.navbar {
-    border-bottom: 3px solid #e53935;
+.navbar, .main-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 56px;
+    padding: 0 0.7rem;
+    box-sizing: border-box;
     background: #fff;
+    margin: 0;
+    border-bottom: 3px solid #e53935;
+    width: 100vw;
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    font-size: 1.04rem;
 }
 .navbar .navbar-brand, .navbar .nav-link {
     color: #e53935 !important;
@@ -306,4 +322,483 @@ label {
 .card-header .bi {
     font-size: 1.5rem;
     margin-right: 0.5rem;
+}
+
+/* --- Auth Card Styles (Login & Registration) --- */
+.auth-card, .login-card, .register-card {
+    background: #fffbe6;
+    max-width: 440px;
+    margin: 5vw auto;
+    border-radius: 16px;
+    box-shadow: 0 8px 40px #e0dcc7;
+    padding: 2.5rem 2rem;
+    text-align: center;
+}
+.login-card {
+    background: #fffbe6;
+}
+.admin-login-card {
+    background: #ffeaea;
+}
+.register-card {
+    background: #fffbe6;
+    max-width: 540px;
+    padding: 2.5rem 2.5rem 2rem 2.5rem;
+}
+.auth-card .icon, .login-card .icon, .register-card .icon {
+    font-size: 2.5rem;
+    color: #e53935;
+    margin-bottom: 0.7rem;
+}
+.auth-card h2, .login-card h2, .register-card h2 {
+    color: #e53935;
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 1.2rem;
+}
+.auth-card label, .login-card label, .register-card label {
+    font-weight: 700;
+    color: #222;
+    display: block;
+    text-align: left;
+    margin-bottom: 0.2rem;
+    margin-top: 1rem;
+}
+.auth-card input, .login-card input, .register-card input, .register-card textarea {
+    width: 100%;
+    padding: 0.7rem;
+    border-radius: 7px;
+    border: 2px solid #ffd6d6;
+    margin-bottom: 1rem;
+    background: #f7f7f7;
+    font-size: 1.1rem;
+}
+.auth-card input:focus, .login-card input:focus, .register-card input:focus, .register-card textarea:focus {
+    outline: none;
+    border-color: #e53935;
+}
+.auth-card .btn, .login-card .btn, .register-card .btn {
+    width: 100%;
+    background: #e53935;
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 7px;
+    padding: 0.8rem 0;
+    margin-top: 0.7rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    transition: background 0.2s;
+}
+.auth-card .btn:hover, .login-card .btn:hover, .register-card .btn:hover {
+    background: #b71c1c;
+}
+.admin-login-card label {
+    font-weight: 700;
+    color: #222;
+    margin-top: 1rem;
+    display: block;
+    text-align: left;
+}
+.admin-login-card .btn {
+    background: #222;
+    color: #fff;
+}
+.admin-login-card .btn:hover {
+    background: #444;
+}
+.auth-card .error, .login-card .error, .register-card .error-list {
+    color: #e53935;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    text-align: left;
+}
+.auth-card .success, .register-card .success {
+    color: #388e3c;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+.auth-card .links, .login-card .links, .register-card .login-link {
+    margin-top: 1.2rem;
+    font-size: 1.05rem;
+    text-align: center;
+}
+.auth-card .links a, .login-card .links a, .register-card .login-link a {
+    color: #e53935;
+    text-decoration: underline;
+    font-weight: 700;
+}
+.auth-card .back-link, .login-card .back-link {
+    margin-top: 0.7rem;
+    display: block;
+}
+@media (max-width: 600px) {
+    .auth-card, .login-card, .register-card {
+        padding: 1.2rem 0.5rem;
+        max-width: 98vw;
+    }
+}
+
+/* --- Navbar Layout Fixes --- */
+.navbar-left {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+.navbar-right, .btn-nav-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-left: auto;
+    height: 100%;
+}
+.navbar-right .nav-link, .btn-nav-row .btn-nav {
+    margin: 0;
+    border-radius: 0;
+    border-right: 1px solid #e53935;
+    position: relative;
+    z-index: 1;
+}
+.navbar-right .nav-link:first-child, .btn-nav-row .btn-nav:first-child {
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+}
+.navbar-right .nav-link:last-child, .btn-nav-row .btn-nav:last-child {
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+    border-right: none;
+}
+.navbar-right .nav-link:not(:first-child), .btn-nav-row .btn-nav:not(:first-child) {
+    margin-left: -1px;
+}
+.nav-link {
+    color: #e53935 !important;
+    font-weight: 600;
+    background: none;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 7px;
+    font-size: 1.04rem;
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.13s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    text-decoration: none;
+}
+.nav-link:hover, .nav-link:focus {
+    background: #fff3e0;
+    color: #b71c1c !important;
+    transform: translateY(-1px) scale(1.04);
+    box-shadow: 0 2px 8px rgba(229,57,53,0.07);
+    text-decoration: none;
+}
+/* Remove border from nav buttons for logged-in users */
+.navbar-right .nav-link, .navbar-right .btn-nav {
+    border: none !important;
+}
+/* Guest nav buttons (btn-nav) still have border */
+.btn-nav {
+    border: 2px solid #e53935;
+    font-size: 1.1rem;
+    padding: 0.5rem 1.5rem;
+    min-width: 0;
+    margin: 0 0.2rem;
+    border-radius: 8px;
+    background: #fff;
+    color: #e53935;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.13s, border-color 0.18s;
+    gap: 0.7rem;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(229,57,53,0.04);
+}
+.btn-nav:hover, .btn-nav:focus {
+    background: #e53935;
+    color: #fff;
+    border-color: #b71c1c;
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 4px 16px rgba(229,57,53,0.13);
+}
+
+/* --- Welcome Card Centering --- */
+.welcome-card {
+    background: #fffbe6;
+    max-width: 520px;
+    margin: 2vw auto 0 auto;
+    border-radius: 16px;
+    box-shadow: 0 8px 40px #e0dcc7;
+    padding: 3rem 2.5rem;
+    text-align: center;
+    position: relative;
+    top: 3vh;
+}
+.welcome-card i.fa-bus {
+    font-size: 4.2rem;
+    margin-bottom: 1.5rem;
+    display: block;
+    color:#e53935
+}
+@media (max-width: 600px) {
+    .navbar, .main-navbar {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0 0.5rem;
+    }
+    .welcome-card {
+        padding: 2rem 0.7rem;
+        margin-top: 2rem;
+    }
+    .btn-nav {
+        height: 38px;
+        font-size: 1rem;
+    }
+}
+
+/* --- Main Button Styles (for nav, login, admin, etc.) --- */
+.btn, .btn.user, .btn.admin, .btn-nav {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    padding: 0.7rem 2.2rem;
+    border-radius: 8px;
+    border: 2px solid #e53935;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.13s, border-color 0.18s;
+    gap: 0.7rem;
+    margin: 0 0.3rem 0.5rem 0;
+    background: #fff;
+    color: #e53935;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(229,57,53,0.04);
+    min-width: 160px;
+}
+.btn.user {
+    background: #e53935;
+    color: #fff;
+    white-space: nowrap;
+    padding-left: 2.2rem;
+    padding-right: 2.2rem;
+}
+.btn.user:hover, .btn.user:focus {
+    background: #b71c1c;
+    color: #fff;
+    border-color: #b71c1c;
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 4px 16px rgba(229,57,53,0.13);
+}
+.btn.admin {
+    background: #fff;
+    color: #e53935;
+}
+.btn.admin:hover, .btn.admin:focus {
+    background: #fff3e0;
+    color: #b71c1c;
+    border-color: #b71c1c;
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 4px 16px rgba(229,57,53,0.13);
+}
+.btn-nav {
+    font-size: 1.1rem;
+    padding: 0.5rem 1.5rem;
+    min-width: 0;
+    margin: 0 0.2rem;
+}
+.btn-nav:hover, .btn-nav:focus {
+    background: #e53935;
+    color: #fff;
+    border-color: #b71c1c;
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 4px 16px rgba(229,57,53,0.13);
+}
+.btn-row {
+    display: flex;
+    justify-content: center;
+    gap: 1.2rem;
+    margin: 2rem 0 1rem 0;
+}
+.register-link a {
+    color: #e53935;
+    font-weight: 700;
+    text-decoration: underline;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-size: 1.1rem;
+}
+.register-link a:hover {
+    color: #b71c1c;
+}
+
+.register-card label {
+    font-weight: 700;
+    color: #222;
+    margin-top: 1rem;
+    display: block;
+    text-align: left;
+}
+.register-card .help, .register-card ul.help {
+    color: #e53935;
+    font-size: 0.9rem;
+    margin: 0rem 0 0.7rem 0;
+    text-align: left;
+    padding-left: 0;
+}
+.register-card ul.help {
+    list-style: disc inside;
+}
+
+/* --- Admin Dashboard Button Grid --- */
+.admin-dashboard-btn-row, .card-admin .btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem 2.5rem;
+    margin: 2.5rem 0 1.5rem 0;
+}
+.admin-dashboard-btn, .card-admin .btn-admin-action {
+    min-width: 260px;
+    max-width: 260px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.45rem;
+    font-weight: 700;
+    border: 2px solid #e53935;
+    border-radius: 12px;
+    background: #fff;
+    color: #e53935;
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.13s, border-color 0.18s;
+    gap: 0.8rem;
+    margin: 0;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(229,57,53,0.04);
+    cursor: pointer;
+}
+.admin-dashboard-btn:hover, .card-admin .btn-admin-action:hover,
+.admin-dashboard-btn:focus, .card-admin .btn-admin-action:focus {
+    background: #fff3e0;
+    color: #b71c1c;
+    border-color: #b71c1c;
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 4px 16px rgba(229,57,53,0.13);
+}
+
+/* --- Table Borders --- */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+table, th, td {
+    border: 1.5px solid #ffe082;
+}
+th, td {
+    padding: 0.3rem 1.2rem;
+    text-align: center;
+}
+
+/* --- Back to Dashboard Button --- */
+.back-btn {
+    background: none;
+    color: #e53935;
+    border: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0.4rem 0.7rem;
+    margin-bottom: 1.2rem;
+    transition: color 0.18s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.back-btn:hover, .back-btn:focus {
+    color: #b71c1c;
+    text-decoration: underline;
+}
+.back-btn:hover i, .back-btn:focus i {
+    color: #b71c1c !important;
+}
+
+/* --- Add Bus Button --- */
+.add-bus-btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    border: 2px solid #e53935;
+    background: #fff;
+    color: #e53935;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.13s, border-color 0.18s;
+    gap: 0.7rem;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(229,57,53,0.04);
+    min-width: 0;
+    margin: 0 0.2rem;
+    display: inline-flex;
+    align-items: center;
+}
+.add-bus-btn:hover, .add-bus-btn:focus {
+    background: #e53935;
+    color: #fff;
+    border-color: #b71c1c;
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 4px 16px rgba(229,57,53,0.13);
+}
+
+/* --- Bus Action Buttons --- */
+.bus-action-btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    border: 2px solid #e53935;
+    background: #fff;
+    color: #e53935;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.13s, border-color 0.18s;
+    gap: 0.7rem;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(229,57,53,0.04);
+    min-width: 0;
+    margin: 0 0.3rem 0.3rem 0;
+    display: inline-flex;
+    align-items: center;
+}
+.bus-action-btn:hover, .bus-action-btn:focus {
+    background: #e53935;
+    color: #fff;
+    border-color: #b71c1c;
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 4px 16px rgba(229,57,53,0.13);
+}
+
+/* --- Action Buttons Left Align --- */
+.bus-action-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+/* --- Ensure icon/text visibility on hover --- */
+.bus-action-btn i, .add-bus-btn i, .back-btn i {
+    color: inherit;
+    transition: color 0.18s;
+}
+.bus-action-btn:hover i, .bus-action-btn:focus i,
+.add-bus-btn:hover i, .add-bus-btn:focus i,
+.back-btn:hover i, .back-btn:focus i {
+    color: #fff;
 } 

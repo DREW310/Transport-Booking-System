@@ -28,27 +28,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             header('Location: ../views/admin_dashboard.php');
             exit();
         } else {
-            $error = "This login is for admin/staff only.";
+            $error = "This login is for admin only.";
         }
     } else {
         $error = "Invalid credentials!";
     }
 }
 ?>
-<style>
-    body { background: #fcf8e3; }
-    .login-card { background: #ffeaea; max-width: 400px; margin: 5vw auto; border-radius: 16px; box-shadow: 0 8px 40px #e0dcc7; padding: 2.5rem 2rem; text-align: center; }
-    .login-card .icon { font-size: 2.5rem; color: #e53935; margin-bottom: 0.7rem; }
-    .login-card h2 { color: #e53935; font-size: 2rem; font-weight: 800; margin-bottom: 1.2rem; }
-    .login-card label { font-weight: 700; color: #e53935; display: block; text-align: left; margin-bottom: 0.2rem; }
-    .login-card input { width: 100%; padding: 0.7rem; border-radius: 7px; border: 2px solid #ffd6d6; margin-bottom: 1rem; background: #f7f7f7; font-size: 1.1rem; }
-    .login-card input:focus { outline: none; border-color: #e53935; }
-    .login-card .btn { width: 100%; background: #222; color: #fff; font-weight: 700; font-size: 1.1rem; border: none; border-radius: 7px; padding: 0.8rem 0; margin-top: 0.7rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.7rem; }
-    .login-card .btn:hover { background: #444; }
-    .login-card .error { color: #e53935; margin-bottom: 1rem; font-weight: 600; }
-    .login-card .back-link { margin-top: 0.7rem; display: block; }
-</style>
-<div class="login-card">
+<div class="login-card admin-login-card">
     <div class="icon"><i class="fa fa-shield-alt"></i></div>
     <h2>Admin Login</h2>
     <?php if (!empty($error)) echo '<div class="error">'.$error.'</div>'; ?>

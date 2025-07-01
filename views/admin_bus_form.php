@@ -1,7 +1,7 @@
 <?php
 require_once('../includes/db.php');
 require_once('../views/header.php');
-session_start();
+if (session_status() === PHP_SESSION_NONE) session_start();
 if (!isset($_SESSION['user']) || (!$_SESSION['user']['is_staff'] && !$_SESSION['user']['is_superuser'])) {
     header('Location: ../public/login.php');
     exit();

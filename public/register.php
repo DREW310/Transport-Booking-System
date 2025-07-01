@@ -69,43 +69,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
-<style>
-    body { background: #fcf8e3; }
-    .register-card { background: #fffbe6; max-width: 540px; margin: 2vw auto; border-radius: 12px; box-shadow: 0 8px 40px #e0dcc7; padding: 2.5rem 2.5rem 2rem 2.5rem; }
-    .register-card h2 { color: #e53935; font-size: 2.3rem; font-weight: 800; text-align: center; margin-bottom: 1.2rem; }
-    .register-card .icon { text-align: center; font-size: 2.5rem; color: #e53935; margin-bottom: 0.5rem; }
-    .register-card label { font-weight: 700; color: #e53935; margin-top: 1rem; display: block; }
-    .register-card input, .register-card textarea { width: 100%; padding: 0.7rem; border-radius: 7px; border: 2px solid #ffd6d6; margin-bottom: 0.5rem; background: #fff; font-size: 1.1rem; }
-    .register-card input:focus, .register-card textarea:focus { outline: none; border-color: #e53935; }
-    .register-card .help { color: #a67c52; font-size: 0.98rem; margin-bottom: 0.7rem; }
-    .register-card .error-list { color: #e53935; margin-bottom: 1rem; }
-    .register-card .error-list li { margin-bottom: 0.2rem; }
-    .register-card .success { color: #388e3c; font-weight: 700; margin-bottom: 1rem; text-align: center; }
-    .register-card .btn { width: 100%; background: #e53935; color: #fff; font-weight: 700; font-size: 1.2rem; border: none; border-radius: 7px; padding: 0.8rem 0; margin-top: 0.7rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.7rem; }
-    .register-card .btn:hover { background: #b71c1c; }
-    .register-card .login-link { text-align: center; margin-top: 1.2rem; font-size: 1.08rem; }
-    .register-card .login-link a { color: #e53935; font-weight: 700; text-decoration: underline; }
-</style>
 <div class="register-card">
     <div class="icon"><i class="fa fa-user-plus"></i></div>
     <h2>Create Your Account</h2>
     <?php if (!empty($errors)) { echo '<ul class="error-list">'; foreach ($errors as $e) echo '<li>'.$e.'</li>'; echo '</ul>'; } ?>
     <?php if ($success) { echo '<div class="success">'.$success.'</div>'; } ?>
     <form action="register.php" method="post" autocomplete="off">
-        <label for="username">Username:<span style="color:#e53935">*</span></label>
+        <label for="username">Username:<span class="required-asterisk">*</span></label>
         <input type="text" name="username" id="username" maxlength="150" value="<?php echo htmlspecialchars($username); ?>" required>
         <div class="help">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</div>
-        <label for="email">Email:<span style="color:#e53935">*</span></label>
+        <label for="email">Email:<span class="required-asterisk">*</span></label>
         <input type="email" name="email" id="email" value="<?php echo htmlspecialchars($email); ?>" required>
-        <label for="password">Password:<span style="color:#e53935">*</span></label>
+        <label for="password">Password:<span class="required-asterisk">*</span></label>
         <input type="password" name="password" id="password" required>
-        <ul class="help" style="color:#e53935;">
+        <ul class="help">
             <li>Your password can't be too similar to your other personal information.</li>
             <li>Your password must contain at least 8 characters.</li>
             <li>Your password can't be a commonly used password.</li>
             <li>Your password can't be entirely numeric.</li>
         </ul>
-        <label for="password2">Password confirmation:<span style="color:#e53935">*</span></label>
+        <label for="password2">Password confirmation:<span class="required-asterisk">*</span></label>
         <input type="password" name="password2" id="password2" required>
         <div class="help">Enter the same password as before, for verification.</div>
         <label for="full_name">Full Name:</label>
