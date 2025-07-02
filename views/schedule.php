@@ -39,9 +39,9 @@ $stmt->execute($params);
 $schedules = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <main style="display:flex;flex-direction:column;align-items:center;min-height:80vh;">
-    <form class="search-bar-card" method="get" action="">
+    <form class="search-bar-card" method="get" action="" style="margin-top:3.5rem;">
         <div class="search-segment">
-            <label for="source"><i class="fa fa-bus"></i> Source</label>
+            <label for="source">Source</label>
             <select name="source" id="source" class="form-control" required>
                 <option value="">From</option>
                 <?php foreach ($states as $state): ?>
@@ -49,11 +49,11 @@ $schedules = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <?php endforeach; ?>
             </select>
         </div>
-        <div class="search-segment" style="display:flex;align-items:center;">
-            <button type="button" id="switchBtn" class="icon-swap" style="margin-top:1.5rem;margin-right:0.5rem;"><i class="fa fa-exchange-alt"></i></button>
+        <div class="search-segment switch-segment">
+            <button type="button" id="switchBtn" class="icon-swap" aria-label="Switch source and destination">⇄</button>
         </div>
         <div class="search-segment">
-            <label for="destination"><i class="fa fa-bus"></i> Destination</label>
+            <label for="destination">Destination</label>
             <select name="destination" id="destination" class="form-control" required>
                 <option value="">To</option>
                 <?php foreach ($states as $state): ?>
@@ -62,14 +62,15 @@ $schedules = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </select>
         </div>
         <div class="search-segment">
-            <label for="date-picker-display"><i class="fa fa-calendar-alt"></i> Date</label>
+            <label for="date-picker-display">Date</label>
             <input type="date" class="form-control" id="date-picker-display" name="date" value="<?php echo htmlspecialchars($filter_date); ?>">
         </div>
-        <div class="search-segment" style="align-items:end;">
-            <button type="submit" class="btn btn-search"><i class="fa fa-search"></i> SEARCH BUSES</button>
+        <div class="search-segment search-btn-segment">
+            <button type="submit" class="btn btn-search search-btn-red">SEARCH BUSES</button>
         </div>
     </form>
     <div style="width:100%;max-width:1100px;">
+        <h2 style="color:#e53935;font-size:1.5rem;font-weight:700;margin-bottom:1.2rem;">Available Buses</h2>
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
@@ -80,7 +81,7 @@ $schedules = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <th>Departure</th>
                     <th>Fare</th>
                     <th>Available Seats</th>
-                    <th></th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -95,7 +96,7 @@ $schedules = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <td><?php echo htmlspecialchars($schedule['departure_time']); ?></td>
                     <td>RM <?php echo htmlspecialchars($schedule['fare']); ?></td>
                     <td><?php echo htmlspecialchars($schedule['available_seats']); ?></td>
-                    <td><a href="booking.php?schedule_id=<?php echo urlencode($schedule['id']); ?>" class="btn btn-primary">Book</a></td>
+                    <td><a href="booking.php?schedule_id=<?php echo urlencode($schedule['id']); ?>" class="bus-action-btn">Book</a></td>
                 </tr>
                 <?php endforeach; endif; ?>
             </tbody>

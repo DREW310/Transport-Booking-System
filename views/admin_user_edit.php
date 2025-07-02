@@ -46,8 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $user) {
 <?php require_once('../views/header.php'); ?>
 <main style="display:flex;flex-direction:column;align-items:center;min-height:80vh;">
     <div class="card" style="margin-top:2.5rem;padding:2.5rem 2.5rem 2rem 2.5rem;min-width:400px;max-width:600px;width:100%;box-shadow:0 4px 24px rgba(229,57,53,0.08);">
-        <a href="admin_users.php" class="btn btn-warning" style="margin-bottom:1.2rem;"><i class="fa fa-arrow-left"></i> Return to Users</a>
-        <a href="admin_dashboard.php" class="btn btn-secondary" style="margin-bottom:1.2rem;margin-left:1rem;"><i class="fa fa-cogs"></i> Return to Admin Panel</a>
+        <a href="admin_users.php" class="back-btn"><i class="fa fa-arrow-left"></i> Return to Users</a>
         <h1 style="margin-bottom:1.5rem;"><i class="fa fa-user-edit icon-red"></i> Edit User</h1>
         <?php if ($success): ?>
             <div class="alert alert-info" style="margin-bottom:1rem;">User updated successfully!</div>
@@ -55,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $user) {
             <div class="alert alert-danger" style="margin-bottom:1rem;">Error: <?php echo htmlspecialchars($error); ?></div>
         <?php endif; ?>
         <?php if ($user): ?>
-        <form method="post" action="">
+        <form method="post" action="" style="display:flex;flex-direction:column;gap:1rem;align-items:stretch;">
             <label>Username:</label>
             <input type="text" name="username" class="form-control" value="<?php echo htmlspecialchars($user['username']); ?>" required>
             <label>Email:</label>
@@ -72,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $user) {
             <input type="text" name="phone" class="form-control" value="<?php echo htmlspecialchars($user['phone']); ?>" required>
             <label>Address:</label>
             <textarea name="address" class="form-control" required><?php echo htmlspecialchars($user['address']); ?></textarea>
-            <button type="submit" class="btn btn-primary" style="margin-top:1rem;"><i class="fa fa-save"></i> Save</button>
+            <button type="submit" class="bus-action-btn" style="margin-top:0.5rem;align-self:flex-start;"><i class="fa fa-save"></i> Save</button>
         </form>
         <?php endif; ?>
     </div>

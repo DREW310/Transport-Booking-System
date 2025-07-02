@@ -23,15 +23,17 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
         <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
             <div class="alert alert-info">Profile updated successfully!</div>
         <?php endif; ?>
-        <div style="background:#fffde7;border-radius:8px;padding:1.5rem 2rem;margin-bottom:2rem;">
-            <p><strong>Username:</strong> <?php echo htmlspecialchars($user['username']); ?></p>
-            <p><strong>Role:</strong> <?php echo ($user['is_superuser'] ? 'Admin' : ($user['is_staff'] ? 'Admin' : 'User')); ?></p>
-            <p><strong>Full Name:</strong> <?php echo htmlspecialchars($user['full_name']); ?></p>
-            <p><strong>Email:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
-            <p><strong>Phone:</strong> <?php echo htmlspecialchars($user['phone']); ?></p>
-            <p><strong>Address:</strong> <?php echo htmlspecialchars($user['address']); ?></p>
+        <div style="display:flex;flex-direction:column;gap:0.7rem;background:#fffde7;border-radius:8px;padding:1.5rem 2rem;margin-bottom:2rem;">
+            <div style="display:flex;gap:1.2rem;"><span style="font-weight:700;min-width:120px;">Username:</span><span><?php echo htmlspecialchars($user['username']); ?></span></div>
+            <div style="display:flex;gap:1.2rem;"><span style="font-weight:700;min-width:120px;">Role:</span><span><?php echo ($user['is_superuser'] ? 'Admin' : ($user['is_staff'] ? 'Admin' : 'User')); ?></span></div>
+            <div style="display:flex;gap:1.2rem;"><span style="font-weight:700;min-width:120px;">Full Name:</span><span><?php echo htmlspecialchars($user['full_name']); ?></span></div>
+            <div style="display:flex;gap:1.2rem;"><span style="font-weight:700;min-width:120px;">Email:</span><span><?php echo htmlspecialchars($user['email']); ?></span></div>
+            <div style="display:flex;gap:1.2rem;"><span style="font-weight:700;min-width:120px;">Phone:</span><span><?php echo htmlspecialchars($user['phone']); ?></span></div>
+            <div style="display:flex;gap:1.2rem;"><span style="font-weight:700;min-width:120px;">Address:</span><span><?php echo htmlspecialchars($user['address']); ?></span></div>
         </div>
-        <a href="edit_profile.php" class="btn btn-primary"><i class="fa fa-edit"></i> Edit Profile</a>
+        <div style="display:flex;justify-content:center;">
+            <a href="edit_profile.php" class="bus-action-btn"><i class="fa fa-edit"></i> Edit Profile</a>
+        </div>
     </div>
 </main>
 <?php require_once('footer.php'); ?> 

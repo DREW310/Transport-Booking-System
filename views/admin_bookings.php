@@ -22,7 +22,7 @@ if ($stmt) {
 ?>
 <main style="display:flex;flex-direction:column;align-items:center;min-height:80vh;">
     <div class="card" style="margin-top:2.5rem;padding:2.5rem 2.5rem 2rem 2.5rem;min-width:600px;max-width:1100px;width:100%;box-shadow:0 4px 24px rgba(229,57,53,0.08);">
-        <a href="admin_dashboard.php" class="btn btn-warning" style="margin-bottom:1.2rem;"><i class="fa fa-arrow-left"></i> Return to Admin Panel</a>
+        <a href="admin_dashboard.php" class="back-btn"><i class="fa fa-arrow-left"></i> Return to Admin Panel</a>
         <h1 style="margin-bottom:1.5rem;"><i class="fa fa-ticket-alt icon-red"></i> All Bookings</h1>
         <div class="table-responsive">
             <?php if (empty($bookings)): ?>

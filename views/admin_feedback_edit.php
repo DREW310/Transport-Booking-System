@@ -49,7 +49,7 @@ require_once('header.php');
 ?>
 <main style="display:flex;flex-direction:column;align-items:center;min-height:80vh;">
     <div class="card" style="margin-top:2.5rem;padding:2.5rem 2.5rem 2rem 2.5rem;min-width:400px;max-width:600px;width:100%;box-shadow:0 4px 24px rgba(229,57,53,0.08);">
-        <a href="admin_feedback.php" class="btn btn-warning" style="margin-bottom:1.2rem;"><i class="fa fa-arrow-left"></i> Return to Feedback</a>
+        <a href="admin_feedback.php" class="back-btn"><i class="fa fa-arrow-left"></i> Return to Feedback</a>
         <a href="admin_dashboard.php" class="btn btn-secondary" style="margin-bottom:1.2rem;margin-left:1rem;"><i class="fa fa-cogs"></i> Return to Admin Panel</a>
         <h1 style="margin-bottom:1.5rem;"><i class="fa fa-comments icon-red"></i> Edit Feedback</h1>
         <?php if ($error): ?><div class="alert alert-danger" style="margin-bottom:1rem;">Error: <?php echo htmlspecialchars($error); ?></div><?php endif; ?>
@@ -60,7 +60,7 @@ require_once('header.php');
             <b><?php echo htmlspecialchars($feedback['company']); ?></b><br>
             <span style="color:#888;">Seat <?php echo htmlspecialchars($feedback['seat_number']); ?></span>
         </div>
-        <form method="post" id="feedbackForm" action="">
+        <form method="post" id="feedbackForm" action="" style="display:flex;flex-direction:column;gap:1rem;align-items:stretch;">
             <div style="text-align:center;margin-bottom:1.2rem;">
                 <div style="font-size:1.2rem;margin-bottom:0.5rem;">Edit rating</div>
                 <div id="starRating" style="font-size:2rem;color:#ccc;cursor:pointer;">
@@ -86,8 +86,8 @@ require_once('header.php');
             <div style="margin-bottom:1.2rem;">
                 <textarea name="review" class="form-control" rows="3" maxlength="600" placeholder="Edit review (optional, max 80 words)"><?php echo isset($_POST['review']) ? htmlspecialchars($_POST['review']) : htmlspecialchars($feedback['review']); ?></textarea>
             </div>
-            <div style="display:flex;gap:1rem;justify-content:center;">
-                <button type="submit" class="btn btn-primary" style="min-width:120px;">Save</button>
+            <div style="display:flex;gap:1rem;justify-content:flex-start;">
+                <button type="submit" class="bus-action-btn" style="align-self:flex-start;"><i class="fa fa-save"></i> Save</button>
                 <a href="admin_feedback.php" class="btn btn-secondary" style="min-width:120px;">Discard</a>
             </div>
         </form>

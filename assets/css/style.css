@@ -99,11 +99,11 @@ h1, h2, h3, h4 {
     background: #b71c1c;
     color: #fff;
 }
-.form-control {
-    margin-bottom: 1rem;
-    border-radius: 6px;
-    border: 1px solid #ffe082;
-    box-shadow: none;
+.form-control, .search-btn-red, .icon-swap {
+    height: 48px;
+    min-height: 48px;
+    font-size: 1.1rem;
+    box-sizing: border-box;
 }
 .form-control:focus {
     border-color: #e53935;
@@ -126,87 +126,61 @@ label {
     margin-left: 2px;
 }
 .search-bar-card {
-    background: #fff;
-    border-radius: 2.5rem;
+    border: 2px solid #ffe082;
     box-shadow: 0 4px 24px rgba(229,57,53,0.08);
-    padding: 1.2rem 1.5rem;
-    margin-bottom: 2rem;
+    border-radius: 2rem;
+    background: #fff;
+    margin-bottom: 2.5rem;
     display: flex;
     align-items: stretch;
-    flex-wrap: nowrap;
-    gap: 0.2rem;
-    overflow-x: auto;
-    max-width: 1100px;
-    width: 100%;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 1.2rem 1.5rem;
 }
-.search-bar-card .search-segment {
-    flex: 1 1 0;
+.search-segment {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 0.8rem;
-    position: relative;
-    min-width: 160px;
-    max-width: 300px;
-    padding-right: 0.5rem;
-    margin-right: 0;
-}
-.search-bar-card .search-segment:nth-child(2) {
-    padding-left: 0.2rem;
-    padding-right: 0.2rem;
-}
-/* Second divider: before the date */
-.search-bar-card .search-segment:nth-child(3)::after {
-    content: '';
-    position: absolute;
-    top: 0%;
-    right: 10px;
-    width: 1.5px;
-    height: 100%;
-    background: #ffe082;
-    z-index: 2;
-}
-.search-bar-card .search-segment:last-child {
-    padding-right: 0;
-}
-.search-bar-card .form-control, .search-bar-card select {
-    border: none;
-    background: transparent;
-    box-shadow: none;
-    font-size: 1.1rem;
-    width: 100%;
+    flex: 1 1 0;
     min-width: 0;
+    max-width: 300px;
+    padding: 0 0.5rem;
+    box-sizing: border-box;
 }
-.search-bar-card .form-control:focus, .search-bar-card select:focus {
-    outline: none;
-    box-shadow: none;
-}
-.search-bar-card label {
-    font-size: 1rem;
-    color: #b71c1c;
-    font-weight: 500;
-    margin-bottom: 0;
-}
-.search-bar-card .icon-swap {
-    background: #fffbe6;
-    border-radius: 50%;
-    padding: 0.5rem;
-    font-size: 1.3rem;
-    color: #e53935;
-    border: 1px solid #ffe082;
-    margin: 0 0.5rem;
-}
-.search-bar-card .btn-search {
-    background: #e53935;
-    color: #fff;
+.search-segment label {
+    display: block;
     font-weight: 700;
-    border-radius: 2rem;
-    font-size: 1.1rem;
-    padding: 0.8rem 2.2rem;
-    border: none;
-    transition: background 0.2s;
+    color: #e53935;
+    margin-bottom: 0.3rem;
+    text-align: center;
+    font-size: 1.08rem;
 }
-.search-bar-card .btn-search:hover {
-    background: #b71c1c;
+.search-segment i {
+    font-size: 1.3rem;
+    margin-bottom: 0.2rem;
+    color: #222;
+}
+.search-segment select,
+.search-segment input[type="date"] {
+    width: 100%;
+    margin-top: 0.2rem;
+}
+/* Switch button segment: center vertically, no flex-grow */
+.search-segment.switch-segment {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 0.2rem;
+}
+/* Search button segment: no flex-grow */
+.search-segment.search-btn-segment {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    padding-left: 0.5rem;
 }
 @media (max-width: 900px) {
     .search-bar-card {
@@ -214,16 +188,12 @@ label {
         border-radius: 1.5rem;
         gap: 1rem;
     }
-    .search-bar-card .search-segment {
-        border-right: none;
-        border-bottom: 1px solid #ffe082;
-        padding-right: 0;
-        padding-bottom: 1rem;
+    .search-segment {
         max-width: 100%;
+        padding: 0;
     }
-    .search-bar-card .search-segment:last-child {
-        border-bottom: none;
-        padding-bottom: 0;
+    .search-segment.switch-segment, .search-segment.search-btn-segment {
+        padding: 0;
     }
 }
 
@@ -759,29 +729,28 @@ th, td {
 
 /* --- Bus Action Buttons --- */
 .bus-action-btn {
-    font-size: 0.9rem;
-    padding: 0.5rem 1.5rem;
-    border-radius: 8px;
-    border: 2px solid #e53935;
-    background: #fff;
-    color: #e53935;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.13s, border-color 0.18s;
-    gap: 0.7rem;
-    text-decoration: none;
-    box-shadow: 0 2px 8px rgba(229,57,53,0.04);
-    min-width: 0;
-    margin: 0 0.3rem 0.3rem 0;
     display: inline-flex;
     align-items: center;
+    gap: 0.5rem;
+    background: #fff;
+    color: #e53935;
+    border: 2px solid #e53935;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 0.5rem 1.2rem;
+    margin-top: 0.5rem;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    width: auto;
+    min-width: 80px;
+    max-width: 100%;
+    justify-content: center;
 }
 .bus-action-btn:hover, .bus-action-btn:focus {
     background: #e53935;
     color: #fff;
-    border-color: #b71c1c;
-    transform: translateY(-2px) scale(1.04);
-    box-shadow: 0 4px 16px rgba(229,57,53,0.13);
+    box-shadow: 0 2px 8px rgba(229,57,53,0.10);
 }
 
 /* --- Action Buttons Left Align --- */
@@ -801,4 +770,173 @@ th, td {
 .add-bus-btn:hover i, .add-bus-btn:focus i,
 .back-btn:hover i, .back-btn:focus i {
     color: #fff;
+}
+
+/* Booking Page Section Cards */
+.booking-section-card {
+    box-shadow: 0 2px 12px rgba(67,160,71,0.08);
+    border: 2px solid #eee;
+    border-radius: 1.2rem;
+    margin-bottom: 2.2rem;
+    background: #fff;
+}
+.booking-section-header {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #e53935;
+    border-radius: 1.2rem 1.2rem 0 0;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 1.1rem 1.5rem 0.7rem 1.5rem;
+    background: none;
+    border-bottom: 1px solid #ffe082;
+}
+.booking-section-body {
+    background: linear-gradient(90deg, #fffbe7 0%, #fff 100%);
+    border-radius: 0 0 1.2rem 1.2rem;
+    padding: 1.5rem;
+}
+/* Booking filter and action buttons */
+.btn-filter, .btn-cancel, .btn-book-ticket {
+    font-size: 1rem;
+    padding: 0.5rem 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    border-radius: 8px;
+    font-weight: 600;
+    min-width: 0;
+    box-shadow: none;
+}
+.btn-book-ticket {
+    font-size: 1.1rem;
+    padding: 0.7rem 2.2rem;
+    background: #e53935;
+    color: #fff;
+    border: none;
+    transition: background 0.2s;
+}
+.btn-book-ticket:hover {
+    background: #b71c1c;
+}
+
+/* Outer bookings card */
+.bookings-outer-card {
+    margin-top: 2.5rem;
+    min-width: 600px;
+    max-width: 1500px;
+    width: 98vw;
+    box-shadow: 0 4px 24px rgba(229,57,53,0.08);
+    border-radius: 18px;
+    background: #fffde7;
+    border: 1.5px solid #ffe082;
+    padding: 0;
+}
+
+/* Upcoming Bookings Table */
+.upcoming-table thead th {
+    background: #e8f5e9;
+    color: #1b5e20;
+    border-color: #43a047 !important;
+}
+.upcoming-table td, .upcoming-table th {
+    border-color: #43a047 !important;
+}
+
+/* Past Bookings Table */
+.past-table thead th {
+    background: #e3f2fd;
+    color: #0d47a1;
+    border-color: #1976d2 !important;
+}
+.past-table td, .past-table th {
+    border-color: #1976d2 !important;
+}
+
+/* Ensure table font color is visible */
+.upcoming-table td, .upcoming-table th,
+.past-table td, .past-table th {
+    color: #222;
+}
+
+.search-btn-red {
+    background: #e53935 !important;
+    color: #fff !important;
+    font-weight: 700;
+    border-radius: 2rem;
+    font-size: 1.1rem;
+    padding: 0.8rem 2.2rem;
+    border: none;
+    box-shadow: 0 2px 8px rgba(229,57,53,0.10);
+    transition: background 0.2s, box-shadow 0.2s;
+}
+.search-btn-red:hover, .search-btn-red:focus {
+    background: #b71c1c !important;
+    color: #fff !important;
+    box-shadow: 0 4px 16px rgba(229,57,53,0.13);
+}
+
+.icon-swap {
+    width: 48px;
+    min-width: 48px;
+    height: 48px;
+    min-height: 48px;
+    border: 1.5px solid #ffe082;
+    border-radius: 50%;
+    background: #fffbe6;
+    color: #e53935;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0.5rem;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s, border-color 0.18s;
+}
+.icon-swap:hover, .icon-swap:focus {
+    background: #ffe082;
+    color: #b71c1c;
+    border-color: #e53935;
+}
+
+.form-control {
+    margin-bottom: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ffe082;
+    box-shadow: none;
+    height: 38px;
+    min-height: 38px;
+    font-size: 1.08rem;
+    padding: 0 1rem;
+}
+.profile-form-actions {
+    display: flex;
+    gap: 1.2rem;
+    margin-top: 0.5rem;
+    justify-content: flex-start;
+    max-width: 420px;
+}
+.profile-form-actions .bus-action-btn,
+.profile-form-actions .btn-warning {
+    height: 44px;
+    min-height: 44px;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    min-width: 160px;
+    max-width: 220px;
+    margin-top: 0;
+}
+.profile-form-actions .btn-warning {
+    line-height: 1.1;
+    padding: 0 1.5rem;
+    box-sizing: border-box;
+}
+.profile-label {
+    font-weight: 700;
+    color: #e53935;
+    margin-bottom: 0.3rem;
 } 

@@ -67,14 +67,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 <main style="display:flex;flex-direction:column;align-items:center;min-height:80vh;">
     <div class="card" style="margin-top:2.5rem;padding:2.5rem 2.5rem 2rem 2.5rem;min-width:400px;max-width:600px;width:100%;box-shadow:0 4px 24px rgba(229,57,53,0.08);">
-        <a href="admin_buses.php" class="btn btn-warning" style="margin-bottom:1.2rem;"><i class="fa fa-arrow-left"></i> Back to Buses</a>
+        <a href="admin_buses.php" class="back-btn" style="margin-bottom:1.2rem;"><i class="fa fa-arrow-left"></i> Back to Buses</a>
         <h1 style="margin-bottom:1.5rem;"><i class="fa fa-bus icon-red"></i> <?php echo $edit_mode ? 'Edit' : 'Add'; ?> Bus</h1>
         <?php if ($success): ?>
             <div class="alert alert-info" style="margin-bottom:1rem;">Bus saved successfully!</div>
         <?php elseif ($error): ?>
             <div class="alert alert-danger" style="margin-bottom:1rem;">Error: <?php echo htmlspecialchars($error); ?></div>
         <?php endif; ?>
-        <form method="post" action="">
+        <form method="post" action="" style="display:flex;flex-direction:column;gap:1rem;align-items:stretch;">
 <?php if ($edit_mode): ?>
             <label>Bus ID:</label>
             <input type="text" name="bus_number" class="form-control" value="<?php echo htmlspecialchars($bus['bus_number']); ?>" readonly>
@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="number" name="capacity" class="form-control" min="1" max="100" value="<?php echo htmlspecialchars($bus['capacity']); ?>" required>
             <label>Company:</label>
             <input type="text" name="company" class="form-control" value="<?php echo htmlspecialchars($bus['company']); ?>" required>
-            <button type="submit" class="btn btn-primary" style="margin-top:1rem;"><i class="fa fa-save"></i> Save</button>
+            <button type="submit" class="bus-action-btn" style="margin-top:0.5rem;align-self:flex-start;"><i class="fa fa-save"></i> Save</button>
         </form>
     </div>
 </main>
