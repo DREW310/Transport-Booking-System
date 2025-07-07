@@ -6,6 +6,13 @@ if (!isset($_SESSION['user'])) {
     header('Location: login.php');
     exit();
 }
+
+// Prevent admin/staff from submitting user feedback
+if ((isset($_SESSION['user']['is_staff']) && $_SESSION['user']['is_staff']) ||
+    (isset($_SESSION['user']['is_superuser']) && $_SESSION['user']['is_superuser'])) {
+    header('Location: admin_dashboard.php');
+    exit();
+}
 $db = getDB();
 $user_id = $_SESSION['user']['id'];
 $booking_id = isset($_GET['booking_id']) ? $_GET['booking_id'] : null;
@@ -48,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif ($word_count > 80) {
         $error = 'Comment must be 80 words or less.';
     } else {
-        $stmt = $db->prepare('INSERT INTO feedback (user_id, booking_id, bus_id, rating, tags, review, date) VALUES (?, ?, ?, ?, ?, ?, NOW())');
+        $stmt = $db->prepare('INSERT INTO feedback (user_id, booking_id, bus_id, rating, tags, comment) VALUES (?, ?, ?, ?, ?, ?)');
         $stmt->execute([$user_id, $booking['id'], $booking['bus_id'], $rating, $tags, $comment]);
         $success = true;
     }
@@ -58,13 +65,18 @@ $tags_list = [
 ];
 ?>
 <main style="display:flex;flex-direction:column;align-items:center;min-height:80vh;">
-    <div class="card" style="margin-top:2.5rem;padding:2.5rem 2.5rem 2rem 2.5rem;min-width:350px;max-width:500px;width:100%;box-shadow:0 4px 24px rgba(229,57,53,0.08);">
-        <h1 style="color:#e53935;margin-bottom:1.5rem;">Rate your trip!</h1>
-        <div style="margin-bottom:1.5rem;">
-            <b><?php echo htmlspecialchars($booking['source']); ?> → <?php echo htmlspecialchars($booking['destination']); ?></b><br>
-            <span style="color:#888;"><?php echo date('D d M, H:i A', strtotime($booking['departure_time'])); ?></span><br>
-            <b><?php echo htmlspecialchars($booking['company']); ?></b><br>
-            <span style="color:#888;">Seat <?php echo htmlspecialchars($booking['seat_number']); ?></span>
+    <div class="card" style="margin-top:2.5rem;padding:2.5rem 2.5rem 2rem 2.5rem;min-width:600px;max-width:800px;width:100%;box-shadow:0 4px 24px rgba(229,57,53,0.08);">
+        <h1 style="margin-bottom:1.5rem;"><i class="fa fa-star icon-red"></i> Submit Feedback</h1>
+
+        <!-- Trip Details -->
+        <div class="card-header bg-info" style="font-size:1.1rem;font-weight:600;color:#fff;border-radius:8px 8px 0 0;">Trip Details</div>
+        <div class="card-body bg-light" style="padding:1.2rem;margin-bottom:1.5rem;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+                <div><strong>Route:</strong> <?php echo htmlspecialchars($booking['source'] . ' → ' . $booking['destination']); ?></div>
+                <div><strong>Date:</strong> <?php echo date('M j, Y', strtotime($booking['departure_time'])); ?></div>
+                <div><strong>Bus:</strong> <?php echo htmlspecialchars($booking['company']); ?></div>
+                <div><strong>Seat:</strong> <?php echo htmlspecialchars($booking['seat_number']); ?></div>
+            </div>
         </div>
         <?php if ($success): ?>
             <div class="alert alert-success" style="margin-bottom:1rem;">Thank you for your feedback!</div>
@@ -72,90 +84,118 @@ $tags_list = [
         <?php else: ?>
         <?php if ($error): ?><div class="alert alert-danger" style="margin-bottom:1rem;">Error: <?php echo htmlspecialchars($error); ?></div><?php endif; ?>
         <form method="post" id="feedbackForm" action="">
-            <div style="text-align:center;margin-bottom:1.2rem;">
-                <div style="font-size:1.2rem;margin-bottom:0.5rem;">Rate your trip experience!</div>
-                <div id="starRating" style="font-size:2rem;color:#ccc;cursor:pointer;">
+            <!-- Rating Section -->
+            <div style="margin-bottom:1.5rem;">
+                <label style="font-weight:600;margin-bottom:0.5rem;display:block;">Rating (1-5 stars):</label>
+                <div id="starRating" style="font-size:2rem;margin:0.5rem 0;cursor:pointer;">
                     <?php for ($i=1; $i<=5; $i++): ?>
-                        <span class="star" data-value="<?php echo $i; ?>">&#9733;</span>
+                        <span class="star" data-value="<?php echo $i; ?>" style="color:#ddd;transition:color 0.3s ease;cursor:pointer;">&#9733;</span>
                     <?php endfor; ?>
                 </div>
                 <input type="hidden" name="rating" id="ratingInput" value="<?php echo isset($_POST['rating']) ? (int)$_POST['rating'] : 0; ?>">
-                <div id="ratingLabel" style="margin-top:0.5rem;font-size:1.1rem;color:#444;"></div>
             </div>
-            <div style="margin-bottom:1.2rem;">
-                <div style="font-size:1.1rem;margin-bottom:0.5rem;">What did you like/dislike?</div>
-                <div style="display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;">
+
+            <!-- Tags Section -->
+            <div style="margin-bottom:1.5rem;">
+                <label style="font-weight:600;margin-bottom:0.5rem;display:block;">What aspects would you like to comment on? (Optional):</label>
+                <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
                     <?php foreach ($tags_list as $tag): ?>
-                        <label class="tag-btn">
-                            <input type="checkbox" name="tags[]" value="<?php echo htmlspecialchars($tag); ?>" style="display:none;">
-                            <span><?php echo htmlspecialchars($tag); ?></span>
+                        <label style="display:inline-flex;align-items:center;background:#f8f9fa;padding:0.3rem 0.8rem;border-radius:20px;cursor:pointer;transition:background-color 0.3s ease;" onmouseover="this.style.backgroundColor='#e9ecef'" onmouseout="this.style.backgroundColor='#f8f9fa'">
+                            <input type="checkbox" name="tags[]" value="<?php echo htmlspecialchars($tag); ?>" style="margin-right:0.5rem;">
+                            <?php echo htmlspecialchars($tag); ?>
                         </label>
                     <?php endforeach; ?>
                 </div>
             </div>
-            <div style="margin-bottom:1.2rem;">
-                <textarea name="comment" class="form-control" rows="3" maxlength="600" placeholder="Tell us more about your experience (optional, max 80 words)"><?php echo isset($_POST['comment']) ? htmlspecialchars($_POST['comment']) : ''; ?></textarea>
+
+            <!-- Comment Section -->
+            <div style="margin-bottom:1.5rem;">
+                <label for="commentBox" style="font-weight:600;margin-bottom:0.5rem;display:block;">Additional Comments (Optional, max 80 words):</label>
+                <textarea name="comment" id="commentBox" rows="4" maxlength="600" class="form-control"
+                    placeholder="Share your experience..."><?php echo isset($_POST['comment']) ? htmlspecialchars($_POST['comment']) : ''; ?></textarea>
+                <small class="text-muted" id="wordCount">0/80 words</small>
             </div>
-            <div style="display:flex;gap:1rem;justify-content:center;">
-                <button type="submit" class="btn btn-primary" style="min-width:120px;">Save</button>
-                <a href="feedback.php" class="btn btn-secondary" style="min-width:120px;">Discard</a>
+
+            <!-- Action Buttons -->
+            <div style="display:flex;gap:1rem;justify-content:flex-start;">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-paper-plane"></i> Submit Feedback
+                </button>
+                <a href="feedback.php" class="btn btn-secondary">Cancel</a>
             </div>
         </form>
         <style>
-        .star.selected, .star.hovered { color: #43a047; }
-        .tag-btn { border:1px solid #bbb; border-radius:20px; padding:0.3rem 1rem; background:#fafafa; cursor:pointer; transition:all 0.2s; }
-        .tag-btn input:checked + span, .tag-btn.selected { background:#43a047; color:#fff; border-color:#43a047; }
-        .tag-btn span { pointer-events:none; }
+        .star {
+            color: #ddd;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+        .star.selected {
+            color: #FFD700;
+        }
         </style>
+
         <script>
-        // Star rating logic
+        // Simple star rating functionality
         const stars = document.querySelectorAll('.star');
         const ratingInput = document.getElementById('ratingInput');
-        const ratingLabel = document.getElementById('ratingLabel');
-        const ratingLabels = ['', 'Terrible', 'Bad', 'Okay', 'Good', 'Excellent'];
+
         stars.forEach(star => {
-            star.addEventListener('mouseover', function() {
-                highlightStars(this.dataset.value);
-            });
-            star.addEventListener('mouseout', function() {
-                highlightStars(ratingInput.value);
-            });
             star.addEventListener('click', function() {
-                ratingInput.value = this.dataset.value;
-                highlightStars(this.dataset.value);
-                ratingLabel.textContent = this.dataset.value + ' - ' + ratingLabels[this.dataset.value];
+                const rating = this.dataset.value;
+                ratingInput.value = rating;
+
+                // Update star colors
+                stars.forEach((s, index) => {
+                    if (index < rating) {
+                        s.classList.add('selected');
+                    } else {
+                        s.classList.remove('selected');
+                    }
+                });
             });
         });
-        function highlightStars(val) {
-            stars.forEach(star => {
-                if (star.dataset.value <= val) {
-                    star.classList.add('selected');
+
+        // Word count functionality
+        const commentBox = document.getElementById('commentBox');
+        const wordCount = document.getElementById('wordCount');
+
+        if (commentBox && wordCount) {
+            commentBox.addEventListener('input', function() {
+                const words = this.value.trim().split(/\s+/).filter(word => word.length > 0);
+                const count = this.value.trim() === '' ? 0 : words.length;
+                wordCount.textContent = count + '/80 words';
+
+                if (count > 80) {
+                    wordCount.style.color = '#dc3545';
                 } else {
-                    star.classList.remove('selected');
+                    wordCount.style.color = '#6c757d';
                 }
             });
         }
-        highlightStars(ratingInput.value);
-        if (ratingInput.value) {
-            ratingLabel.textContent = ratingInput.value + ' - ' + ratingLabels[ratingInput.value];
-        }
-        // Tag button logic
-        document.querySelectorAll('.tag-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                const input = this.querySelector('input');
-                input.checked = !input.checked;
-                this.classList.toggle('selected', input.checked);
-                e.preventDefault();
-            });
-        });
-        // Limit comment to 80 words
+
+        // Form validation
         document.getElementById('feedbackForm').addEventListener('submit', function(e) {
-            const comment = this.comment.value.trim();
-            if (comment.split(/\s+/).length > 80) {
-                alert('Comment must be 80 words or less.');
+            if (!ratingInput.value || ratingInput.value < 1) {
+                alert('Please select a rating.');
                 e.preventDefault();
+                return;
+            }
+
+            if (commentBox) {
+                const words = commentBox.value.trim().split(/\s+/).filter(word => word.length > 0);
+                const count = commentBox.value.trim() === '' ? 0 : words.length;
+                if (count > 80) {
+                    alert('Comment must be 80 words or less.');
+                    e.preventDefault();
+                    return;
+                }
             }
         });
+                }
+            });
+        }
+        </script>
         </script>
         <?php endif; ?>
     </div>

@@ -17,6 +17,7 @@ if (!isset($_SESSION['user']) || (!$_SESSION['user']['is_staff'] && !$_SESSION['
             <a href="admin_bookings.php" class="admin-dashboard-btn"><i class="fa fa-ticket-alt"></i> View Bookings</a>
             <a href="admin_feedback.php" class="admin-dashboard-btn"><i class="fa fa-comments"></i> View Feedback</a>
             <a href="admin_users.php" class="admin-dashboard-btn"><i class="fa fa-users"></i> View Users</a>
+            <a href="admin_reports.php" class="admin-dashboard-btn"><i class="fa fa-chart-bar"></i> Business Reports</a>
         </div>
     </div>
 </main>

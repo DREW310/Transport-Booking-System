@@ -13,10 +13,20 @@ class BookingController {
         $stmt->execute();
     }
 
-    // Get all bookings for a user
+    // Get all bookings for a user with complete information
     public function getBookingsByUser($userId) {
         $db = getDB();
-        $stmt = $db->prepare("SELECT * FROM bookings WHERE user_id = :user_id");
+        $stmt = $db->prepare("
+            SELECT b.id, b.booking_id, b.status, b.seat_number, b.booking_time, b.payment_method,
+                   s.departure_time, bu.bus_number, bu.license_plate, bu.bus_type, bu.company,
+                   r.source, r.destination, r.fare
+            FROM bookings b
+            JOIN schedules s ON b.schedule_id = s.id
+            JOIN buses bu ON s.bus_id = bu.id
+            JOIN routes r ON s.route_id = r.id
+            WHERE b.user_id = :user_id
+            ORDER BY s.departure_time DESC
+        ");
         $stmt->bindParam(':user_id', $userId);
         $stmt->execute();
 

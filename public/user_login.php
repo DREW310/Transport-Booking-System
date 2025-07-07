@@ -2,7 +2,7 @@
 session_start();
 require_once('../includes/db.php');
 require_once('../controllers/userController.php');
-require_once('../views/header.php');
+require_once('../views/login_header.php');
 
 $username = $password = '';
 $error = '';
@@ -41,10 +41,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <?php if (!empty($error)) echo '<div class="error">'.$error.'</div>'; ?>
     <form action="user_login.php" method="post" autocomplete="off">
         <label for="username">Username:</label>
-        <input type="text" name="username" id="username" value="<?php echo htmlspecialchars($username); ?>" required>
+        <input type="text" name="username" id="username" value="<?php echo htmlspecialchars($username ?? ''); ?>" required>
         <label for="password">Password:</label>
         <input type="password" name="password" id="password" required>
         <button type="submit" class="btn"><i class="fa fa-sign-in-alt"></i> Login as User</button>
     </form>
-    <a href="index.php" class="back-link">Back</a>
+
+    <!--
+    FORGOT PASSWORD LINK
+    PURPOSE: Provide access to password recovery
+    STUDENT LEARNING: User experience and navigation design
+    -->
+    <div class="auth-links">
+        <p><a href="forgot_password.php">Forgot your password?</a></p>
+        <p><a href="index.php" class="back-link">Back to Home</a></p>
+    </div>
 </div> 

@@ -33,7 +33,7 @@ require_once('header.php');
 <main style="display:flex;flex-direction:column;align-items:center;min-height:80vh;">
     <div class="card" style="margin-top:2.5rem;padding:2.5rem 2.5rem 2rem 2.5rem;min-width:400px;max-width:600px;width:100%;box-shadow:0 4px 24px rgba(229,57,53,0.08);">
         <a href="admin_feedback.php" class="btn btn-warning" style="margin-bottom:1.2rem;"><i class="fa fa-arrow-left"></i> Return to Feedback</a>
-        <a href="admin_dashboard.php" class="btn btn-secondary" style="margin-bottom:1.2rem;margin-left:1rem;"><i class="fa fa-cogs"></i> Return to Admin Panel</a>
+        <a href="admin_dashboard.php" class="btn btn-secondary" style="margin-bottom:1.2rem;margin-left:1rem;"><i class="fa fa-cogs"></i> Back to Dashboard</a>
         <h1 style="margin-bottom:1.5rem;"><i class="fa fa-comments icon-red"></i> Delete Feedback</h1>
         <?php if ($deleted): ?>
             <div class="alert alert-success" style="margin-bottom:1rem;">Feedback deleted successfully.</div>

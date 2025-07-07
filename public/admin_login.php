@@ -2,7 +2,7 @@
 session_start();
 require_once('../includes/db.php');
 require_once('../controllers/userController.php');
-require_once('../views/header.php');
+require_once('../views/login_header.php');
 
 $username = $password = '';
 $error = '';
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <?php if (!empty($error)) echo '<div class="error">'.$error.'</div>'; ?>
     <form action="admin_login.php" method="post" autocomplete="off">
         <label for="username">Username:</label>
-        <input type="text" name="username" id="username" value="<?php echo htmlspecialchars($username); ?>" required>
+        <input type="text" name="username" id="username" value="<?php echo htmlspecialchars($username ?? ''); ?>" required>
         <label for="password">Password:</label>
         <input type="password" name="password" id="password" required>
         <button type="submit" class="btn"><i class="fa fa-shield-alt"></i> Login as Admin</button>

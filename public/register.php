@@ -1,7 +1,7 @@
 <?php
 require_once('../includes/db.php');
 require_once('../controllers/userController.php');
-require_once('../views/header.php');
+require_once('../views/auth_header.php');
 
 $username = $email = $password = $password2 = $full_name = $phone = $address = '';
 $errors = [];
@@ -76,10 +76,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <?php if ($success) { echo '<div class="success">'.$success.'</div>'; } ?>
     <form action="register.php" method="post" autocomplete="off">
         <label for="username">Username:<span class="required-asterisk">*</span></label>
-        <input type="text" name="username" id="username" maxlength="150" value="<?php echo htmlspecialchars($username); ?>" required>
+        <input type="text" name="username" id="username" maxlength="150" value="<?php echo htmlspecialchars($username ?? ''); ?>" required>
         <div class="help">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</div>
         <label for="email">Email:<span class="required-asterisk">*</span></label>
-        <input type="email" name="email" id="email" value="<?php echo htmlspecialchars($email); ?>" required>
+        <input type="email" name="email" id="email" value="<?php echo htmlspecialchars($email ?? ''); ?>" required>
         <label for="password">Password:<span class="required-asterisk">*</span></label>
         <input type="password" name="password" id="password" required>
         <ul class="help">
@@ -92,11 +92,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <input type="password" name="password2" id="password2" required>
         <div class="help">Enter the same password as before, for verification.</div>
         <label for="full_name">Full Name:</label>
-        <input type="text" name="full_name" id="full_name" value="<?php echo htmlspecialchars($full_name); ?>">
+        <input type="text" name="full_name" id="full_name" value="<?php echo htmlspecialchars($full_name ?? ''); ?>">
         <label for="phone">Phone:</label>
-        <input type="text" name="phone" id="phone" value="<?php echo htmlspecialchars($phone); ?>">
+        <input type="text" name="phone" id="phone" value="<?php echo htmlspecialchars($phone ?? ''); ?>">
         <label for="address">Address:</label>
-        <textarea name="address" id="address"><?php echo htmlspecialchars($address); ?></textarea>
+        <textarea name="address" id="address"><?php echo htmlspecialchars($address ?? ''); ?></textarea>
         <button type="submit" class="btn"><i class="fa fa-user-plus"></i> Register</button>
     </form>
     <div class="login-link">Already have an account? <a href="user_login.php">Login here.</a></div>

@@ -1,64 +1,2014 @@
-/* Transport Booking System Theme */
+/*
+===========================================
+TRANSPORT BOOKING SYSTEM - MAIN STYLESHEET
+PURPOSE: Styling for our transport booking system with modern, responsive design
+STUDENT LEARNING: CSS3 features, responsive design, modern layout techniques
+TECHNOLOGIES: CSS3, Flexbox, Media Queries, Animations
+===========================================
+*/
+
+/* Import our consistent color palette */
+@import url('color-palette.css');
+
+/*
+SECTION: Base Styles and Reset
+PURPOSE: Set up basic styling and reset browser defaults
+STUDENT LEARNING: CSS reset principles and base styling
+*/
 body {
-    background: #fffbe6;
+    /* Background color - clean modern white-gray for professional look */
+    background: #f8f9fa;
+
+    /* Font stack - modern, readable fonts */
     font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+
+    /* Remove default margins and padding */
     margin: 0;
     padding: 0;
+
+    /* Smooth scrolling for better user experience */
+    scroll-behavior: smooth;
+
+    /* Set line height for better readability */
+    line-height: 1.6;
 }
+/*
+SECTION: Navigation Styles
+PURPOSE: Enhanced navigation with better accessibility and modern design
+STUDENT LEARNING: CSS flexbox, positioning, and responsive navigation
+*/
+
 .navbar, .main-navbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    min-height: 56px;
-    padding: 0 0.7rem;
+    min-height: 60px;
+    padding: 0 1rem;
     box-sizing: border-box;
     background: #fff;
     margin: 0;
-    border-bottom: 3px solid #e53935;
-    width: 100vw;
+    border-bottom: 3px solid #5A9FD4;
+    width: 100%;
     position: sticky;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
-    font-size: 1.04rem;
+    font-size: 1rem;
+    /* CSS3 Shadow for depth */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Navigation left section */
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* User and brand icons */
+.user-icon, .brand-icon {
+    font-size: 1.3rem;
+    color: var(--primary-blue);
+}
+
+.welcome-text, .brand-text {
+    font-weight: 600;
+    color: var(--primary-blue);
+    font-size: 1rem;
+}
+
+.brand-text {
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.brand-link {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: opacity 0.2s ease;
+}
+
+.brand-link:hover {
+    opacity: 0.8;
+}
+
+/* Navigation right section */
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
 }
 .navbar .navbar-brand, .navbar .nav-link {
-    color: #e53935 !important;
+    color: var(--primary-blue) !important;
     font-weight: 600;
 }
 .navbar .nav-link.active, .navbar .nav-link:focus, .navbar .nav-link:hover {
-    color: #fff !important;
-    background: #e53935 !important;
+    color: var(--text-on-primary) !important;
+    background: var(--primary-blue) !important;
     border-radius: 5px;
 }
 .btn-primary, .btn-success {
-    background: #e53935;
+    background: var(--primary-blue);
     border: none;
-    color: #fff;
+    color: var(--text-on-primary);
     font-weight: 600;
-    transition: background 0.2s, box-shadow 0.2s;
+    transition: var(--transition-default);
 }
 .btn-primary:hover, .btn-success:hover {
-    background: #b71c1c;
-    box-shadow: 0 2px 8px rgba(229,57,53,0.15);
+    background: var(--primary-blue-dark);
+    box-shadow: var(--shadow-md);
 }
 .btn-warning, .btn-outline-danger, .btn-outline-success, .btn-outline-secondary {
     font-weight: 600;
 }
+/*
+SECTION: Landing Page Styles
+PURPOSE: Styling for the main welcome page
+STUDENT LEARNING: CSS layout, flexbox, and visual hierarchy
+*/
+
+/* Main landing page container */
+.landing-page {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1rem;
+}
+
+/* Welcome section styling */
+.welcome-section {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+/* Enhanced welcome card */
+.welcome-card {
+    background: white;
+    padding: 3rem 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    max-width: 500px;
+    margin: 0 auto;
+    /* CSS3 Animation - subtle entrance effect */
+    animation: fadeInUp 0.8s ease-out;
+}
+
+/* Welcome icon styling */
+.welcome-icon {
+    font-size: 4rem;
+    color: var(--primary-blue);
+    margin-bottom: 1rem;
+    /* CSS3 Animation - icon pulse effect */
+    animation: pulse 2s infinite;
+}
+
+/* Welcome title styling */
+.welcome-title {
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+    font-size: 2.2rem;
+    font-weight: 300;
+}
+
+.system-name {
+    color: var(--primary-blue);
+    font-weight: 600;
+}
+
+/* Button row layout using flexbox */
+.btn-row {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+/* Enhanced button styles */
+.btn-user, .btn-admin {
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 160px;
+    justify-content: center;
+}
+
+.btn-user {
+    background: var(--primary-blue);
+    color: var(--text-on-primary);
+    transition: var(--transition-default);
+}
+
+.btn-user:hover {
+    background: var(--primary-blue-dark) !important;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-admin {
+    background: var(--secondary-teal);
+    color: var(--text-on-primary);
+    transition: var(--transition-default);
+}
+
+.btn-admin:hover {
+    background: var(--secondary-teal-dark) !important;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* HOMEPAGE BUTTON HOVER FIX - FORCE CONSISTENCY */
+.welcome-card .btn.btn-user:hover,
+.welcome-card .btn.btn-admin:hover {
+    background: #2E5984 !important;
+    color: white !important;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(46,89,132,0.3) !important;
+}
+
+/* Features preview section */
+.features-preview {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.features-preview h2 {
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+}
+
+/* Features grid using CSS Grid */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.feature-item {
+    background: white;
+    padding: 2rem 1rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
+}
+
+.feature-item:hover {
+    transform: translateY(-5px);
+}
+
+.feature-item i {
+    font-size: 2.5rem;
+    color: var(--primary-blue);
+    margin-bottom: 1rem;
+}
+
+.feature-item h3 {
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.feature-item p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* CSS3 Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* Responsive design for mobile devices */
+@media (max-width: 768px) {
+    .welcome-card {
+        padding: 2rem 1rem;
+        margin: 0 1rem;
+    }
+
+    .btn-row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn-user, .btn-admin {
+        width: 100%;
+        max-width: 250px;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/*
+SECTION: Footer Styles
+PURPOSE: Professional footer design with multiple sections
+STUDENT LEARNING: CSS Grid, flexbox, and footer layout techniques
+*/
+
+.site-footer {
+    background: var(--neutral-gray-800);
+    color: var(--text-on-primary);
+    margin-top: 4rem;
+    padding: 2rem 0 1rem;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 4rem;
+    padding: 0 1rem;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+.footer-section {
+    flex: 0 0 auto;
+    min-width: 200px;
+    text-align: center;
+}
+
+.footer-section h4 {
+    color: var(--primary-blue-light);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.footer-section p {
+    margin: 0.5rem 0;
+    color: var(--neutral-gray-300);
+}
+
+.footer-section i {
+    margin-right: 0.5rem;
+    color: var(--primary-blue-light);
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin: 0.5rem 0;
+}
+
+.footer-links a {
+    color: var(--neutral-gray-300);
+    text-decoration: none;
+    transition: var(--transition-default);
+}
+
+.footer-links a:hover {
+    color: var(--primary-blue-light);
+}
+
+.copyright {
+    font-weight: 600;
+    color: var(--primary-blue-light);
+}
+
+.project-info {
+    font-size: 0.9rem;
+    color: var(--neutral-gray-400);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding: 1rem;
+    border-top: 1px solid #555;
+    margin-top: 2rem;
+    color: #999;
+    font-size: 0.9rem;
+}
+
+/*
+SECTION: Notification Styles
+PURPOSE: User feedback notifications
+STUDENT LEARNING: CSS positioning and animation for notifications
+*/
+
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #fff;
+    border-left: 4px solid #5A9FD4;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    z-index: 2000;
+    max-width: 300px;
+    animation: slideInRight 0.3s ease-out;
+}
+
+.notification button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    float: right;
+    color: #999;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/*
+SECTION: Visual Seat Selection Styles
+PURPOSE: Styling for interactive bus seat map
+STUDENT LEARNING: CSS Grid, Flexbox, Interactive UI Design, Animations
+*/
+
+/* Main seat selection container */
+.seat-selection-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    margin: 2rem 0;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.seat-selection-container h3 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+/* Seat legend styling */
+.seat-legend {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.seat-demo {
+    width: 25px;
+    height: 25px;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+}
+
+/* Bus container styling */
+.bus-container {
+    background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border: 3px solid #ddd;
+    position: relative;
+}
+
+/* Driver section */
+.driver-section {
+    text-align: center;
+    padding: 0.8rem;
+    background: #333;
+    color: white;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.driver-section i {
+    margin-right: 0.5rem;
+    color: #5A9FD4;
+}
+
+/* Seat map grid */
+.seat-map {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+/* Individual seat row */
+.seat-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+/* Individual seat styling */
+.seat {
+    width: 45px;
+    height: 45px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid;
+    position: relative;
+}
+
+/* Available seat */
+.seat.available {
+    background: #4caf50;
+    border-color: #388e3c;
+    color: white;
+}
+
+.seat.available:hover {
+    background: #66bb6a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(76,175,80,0.3);
+}
+
+/* Booked seat */
+.seat.booked {
+    background: #6BB6D6;
+    border-color: #4A8BC2;
+    color: white;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Selected seat */
+.seat.selected {
+    background: #5A9FD4;
+    border-color: #4A8BC2;
+    color: white;
+    box-shadow: 0 0 15px rgba(33,150,243,0.5);
+    animation: seatPulse 1.5s infinite;
+}
+
+/* Aisle space */
+.aisle {
+    width: 30px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 0.7rem;
+}
+
+.aisle::after {
+    content: "AISLE";
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    opacity: 0.5;
+}
+
+/* Seat number styling */
+.seat-number {
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+/* Selected seat information */
+.selected-seat-info {
+    background: #e3f2fd;
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    border-left: 4px solid #5A9FD4;
+}
+
+.selected-seat-info p {
+    margin: 0.5rem 0;
+    color: #333;
+}
+
+/* Payment section styling */
+.payment-section {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin: 1rem 0;
+    border: 2px solid #e9ecef;
+}
+
+.payment-section h4 {
+    color: #333;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.payment-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.payment-option {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem;
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.payment-option:hover {
+    border-color: #5A9FD4;
+    background: #F3F8FF;
+}
+
+.payment-option input[type="radio"] {
+    margin-right: 0.8rem;
+    accent-color: #5A9FD4;
+}
+
+.payment-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    color: #333;
+}
+
+.payment-label i {
+    color: #5A9FD4;
+    width: 20px;
+}
+
+.payment-note {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 5px;
+    padding: 0.8rem;
+    margin: 0;
+    color: #856404;
+}
+
+.payment-note i {
+    color: #f39c12;
+    margin-right: 0.5rem;
+}
+
+/* Booking actions */
+.booking-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+}
+
+.booking-actions .btn {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.booking-actions .btn-primary {
+    background: #ccc;
+    color: #666;
+}
+
+.booking-actions .btn-primary.enabled {
+    background: #5A9FD4;
+    color: white;
+}
+
+.booking-actions .btn-primary.enabled:hover {
+    background: #3E7CB0;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(90,159,212,0.3);
+}
+
+.booking-actions .btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.booking-actions .btn-secondary:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+}
+
+/* CSS Animations for seat selection */
+@keyframes seatPulse {
+    0%, 100% {
+        box-shadow: 0 0 15px rgba(33,150,243,0.5);
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(33,150,243,0.8);
+    }
+}
+
+/* Responsive design for mobile devices */
+@media (max-width: 768px) {
+    .seat-selection-container {
+        padding: 1rem;
+        margin: 1rem;
+    }
+
+    .seat-legend {
+        gap: 1rem;
+    }
+
+    .seat {
+        width: 35px;
+        height: 35px;
+        font-size: 0.7rem;
+    }
+
+    .aisle {
+        width: 20px;
+        height: 35px;
+    }
+
+    .booking-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .booking-actions .btn {
+        width: 100%;
+        max-width: 250px;
+        justify-content: center;
+    }
+}
+
+/*
+SECTION: Booking Success and Error Cards
+PURPOSE: Enhanced feedback for booking results
+STUDENT LEARNING: User feedback design and visual hierarchy
+*/
+
+/* Success card styling */
+.booking-success-card {
+    background: var(--success-green-pale);
+    border: 2px solid var(--success-green);
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    margin: 1rem 0;
+    box-shadow: var(--shadow-lg);
+}
+
+.success-icon {
+    font-size: 3rem;
+    color: var(--success-green);
+    margin-bottom: 1rem;
+}
+
+.booking-success-card h3 {
+    color: var(--success-green-dark);
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.booking-details {
+    background: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.detail-value {
+    font-weight: 700;
+    color: var(--success-green-dark);
+}
+
+.success-message {
+    background: var(--success-green-pale);
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+    color: var(--success-green-dark);
+}
+
+.success-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+}
+
+/* Error card styling */
+.booking-error-card {
+    background: var(--error-red-pale);
+    border: 2px solid var(--error-red);
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    margin: 1rem 0;
+    box-shadow: var(--shadow-lg);
+}
+
+.error-icon {
+    font-size: 3rem;
+    color: var(--error-red);
+    margin-bottom: 1rem;
+}
+
+.booking-error-card h3 {
+    color: #3E7CB0;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.booking-error-card p {
+    color: #4A8BC2;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+}
+
+/*
+SECTION: Authentication Pages Styling
+PURPOSE: Styling for login, register, forgot password, and reset password pages
+STUDENT LEARNING: Consistent UI design, form styling, user experience
+*/
+
+/* Main authentication container */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 2rem 1rem;
+}
+
+/* Authentication card */
+.auth-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    padding: 2.5rem;
+    max-width: 450px;
+    width: 100%;
+    text-align: center;
+}
+
+/* Authentication header */
+.auth-header {
+    margin-bottom: 2rem;
+}
+
+.auth-icon {
+    font-size: 3rem;
+    color: #5A9FD4;
+    margin-bottom: 1rem;
+}
+
+.auth-header h2 {
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-size: 1.8rem;
+}
+
+.auth-subtitle {
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 0;
+}
+
+.user-info {
+    background: #f8f9fa;
+    padding: 0.8rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+    border-left: 4px solid #5A9FD4;
+}
+
+/* Authentication form */
+.auth-form {
+    text-align: left;
+    margin: 2rem 0;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group label i {
+    color: #5A9FD4;
+    margin-right: 0.5rem;
+    width: 16px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #5A9FD4;
+    box-shadow: 0 0 0 3px rgba(90,159,212,0.1);
+}
+
+.form-help {
+    display: block;
+    margin-top: 0.5rem;
+    color: #666;
+    font-size: 0.85rem;
+}
+
+/* Full width button */
+.btn-full {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    margin-top: 1rem;
+}
+
+/* Authentication links */
+.auth-links {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.auth-links p {
+    margin: 0.5rem 0;
+    color: #666;
+}
+
+.auth-links a {
+    color: #5A9FD4;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+
+/* Success and error cards for auth pages */
+.success-card, .error-card {
+    text-align: center;
+    padding: 2rem;
+}
+
+.success-card .success-icon,
+.error-card .error-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.success-card .success-icon {
+    color: #4caf50;
+}
+
+.error-card .error-icon {
+    color: #6BB6D6;
+}
+
+.success-card h3 {
+    color: #2e7d32;
+    margin-bottom: 1rem;
+}
+
+.error-card h3 {
+    color: #3E7CB0;
+    margin-bottom: 1rem;
+}
+
+/* Demo section for coursework */
+.demo-section {
+    background: #fff3cd;
+    border: 2px solid #ffc107;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    text-align: left;
+}
+
+.demo-section h4 {
+    color: #856404;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.demo-link {
+    background: white;
+    padding: 1rem;
+    border-radius: 5px;
+    margin: 1rem 0;
+    border: 1px solid #ffc107;
+}
+
+.demo-link a {
+    color: #5A9FD4;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.demo-link a:hover {
+    text-decoration: underline;
+}
+
+/* Error message styling */
+.error-message {
+    background: #E3F2FD;
+    border: 1px solid #6BB6D6;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    color: #3E7CB0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Authentication actions */
+.auth-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+}
+
+/* Responsive design for auth pages */
+@media (max-width: 768px) {
+    .auth-card {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+
+    .auth-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .auth-actions .btn {
+        width: 100%;
+        max-width: 250px;
+    }
+}
+
+/*
+SECTION: Admin Reports Dashboard Styling
+PURPOSE: Professional business reports and analytics visualization
+STUDENT LEARNING: Dashboard design, data visualization, business presentation
+*/
+
+/* Reports container */
+.reports-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.reports-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.reports-header h1 {
+    color: #333;
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.reports-header p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* KPI Grid */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.kpi-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.kpi-card:hover {
+    transform: translateY(-5px);
+}
+
+.kpi-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+}
+
+.kpi-card.revenue .kpi-icon {
+    background: linear-gradient(135deg, #4caf50, #66bb6a);
+}
+
+.kpi-card.bookings .kpi-icon {
+    background: linear-gradient(135deg, #5A9FD4, #42a5f5);
+}
+
+.kpi-card.average .kpi-icon {
+    background: linear-gradient(135deg, #ff9800, #ffb74d);
+}
+
+.kpi-card.routes .kpi-icon {
+    background: linear-gradient(135deg, #9c27b0, #ba68c8);
+}
+
+.kpi-content h3 {
+    margin: 0 0 0.5rem 0;
+    color: #333;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.kpi-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #5A9FD4;
+    margin-bottom: 0.25rem;
+}
+
+.kpi-content small {
+    color: #666;
+    font-size: 0.8rem;
+}
+
+/* Report sections */
+.report-section {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.section-header {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.section-header h2 {
+    color: #333;
+    font-size: 1.4rem;
+    margin: 0;
+}
+
+/* Simple Chart Styling */
+.chart-container {
+    overflow-x: auto;
+}
+
+.simple-chart {
+    display: flex;
+    align-items: end;
+    gap: 1rem;
+    min-height: 200px;
+    padding: 1rem 0;
+    min-width: 500px;
+}
+
+.chart-bar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 60px;
+}
+
+.bar-container {
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+
+.bar {
+    background: linear-gradient(135deg, #5A9FD4, #6BB6D6);
+    width: 40px;
+    border-radius: 4px 4px 0 0;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.bar:hover {
+    background: linear-gradient(135deg, #3E7CB0, #5A9FD4);
+    transform: scale(1.05);
+}
+
+.bar-value {
+    position: absolute;
+    top: -25px;
+    font-weight: 600;
+    color: #333;
+    font-size: 0.9rem;
+}
+
+.bar-label {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: #666;
+    font-weight: 500;
+}
+
+.bar-revenue {
+    font-size: 0.75rem;
+    color: #5A9FD4;
+    font-weight: 600;
+    margin-top: 0.25rem;
+}
+
+/* Reports table */
+.table-container {
+    overflow-x: auto;
+}
+
+.reports-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.reports-table th,
+.reports-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.reports-table th {
+    background: #f8f9fa;
+    font-weight: 600;
+    color: #333;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.rank-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: white;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.rank-1 { background: #ffd700; color: #333; }
+.rank-2 { background: #c0c0c0; color: #333; }
+.rank-3 { background: #cd7f32; }
+.rank-4, .rank-5 { background: #666; }
+
+.route-name {
+    font-weight: 600;
+    color: #333;
+}
+
+.booking-count {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #5A9FD4;
+    font-weight: 500;
+}
+
+.revenue-cell {
+    color: #4caf50;
+    font-weight: 600;
+}
+
+/* Company performance grid */
+.company-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.company-card {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 1.5rem;
+    border-left: 4px solid #5A9FD4;
+}
+
+.company-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.company-header h3 {
+    margin: 0;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.rating .fa-star {
+    color: #ddd;
+    font-size: 0.8rem;
+}
+
+.rating .fa-star.filled {
+    color: #ffc107;
+}
+
+.rating span {
+    margin-left: 0.5rem;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.company-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stat-label {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.stat-value {
+    color: #333;
+    font-weight: 600;
+}
+
+/* No data states */
+.no-data {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+}
+
+.no-data i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #ddd;
+}
+
+.no-data-cell {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+}
+
+/* Report actions */
+.report-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+/* Responsive design for reports */
+@media (max-width: 768px) {
+    .reports-container {
+        padding: 1rem;
+    }
+
+    .kpi-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .simple-chart {
+        min-width: 400px;
+    }
+
+    .company-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .report-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/*
+SECTION: Enhanced Search Form Styling
+PURPOSE: Improved search interface with additional filters
+STUDENT LEARNING: Advanced form design, user experience enhancement
+*/
+
+/* Schedule Page Layout */
+.schedule-main {
+    min-height: 80vh !important;
+    padding: 2rem 1rem !important;
+    background: var(--gradient-page) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+}
+
+.schedule-search-container {
+    max-width: 1200px !important;
+    width: 100% !important;
+    margin: 0 auto 3rem auto !important;
+}
+
+.schedule-search-form {
+    background: var(--bg-primary) !important;
+    border-radius: 20px !important;
+    padding: 2.5rem !important;
+    box-shadow: var(--shadow-xl) !important;
+    border: 1px solid var(--border-light) !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.search-title {
+    text-align: center;
+    color: var(--primary-blue-dark);
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.search-title i {
+    color: var(--primary-blue);
+}
+
+/* Search Form Fields */
+.search-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.search-field {
+    flex: 1;
+    min-width: 200px;
+}
+
+.search-field label {
+    display: block;
+    font-weight: 600;
+    color: var(--primary-blue-dark);
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.search-field label i {
+    margin-right: 0.5rem;
+    color: var(--primary-blue);
+    width: 16px;
+}
+
+.schedule-search-form .search-field .form-control {
+    width: 100% !important;
+    padding: 0.75rem 1rem !important;
+    border: 2px solid var(--border-light) !important;
+    border-radius: 10px !important;
+    font-size: 1rem !important;
+    transition: var(--transition-default) !important;
+    background: var(--bg-secondary) !important;
+    height: auto !important;
+    min-height: auto !important;
+    margin-bottom: 0 !important;
+    box-shadow: none !important;
+}
+
+.schedule-search-form .search-field .form-control:focus {
+    outline: none !important;
+    border-color: var(--primary-blue) !important;
+    background: var(--bg-primary) !important;
+    box-shadow: var(--focus-ring) !important;
+}
+
+.switch-container {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    margin: 0 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.switch-btn {
+    background: var(--primary-blue);
+    color: var(--text-on-primary);
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition-default);
+    font-size: 1.2rem;
+}
+
+.switch-btn:hover {
+    background: var(--primary-blue-dark);
+    transform: rotate(180deg);
+}
+
+/* Search Actions */
+.search-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn-search {
+    background: var(--gradient-primary);
+    color: var(--text-on-primary);
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: var(--transition-default);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+}
+
+.btn-search:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Clear filters button */
+.btn-clear {
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    padding: 0.75rem 2rem;
+    border: 2px solid var(--border-medium);
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: var(--transition-default);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+}
+
+.btn-clear:hover {
+    background: var(--neutral-gray-200);
+    border-color: var(--border-dark);
+    text-decoration: none;
+    color: #666;
+}
+
+/* Schedule Results */
+.schedule-results-container {
+    max-width: 1200px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    background: white !important;
+    border-radius: 20px !important;
+    padding: 2rem !important;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1) !important;
+    box-sizing: border-box !important;
+}
+
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.results-title {
+    color: #2E5984;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.results-title i {
+    color: #5A9FD4;
+}
+
+.results-count {
+    background: #e3f2fd;
+    color: #2E5984;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* Schedule Table */
+.schedule-results-container .schedule-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    margin-top: 1rem !important;
+    background: white !important;
+    border-radius: 15px !important;
+    overflow: hidden !important;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08) !important;
+    border: none !important;
+}
+
+.schedule-results-container .schedule-table thead {
+    background: linear-gradient(135deg, #5A9FD4 0%, #2E5984 100%) !important;
+}
+
+.schedule-results-container .schedule-table thead th {
+    color: white !important;
+    font-weight: 600 !important;
+    padding: 1.2rem 1rem !important;
+    text-align: left !important;
+    font-size: 0.95rem !important;
+    border: none !important;
+}
+
+.schedule-results-container .schedule-table thead th i {
+    margin-right: 0.5rem !important;
+    opacity: 0.8 !important;
+}
+
+.schedule-results-container .schedule-table tbody tr {
+    transition: all 0.3s ease !important;
+    border-bottom: 1px solid #f0f0f0 !important;
+}
+
+.schedule-results-container .schedule-table tbody tr:hover {
+    background: #f8f9ff !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 5px 15px rgba(90, 159, 212, 0.1) !important;
+}
+
+.schedule-results-container .schedule-table tbody tr:last-child {
+    border-bottom: none !important;
+}
+
+.schedule-results-container .schedule-table td {
+    padding: 1.2rem 1rem !important;
+    vertical-align: middle !important;
+    border: none !important;
+}
+
+.bus-id {
+    font-weight: 600;
+    color: #2E5984;
+}
+
+.company {
+    font-weight: 500;
+    color: #333;
+}
+
+.bus-type {
+    background: #e3f2fd;
+    color: #2E5984;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.route-text {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+}
+
+.route-text i {
+    color: #5A9FD4;
+    font-size: 0.8rem;
+}
+
+.departure {
+    font-weight: 500;
+    color: #333;
+}
+
+.fare {
+    font-weight: 600;
+    color: #2E5984;
+    font-size: 1.1rem;
+}
+
+.seats-count {
+    background: #e8f5e9;
+    color: #2e7d32;
+    padding: 0.4rem 0.8rem;
+    border-radius: 15px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: inline-block;
+}
+
+.seats-count.low-seats {
+    background: #ffebee;
+    color: #c62828;
+}
+
+.book-btn {
+    background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: all 0.3s ease;
+}
+
+.book-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+    text-decoration: none;
+    color: white;
+}
+
+.sold-out {
+    background: #ffebee;
+    color: #c62828;
+    padding: 0.6rem 1.2rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: inline-block;
+}
+
+/* No Results */
+.no-results td {
+    text-align: center;
+    padding: 3rem 1rem;
+}
+
+.no-results-content {
+    color: #666;
+}
+
+.no-results-content i {
+    font-size: 3rem;
+    color: #ddd;
+    margin-bottom: 1rem;
+}
+
+.no-results-content h3 {
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.no-results-content p {
+    color: #666;
+    margin: 0;
+}
+
+/* Responsive Design for Schedule Page */
+@media (max-width: 768px) {
+    .schedule-main {
+        padding: 1rem 0.5rem;
+    }
+
+    .schedule-search-form {
+        padding: 1.5rem;
+    }
+
+    .search-title {
+        font-size: 1.5rem;
+    }
+
+    .search-row {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .search-field {
+        min-width: 100%;
+    }
+
+    .switch-container {
+        order: -1;
+        margin: 0;
+    }
+
+    .switch-btn {
+        transform: rotate(90deg);
+    }
+
+    .search-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn-search, .btn-clear {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+    }
+
+    .schedule-results-container {
+        padding: 1rem;
+        margin: 0 0.5rem;
+    }
+
+    .results-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .results-title {
+        font-size: 1.4rem;
+    }
+
+    .schedule-table {
+        font-size: 0.85rem;
+    }
+
+    .schedule-table thead th,
+    .schedule-table td {
+        padding: 0.8rem 0.5rem;
+    }
+
+    .route-text {
+        flex-direction: column;
+        gap: 0.2rem;
+        font-size: 0.8rem;
+    }
+
+    .book-btn {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+    }
+}
+
+/* Search form responsive adjustments */
+@media (max-width: 768px) {
+    .enhanced-search-card {
+        padding: 1rem;
+    }
+
+    .enhanced-search-card .search-segment {
+        margin: 0.5rem 0;
+        min-width: 100%;
+    }
+}
+
 .btn-warning {
-    background: #fffde7;
-    color: #e53935;
-    border: 1px solid #e53935;
+    background: #f8f9fa;
+    color: #5A9FD4;
+    border: 1px solid #5A9FD4;
 }
 .btn-warning:hover {
-    background: #ffe082;
-    color: #b71c1c;
+    background: #e9ecef;
+    color: #2E5984;
 }
 .card {
-    background: #fffde7;
-    border: 1px solid #ffe082;
-    box-shadow: 0 2px 8px rgba(255,224,130,0.15);
+    background: #ffffff;
+    border: 1px solid #e1e8ed;
+    box-shadow: 0 2px 8px rgba(90,159,212,0.15);
     border-radius: 10px;
 }
 .table-striped > tbody > tr:nth-of-type(odd) {
@@ -68,17 +2018,17 @@ body {
     border-color: #ffe082 !important;
 }
 .alert-info {
-    background: #fffde7;
-    color: #e53935;
-    border-color: #ffe082;
+    background: #f8f9fa;
+    color: #5A9FD4;
+    border-color: #e1e8ed;
     font-weight: 500;
 }
 h1, h2, h3, h4 {
-    color: #e53935;
+    color: #5A9FD4;
     font-weight: 700;
 }
 .icon-red {
-    color: #e53935;
+    color: #5A9FD4;
 }
 .icon-yellow {
     color: #ffe082;
@@ -86,7 +2036,7 @@ h1, h2, h3, h4 {
 .card-admin {
     background: #fff3f3;
     border: 1px solid #ffcdd2;
-    box-shadow: 0 2px 8px rgba(229,57,53,0.10);
+    box-shadow: 0 2px 8px rgba(90,159,212,0.10);
 }
 .btn-admin {
     background: #212121;
@@ -96,7 +2046,7 @@ h1, h2, h3, h4 {
     transition: background 0.2s, box-shadow 0.2s;
 }
 .btn-admin:hover {
-    background: #b71c1c;
+    background: #2E5984;
     color: #fff;
 }
 .form-control, .search-btn-red, .icon-swap {
@@ -106,8 +2056,8 @@ h1, h2, h3, h4 {
     box-sizing: border-box;
 }
 .form-control:focus {
-    border-color: #e53935;
-    box-shadow: 0 0 0 0.2rem rgba(229,57,53,0.10);
+    border-color: #5A9FD4;
+    box-shadow: 0 0 0 0.2rem rgba(90,159,212,0.10);
 }
 label {
     font-weight: 500;
@@ -115,13 +2065,13 @@ label {
 }
 .form-text, .helptext {
     font-size: 0.95em;
-    color: #b71c1c;
+    color: #2E5984;
     margin-top: 0.2rem;
     margin-bottom: 0.7rem;
     display: block;
 }
 .required-asterisk {
-    color: #e53935;
+    color: #dc3545;
     font-weight: bold;
     margin-left: 2px;
 }
@@ -150,7 +2100,7 @@ label {
 .search-segment label {
     display: block;
     font-weight: 700;
-    color: #e53935;
+    color: #5A9FD4;
     margin-bottom: 0.3rem;
     text-align: center;
     font-size: 1.08rem;
@@ -213,7 +2163,7 @@ label {
     width: 100%;
 }
 #date-picker-display:focus, #date-picker-display:hover {
-    border-color: #e53935;
+    border-color: #5A9FD4;
     box-shadow: 0 0 0 2px #ffe082;
     outline: none;
 }
@@ -274,13 +2224,13 @@ label {
 }
 .card-header .btn-outline-light.active, .card-header .btn-outline-success.active, .card-header .btn-outline-danger.active {
     background: #ffe082;
-    color: #e53935;
+    color: #5A9FD4;
     box-shadow: 0 2px 8px #ffe08255;
     border-color: #ffe082;
 }
 .card-header .btn-outline-light:hover, .card-header .btn-outline-success:hover, .card-header .btn-outline-danger:hover {
     background: #fff8e7;
-    color: #e53935;
+    color: #5A9FD4;
     border-color: #ffe082;
 }
 /* Responsive table */
@@ -296,32 +2246,32 @@ label {
 
 /* --- Auth Card Styles (Login & Registration) --- */
 .auth-card, .login-card, .register-card {
-    background: #fffbe6;
+    background: #ffffff;
     max-width: 440px;
     margin: 5vw auto;
     border-radius: 16px;
-    box-shadow: 0 8px 40px #e0dcc7;
+    box-shadow: 0 8px 40px rgba(90,159,212,0.15);
     padding: 2.5rem 2rem;
     text-align: center;
 }
 .login-card {
-    background: #fffbe6;
+    background: #ffffff;
 }
 .admin-login-card {
-    background: #ffeaea;
+    background: #ffffff;
 }
 .register-card {
-    background: #fffbe6;
+    background: #ffffff;
     max-width: 540px;
     padding: 2.5rem 2.5rem 2rem 2.5rem;
 }
 .auth-card .icon, .login-card .icon, .register-card .icon {
     font-size: 2.5rem;
-    color: #e53935;
+    color: #5A9FD4;
     margin-bottom: 0.7rem;
 }
 .auth-card h2, .login-card h2, .register-card h2 {
-    color: #e53935;
+    color: #5A9FD4;
     font-size: 2.2rem;
     font-weight: 800;
     margin-bottom: 1.2rem;
@@ -345,11 +2295,11 @@ label {
 }
 .auth-card input:focus, .login-card input:focus, .register-card input:focus, .register-card textarea:focus {
     outline: none;
-    border-color: #e53935;
+    border-color: #5A9FD4;
 }
 .auth-card .btn, .login-card .btn, .register-card .btn {
     width: 100%;
-    background: #e53935;
+    background: #5A9FD4;
     color: #fff;
     font-weight: 700;
     font-size: 1.1rem;
@@ -365,7 +2315,7 @@ label {
     transition: background 0.2s;
 }
 .auth-card .btn:hover, .login-card .btn:hover, .register-card .btn:hover {
-    background: #b71c1c;
+    background: #2E5984;
 }
 .admin-login-card label {
     font-weight: 700;
@@ -382,7 +2332,7 @@ label {
     background: #444;
 }
 .auth-card .error, .login-card .error, .register-card .error-list {
-    color: #e53935;
+    color: #5A9FD4;
     margin-bottom: 1rem;
     font-weight: 600;
     text-align: left;
@@ -399,7 +2349,7 @@ label {
     text-align: center;
 }
 .auth-card .links a, .login-card .links a, .register-card .login-link a {
-    color: #e53935;
+    color: #5A9FD4;
     text-decoration: underline;
     font-weight: 700;
 }
@@ -430,7 +2380,7 @@ label {
 .navbar-right .nav-link, .btn-nav-row .btn-nav {
     margin: 0;
     border-radius: 0;
-    border-right: 1px solid #e53935;
+    border-right: 1px solid #5A9FD4;
     position: relative;
     z-index: 1;
 }
@@ -447,7 +2397,7 @@ label {
     margin-left: -1px;
 }
 .nav-link {
-    color: #e53935 !important;
+    color: #5A9FD4 !important;
     font-weight: 600;
     background: none;
     border: none;
@@ -462,7 +2412,7 @@ label {
 }
 .nav-link:hover, .nav-link:focus {
     background: #fff3e0;
-    color: #b71c1c !important;
+    color: #2E5984 !important;
     transform: translateY(-1px) scale(1.04);
     box-shadow: 0 2px 8px rgba(229,57,53,0.07);
     text-decoration: none;
@@ -473,36 +2423,36 @@ label {
 }
 /* Guest nav buttons (btn-nav) still have border */
 .btn-nav {
-    border: 2px solid #e53935;
+    border: 2px solid #5A9FD4;
     font-size: 1.1rem;
     padding: 0.5rem 1.5rem;
     min-width: 0;
     margin: 0 0.2rem;
     border-radius: 8px;
     background: #fff;
-    color: #e53935;
+    color: #5A9FD4;
     font-weight: 700;
     cursor: pointer;
     transition: background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.13s, border-color 0.18s;
     gap: 0.7rem;
     text-decoration: none;
-    box-shadow: 0 2px 8px rgba(229,57,53,0.04);
+    box-shadow: 0 2px 8px rgba(90,159,212,0.04);
 }
 .btn-nav:hover, .btn-nav:focus {
-    background: #e53935;
+    background: #5A9FD4;
     color: #fff;
-    border-color: #b71c1c;
+    border-color: #2E5984;
     transform: translateY(-2px) scale(1.04);
     box-shadow: 0 4px 16px rgba(229,57,53,0.13);
 }
 
 /* --- Welcome Card Centering --- */
 .welcome-card {
-    background: #fffbe6;
+    background: #ffffff;
     max-width: 520px;
     margin: 2vw auto 0 auto;
     border-radius: 16px;
-    box-shadow: 0 8px 40px #e0dcc7;
+    box-shadow: 0 8px 40px rgba(90,159,212,0.15);
     padding: 3rem 2.5rem;
     text-align: center;
     position: relative;
@@ -512,7 +2462,7 @@ label {
     font-size: 4.2rem;
     margin-bottom: 1.5rem;
     display: block;
-    color:#e53935
+    color:#5A9FD4
 }
 @media (max-width: 600px) {
     .navbar, .main-navbar {
@@ -538,42 +2488,42 @@ label {
     font-size: 1.3rem;
     padding: 0.7rem 2.2rem;
     border-radius: 8px;
-    border: 2px solid #e53935;
+    border: 2px solid #5A9FD4;
     font-weight: 700;
     cursor: pointer;
     transition: background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.13s, border-color 0.18s;
     gap: 0.7rem;
     margin: 0 0.3rem 0.5rem 0;
     background: #fff;
-    color: #e53935;
+    color: #5A9FD4;
     text-decoration: none;
-    box-shadow: 0 2px 8px rgba(229,57,53,0.04);
+    box-shadow: 0 2px 8px rgba(90,159,212,0.04);
     min-width: 160px;
 }
 .btn.user {
-    background: #e53935;
+    background: #5A9FD4;
     color: #fff;
     white-space: nowrap;
     padding-left: 2.2rem;
     padding-right: 2.2rem;
 }
 .btn.user:hover, .btn.user:focus {
-    background: #b71c1c;
+    background: #2E5984;
     color: #fff;
-    border-color: #b71c1c;
+    border-color: #2E5984;
     transform: translateY(-2px) scale(1.04);
-    box-shadow: 0 4px 16px rgba(229,57,53,0.13);
+    box-shadow: 0 4px 16px rgba(46,89,132,0.25);
 }
 .btn.admin {
     background: #fff;
-    color: #e53935;
+    color: #5A9FD4;
 }
 .btn.admin:hover, .btn.admin:focus {
-    background: #fff3e0;
-    color: #b71c1c;
-    border-color: #b71c1c;
+    background: #2E5984;
+    color: #fff;
+    border-color: #2E5984;
     transform: translateY(-2px) scale(1.04);
-    box-shadow: 0 4px 16px rgba(229,57,53,0.13);
+    box-shadow: 0 4px 16px rgba(46,89,132,0.25);
 }
 .btn-nav {
     font-size: 1.1rem;
@@ -582,9 +2532,9 @@ label {
     margin: 0 0.2rem;
 }
 .btn-nav:hover, .btn-nav:focus {
-    background: #e53935;
+    background: #5A9FD4;
     color: #fff;
-    border-color: #b71c1c;
+    border-color: #2E5984;
     transform: translateY(-2px) scale(1.04);
     box-shadow: 0 4px 16px rgba(229,57,53,0.13);
 }
@@ -595,7 +2545,7 @@ label {
     margin: 2rem 0 1rem 0;
 }
 .register-link a {
-    color: #e53935;
+    color: #5A9FD4;
     font-weight: 700;
     text-decoration: underline;
     background: none;
@@ -605,7 +2555,7 @@ label {
     font-size: 1.1rem;
 }
 .register-link a:hover {
-    color: #b71c1c;
+    color: #2E5984;
 }
 
 .register-card label {
@@ -616,7 +2566,7 @@ label {
     text-align: left;
 }
 .register-card .help, .register-card ul.help {
-    color: #e53935;
+    color: #dc3545;
     font-size: 0.9rem;
     margin: 0rem 0 0.7rem 0;
     text-align: left;
@@ -643,22 +2593,22 @@ label {
     justify-content: center;
     font-size: 1.45rem;
     font-weight: 700;
-    border: 2px solid #e53935;
+    border: 2px solid #5A9FD4;
     border-radius: 12px;
     background: #fff;
-    color: #e53935;
+    color: #5A9FD4;
     transition: background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.13s, border-color 0.18s;
     gap: 0.8rem;
     margin: 0;
     text-decoration: none;
-    box-shadow: 0 2px 8px rgba(229,57,53,0.04);
+    box-shadow: 0 2px 8px rgba(90,159,212,0.04);
     cursor: pointer;
 }
 .admin-dashboard-btn:hover, .card-admin .btn-admin-action:hover,
 .admin-dashboard-btn:focus, .card-admin .btn-admin-action:focus {
     background: #fff3e0;
-    color: #b71c1c;
-    border-color: #b71c1c;
+    color: #2E5984;
+    border-color: #2E5984;
     transform: translateY(-2px) scale(1.04);
     box-shadow: 0 4px 16px rgba(229,57,53,0.13);
 }
@@ -679,11 +2629,11 @@ th, td {
 /* --- Back to Dashboard Button --- */
 .back-btn {
     background: none;
-    color: #e53935;
+    color: #5A9FD4;
     border: none;
     font-weight: 700;
     font-size: 1.1rem;
-    text-decoration: underline;
+    text-decoration: none;
     cursor: pointer;
     padding: 0.4rem 0.7rem;
     margin-bottom: 1.2rem;
@@ -693,11 +2643,11 @@ th, td {
     gap: 0.5rem;
 }
 .back-btn:hover, .back-btn:focus {
-    color: #b71c1c;
-    text-decoration: underline;
+    color: #2E5984;
+    text-decoration: none;
 }
 .back-btn:hover i, .back-btn:focus i {
-    color: #b71c1c !important;
+    color: #2E5984 !important;
 }
 
 /* --- Add Bus Button --- */
@@ -705,24 +2655,24 @@ th, td {
     font-size: 0.9rem;
     padding: 0.5rem 1.5rem;
     border-radius: 8px;
-    border: 2px solid #e53935;
+    border: 2px solid #5A9FD4;
     background: #fff;
-    color: #e53935;
+    color: #5A9FD4;
     font-weight: 700;
     cursor: pointer;
     transition: background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.13s, border-color 0.18s;
     gap: 0.7rem;
     text-decoration: none;
-    box-shadow: 0 2px 8px rgba(229,57,53,0.04);
+    box-shadow: 0 2px 8px rgba(90,159,212,0.04);
     min-width: 0;
     margin: 0 0.2rem;
     display: inline-flex;
     align-items: center;
 }
 .add-bus-btn:hover, .add-bus-btn:focus {
-    background: #e53935;
+    background: #5A9FD4;
     color: #fff;
-    border-color: #b71c1c;
+    border-color: #2E5984;
     transform: translateY(-2px) scale(1.04);
     box-shadow: 0 4px 16px rgba(229,57,53,0.13);
 }
@@ -733,8 +2683,8 @@ th, td {
     align-items: center;
     gap: 0.5rem;
     background: #fff;
-    color: #e53935;
-    border: 2px solid #e53935;
+    color: #5A9FD4;
+    border: 2px solid #5A9FD4;
     border-radius: 8px;
     font-weight: 600;
     font-size: 1.1rem;
@@ -748,9 +2698,9 @@ th, td {
     justify-content: center;
 }
 .bus-action-btn:hover, .bus-action-btn:focus {
-    background: #e53935;
+    background: #5A9FD4;
     color: #fff;
-    box-shadow: 0 2px 8px rgba(229,57,53,0.10);
+    box-shadow: 0 2px 8px rgba(90,159,212,0.10);
 }
 
 /* --- Action Buttons Left Align --- */
@@ -783,7 +2733,7 @@ th, td {
 .booking-section-header {
     font-size: 1.25rem;
     font-weight: 800;
-    color: #e53935;
+    color: #5A9FD4;
     border-radius: 1.2rem 1.2rem 0 0;
     display: flex;
     align-items: center;
@@ -812,13 +2762,13 @@ th, td {
 .btn-book-ticket {
     font-size: 1.1rem;
     padding: 0.7rem 2.2rem;
-    background: #e53935;
+    background: #5A9FD4;
     color: #fff;
     border: none;
     transition: background 0.2s;
 }
 .btn-book-ticket:hover {
-    background: #b71c1c;
+    background: #2E5984;
 }
 
 /* Outer bookings card */
@@ -829,7 +2779,7 @@ th, td {
     width: 98vw;
     box-shadow: 0 4px 24px rgba(229,57,53,0.08);
     border-radius: 18px;
-    background: #fffde7;
+    background: #F8FBFF;
     border: 1.5px solid #ffe082;
     padding: 0;
 }
@@ -848,10 +2798,10 @@ th, td {
 .past-table thead th {
     background: #e3f2fd;
     color: #0d47a1;
-    border-color: #1976d2 !important;
+    border-color: #4A8BC2 !important;
 }
 .past-table td, .past-table th {
-    border-color: #1976d2 !important;
+    border-color: #4A8BC2 !important;
 }
 
 /* Ensure table font color is visible */
@@ -861,18 +2811,18 @@ th, td {
 }
 
 .search-btn-red {
-    background: #e53935 !important;
+    background: #5A9FD4 !important;
     color: #fff !important;
     font-weight: 700;
     border-radius: 2rem;
     font-size: 1.1rem;
     padding: 0.8rem 2.2rem;
     border: none;
-    box-shadow: 0 2px 8px rgba(229,57,53,0.10);
+    box-shadow: 0 2px 8px rgba(90,159,212,0.10);
     transition: background 0.2s, box-shadow 0.2s;
 }
 .search-btn-red:hover, .search-btn-red:focus {
-    background: #b71c1c !important;
+    background: #2E5984 !important;
     color: #fff !important;
     box-shadow: 0 4px 16px rgba(229,57,53,0.13);
 }
@@ -882,10 +2832,10 @@ th, td {
     min-width: 48px;
     height: 48px;
     min-height: 48px;
-    border: 1.5px solid #ffe082;
+    border: 1.5px solid #e1e8ed;
     border-radius: 50%;
-    background: #fffbe6;
-    color: #e53935;
+    background: #ffffff;
+    color: #5A9FD4;
     font-size: 1.5rem;
     display: flex;
     align-items: center;
@@ -896,8 +2846,8 @@ th, td {
 }
 .icon-swap:hover, .icon-swap:focus {
     background: #ffe082;
-    color: #b71c1c;
-    border-color: #e53935;
+    color: #2E5984;
+    border-color: #5A9FD4;
 }
 
 .form-control {
@@ -937,6 +2887,6 @@ th, td {
 }
 .profile-label {
     font-weight: 700;
-    color: #e53935;
+    color: #5A9FD4;
     margin-bottom: 0.3rem;
 } 

@@ -32,15 +32,15 @@ $tags_list = [
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $feedback) {
     $rating = (int)$_POST['rating'];
     $tags = isset($_POST['tags']) ? implode(',', $_POST['tags']) : '';
-    $review = trim($_POST['review']);
-    $word_count = str_word_count($review);
+    $comment = trim($_POST['comment']);
+    $word_count = str_word_count($comment);
     if ($rating < 1 || $rating > 5) {
         $error = 'Please select a rating.';
     } elseif ($word_count > 80) {
-        $error = 'Review must be 80 words or less.';
+        $error = 'Comment must be 80 words or less.';
     } else {
-        $stmt = $db->prepare('UPDATE feedback SET rating=?, tags=?, review=? WHERE id=?');
-        $stmt->execute([$rating, $tags, $review, $id]);
+        $stmt = $db->prepare('UPDATE feedback SET rating=?, tags=?, comment=? WHERE id=?');
+        $stmt->execute([$rating, $tags, $comment, $id]);
         header('Location: admin_feedback.php?success=1');
         exit();
     }
@@ -84,7 +84,7 @@ require_once('header.php');
                 </div>
             </div>
             <div style="margin-bottom:1.2rem;">
-                <textarea name="review" class="form-control" rows="3" maxlength="600" placeholder="Edit review (optional, max 80 words)"><?php echo isset($_POST['review']) ? htmlspecialchars($_POST['review']) : htmlspecialchars($feedback['review']); ?></textarea>
+                <textarea name="comment" class="form-control" rows="3" maxlength="600" placeholder="Edit comment (optional, max 80 words)"><?php echo isset($_POST['comment']) ? htmlspecialchars($_POST['comment']) : htmlspecialchars($feedback['comment'] ?? ''); ?></textarea>
             </div>
             <div style="display:flex;gap:1rem;justify-content:flex-start;">
                 <button type="submit" class="bus-action-btn" style="align-self:flex-start;"><i class="fa fa-save"></i> Save</button>
@@ -138,11 +138,11 @@ require_once('header.php');
                 e.preventDefault();
             });
         });
-        // Limit review to 80 words
+        // Limit comment to 80 words
         document.getElementById('feedbackForm').addEventListener('submit', function(e) {
-            const review = this.review.value.trim();
-            if (review.split(/\s+/).length > 80) {
-                alert('Review must be 80 words or less.');
+            const comment = this.comment.value.trim();
+            if (comment.split(/\s+/).length > 80) {
+                alert('Comment must be 80 words or less.');
                 e.preventDefault();
             }
         });

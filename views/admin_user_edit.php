@@ -66,11 +66,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $user) {
                 <option value="Superuser" <?php if ($user['is_superuser']) echo 'selected'; ?>>Superuser</option>
             </select>
             <label>Full name:</label>
-            <input type="text" name="full_name" class="form-control" value="<?php echo htmlspecialchars($user['full_name']); ?>" required>
+            <input type="text" name="full_name" class="form-control" value="<?php echo htmlspecialchars($user['full_name'] ?? ''); ?>" required>
             <label>Phone:</label>
-            <input type="text" name="phone" class="form-control" value="<?php echo htmlspecialchars($user['phone']); ?>" required>
+            <input type="text" name="phone" class="form-control" value="<?php echo htmlspecialchars($user['phone'] ?? ''); ?>" required>
             <label>Address:</label>
-            <textarea name="address" class="form-control" required><?php echo htmlspecialchars($user['address']); ?></textarea>
+            <textarea name="address" class="form-control" required><?php echo htmlspecialchars($user['address'] ?? ''); ?></textarea>
             <button type="submit" class="bus-action-btn" style="margin-top:0.5rem;align-self:flex-start;"><i class="fa fa-save"></i> Save</button>
         </form>
         <?php endif; ?>
