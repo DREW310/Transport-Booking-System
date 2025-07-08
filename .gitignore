@@ -1,0 +1,71 @@
+# Transport Booking System - Git Ignore File
+
+# Development and Testing Files
+database/test_*.php
+database/create_test_*.php
+database/update_notifications_table.php
+database/add_notification_type.sql
+
+# Logs and temporary files
+*.log
+logs/
+tmp/
+temp/
+
+# System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Environment specific files (if any)
+.env
+config.local.php
+
+# User uploaded files (if any)
+uploads/
+user_files/
+
+# Cache files
+cache/
+*.cache
+
+# Database dumps (except the main schema files)
+*.sql.backup
+database_backup_*.sql
+
+# Email files (removed from system)
+emails/
+
+# Node modules (if using any frontend tools)
+node_modules/
+package-lock.json
+
+# Composer (if using PHP dependencies)
+vendor/
+composer.lock
+
+# OS generated files
+.DS_Store?
+ehthumbs.db
+Icon?
+
+# Windows image file caches
+Thumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
