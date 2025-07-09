@@ -511,6 +511,22 @@ STUDENT LEARNING: CSS Grid, Flexbox, Interactive UI Design, Animations
     border: 2px solid #ddd;
 }
 
+/* Seat demo legend colors */
+.seat-demo.available {
+    background: #4caf50;
+    border-color: #388e3c;
+}
+
+.seat-demo.booked {
+    background: #6BB6D6;
+    border-color: #4A8BC2;
+}
+
+.seat-demo.selected {
+    background: #5A9FD4;
+    border-color: #4A8BC2;
+}
+
 /* Bus container styling */
 .bus-container {
     background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
