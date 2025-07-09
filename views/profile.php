@@ -21,7 +21,13 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
     <div class="card" style="margin-top:2.5rem;padding:2.5rem 2.5rem 2rem 2.5rem;min-width:400px;max-width:600px;width:100%;box-shadow:0 4px 24px rgba(229,57,53,0.08);">
         <h1 style="margin-bottom:1.5rem;"><i class="fa fa-user icon-red"></i> Profile</h1>
         <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
-            <div class="alert alert-info">Profile updated successfully!</div>
+            <div class="alert alert-success" style="margin-bottom:1.5rem; padding:1.5rem; border-radius:12px; border:none; background:#d4edda; color:#155724; font-weight:600; box-shadow:0 4px 16px rgba(40,167,69,0.2); text-align:center;">
+                <div style="font-size:2.5rem; color:#28a745; margin-bottom:1rem;">
+                    <i class="fa fa-check-circle"></i>
+                </div>
+                <h4 style="color:#155724; margin-bottom:0.5rem;">Success!</h4>
+                <p style="margin-bottom:0; color:#155724;">Profile updated successfully!</p>
+            </div>
         <?php endif; ?>
         <div style="display:flex;flex-direction:column;gap:0.7rem;background:#fffde7;border-radius:8px;padding:1.5rem 2rem;margin-bottom:2rem;">
             <div style="display:flex;gap:1.2rem;"><span style="font-weight:700;min-width:120px;">Username:</span><span><?php echo htmlspecialchars($user['username']); ?></span></div>
@@ -36,4 +42,27 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
         </div>
     </div>
 </main>
-<?php require_once('footer.php'); ?> 
+
+<script>
+// Auto-hide success messages after 5 seconds
+document.addEventListener('DOMContentLoaded', function() {
+    const alerts = document.querySelectorAll('.alert');
+    alerts.forEach(function(alert) {
+        // Add fade-out animation after 5 seconds
+        setTimeout(function() {
+            alert.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
+            alert.style.opacity = '0';
+            alert.style.transform = 'translateY(-20px)';
+
+            // Remove from DOM after animation
+            setTimeout(function() {
+                if (alert.parentNode) {
+                    alert.parentNode.removeChild(alert);
+                }
+            }, 500);
+        }, 5000);
+    });
+});
+</script>
+
+<?php require_once('footer.php'); ?>

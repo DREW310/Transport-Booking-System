@@ -102,36 +102,7 @@ STUDENT LEARNING: HTML5 semantic elements make our code more meaningful and acce
         </div>
     </section>
 
-    <!--
-    HTML5 SEMANTIC ELEMENT: <section>
-    PURPOSE: Additional information section
-    STUDENT LEARNING: Content organization and information architecture
-    -->
-    <section class="features-preview">
-        <h2>Why Choose Our Transport System?</h2>
-        <div class="features-grid">
-            <!-- Feature 1 -->
-            <div class="feature-item">
-                <i class="fa fa-clock" aria-hidden="true"></i>
-                <h3>Real-time Booking</h3>
-                <p>Book your seats instantly with live availability updates</p>
-            </div>
 
-            <!-- Feature 2 -->
-            <div class="feature-item">
-                <i class="fa fa-shield-alt" aria-hidden="true"></i>
-                <h3>Secure Payments</h3>
-                <p>Safe and secure payment processing for all transactions</p>
-            </div>
-
-            <!-- Feature 3 -->
-            <div class="feature-item">
-                <i class="fa fa-mobile-alt" aria-hidden="true"></i>
-                <h3>Mobile Friendly</h3>
-                <p>Access from any device - desktop, tablet, or mobile</p>
-            </div>
-        </div>
-    </section>
 </main>
 
 <!--

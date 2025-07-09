@@ -50,8 +50,8 @@ if (!$schedule) {
     header('Location: schedule.php');
     exit();
 }
-// Fetch booked seats
-$stmt = $db->prepare('SELECT seat_number FROM bookings WHERE schedule_id = ?');
+// Fetch booked seats (exclude cancelled bookings)
+$stmt = $db->prepare('SELECT seat_number FROM bookings WHERE schedule_id = ? AND status IN ("Booked", "Completed")');
 $stmt->execute([$schedule_id]);
 $booked_seats = array_column($stmt->fetchAll(PDO::FETCH_ASSOC), 'seat_number');
 $available_seats = $schedule['available_seats'];
@@ -99,8 +99,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Note: Email confirmation removed for simplicity
 
         $success = true;
-        // Refresh booked seats
-        $stmt = $db->prepare('SELECT seat_number FROM bookings WHERE schedule_id = ?');
+        // Refresh booked seats (exclude cancelled bookings)
+        $stmt = $db->prepare('SELECT seat_number FROM bookings WHERE schedule_id = ? AND status IN ("Booked", "Completed")');
         $stmt->execute([$schedule_id]);
         $booked_seats = array_column($stmt->fetchAll(PDO::FETCH_ASSOC), 'seat_number');
         $seat_options = [];
@@ -342,7 +342,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <p class="payment-note">
                         <i class="fa fa-info-circle"></i>
-                        <small>This is a mock payment system for coursework demonstration.</small>
+                        <small>This is a mock payment system for TWT6223 demonstration.</small>
                     </p>
                 </div>
 

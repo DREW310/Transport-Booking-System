@@ -1,5 +1,6 @@
 <?php
 require_once('../includes/db.php');
+require_once('../includes/status_helpers.php');
 require_once('../views/header.php');
 if (session_status() === PHP_SESSION_NONE) session_start();
 if (!isset($_SESSION['user']) || (!$_SESSION['user']['is_staff'] && !$_SESSION['user']['is_superuser'])) {
@@ -322,7 +323,6 @@ $occupancy_rate = ($booked_count / $capacity) * 100;
             <a href="admin_schedules.php" class="back-btn"><i class="fa fa-arrow-left"></i> Back to Schedules</a>
             <div style="text-align: right; font-size: 0.9rem; color: #666;">
                 <div><strong>Schedule ID:</strong> <?php echo $schedule_id; ?></div>
-                <div><strong>Last Updated:</strong> <?php echo date('M j, Y g:i A'); ?></div>
             </div>
         </div>
         
@@ -478,9 +478,7 @@ $occupancy_rate = ($booked_count / $capacity) * 100;
                         <div class="info-item">
                             <span class="info-label">Status:</span>
                             <span class="info-value">
-                                <span class="status-badge status-<?php echo strtolower($booking['status']); ?>">
-                                    <?php echo htmlspecialchars($booking['status']); ?>
-                                </span>
+                                <?php echo getStatusBadge($booking['status'], 'small'); ?>
                             </span>
                         </div>
                     </div>

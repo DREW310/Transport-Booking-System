@@ -6,7 +6,26 @@ if (!isset($_SESSION['user']) || (!$_SESSION['user']['is_staff'] && !$_SESSION['
     exit();
 }
 require_once('../includes/db.php');
+require_once('../includes/status_helpers.php');
 $db = getDB();
+
+// STEP 1: Fix any incorrectly completed future bookings first
+$fix_stmt = $db->prepare('UPDATE bookings b
+                         JOIN schedules s ON b.schedule_id = s.id
+                         SET b.status = ?
+                         WHERE b.status = ?
+                         AND s.departure_time > NOW()');
+$fix_stmt->execute(['Booked', 'Completed']);
+
+// STEP 2: System-wide auto-complete past bookings (runs on admin page load)
+// This ensures all booking statuses are up-to-date when admin views the page
+$stmt = $db->prepare('UPDATE bookings b
+                     JOIN schedules s ON b.schedule_id = s.id
+                     SET b.status = ?
+                     WHERE b.status = ?
+                     AND s.departure_time <= DATE_SUB(NOW(), INTERVAL 1 HOUR)
+                     AND b.status NOT IN (?, ?)');
+$stmt->execute(['Completed', 'Booked', 'Cancelled', 'Completed']);
 
 // Get filter parameters
 $filter_status = $_GET['status'] ?? '';
@@ -256,15 +275,17 @@ $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <tbody>
                     <?php foreach ($bookings as $booking):
                         $is_past = strtotime($booking['departure_time']) < time();
-                        $is_today = date('Y-m-d', strtotime($booking['departure_time'])) === date('Y-m-d');
-                        $is_soon = strtotime($booking['departure_time']) < (time() + 3600); // 1 hour
+                        // Use database time comparison to avoid timezone issues
+                        $current_time_result = $db->query("SELECT NOW() as current_datetime, DATE(NOW()) as today_date")->fetch(PDO::FETCH_ASSOC);
+                        $current_datetime = $current_time_result['current_datetime'];
+                        $today_date = $current_time_result['today_date'];
+                        $is_today = date('Y-m-d', strtotime($booking['departure_time'])) === $today_date;
+                        $is_soon = $booking['departure_time'] < date('Y-m-d H:i:s', strtotime($current_datetime) + 3600);
 
                         // Row styling based on status and time
-                        $row_style = '';
-                        if ($booking['status'] === 'Cancelled') {
-                            $row_style = 'opacity: 0.6; background: #f8f9fa;';
-                        } elseif ($is_past) {
-                            $row_style = 'opacity: 0.6; background: #f8f9fa;';
+                        $row_style = getStatusRowStyle($booking['status']);
+                        if ($is_past && $booking['status'] !== 'Cancelled') {
+                            $row_style .= 'opacity: 0.7;';
                         }
                     ?>
                     <tr style="<?php echo $row_style; ?>">
@@ -311,20 +332,20 @@ $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </td>
 
                         <td>
-                            <div style="font-weight: 600;">
-                                <?php echo htmlspecialchars($booking['status']); ?>
+                            <?php echo getStatusBadge($booking['status'], 'medium'); ?>
+                            <div style="margin-top: 4px;">
+                                <small style="color: #666;">
+                                    <?php if ($booking['status'] === 'Cancelled'): ?>
+                                        <i class="fa fa-times-circle"></i> Booking cancelled
+                                    <?php elseif ($is_past && $booking['status'] === 'Booked'): ?>
+                                        <i class="fa fa-clock"></i> Trip completed
+                                    <?php elseif ($is_soon && $booking['status'] === 'Booked'): ?>
+                                        <i class="fa fa-exclamation-triangle"></i> Departing soon
+                                    <?php else: ?>
+                                        <i class="fa fa-check-circle"></i> Active booking
+                                    <?php endif; ?>
+                                </small>
                             </div>
-                            <small style="color: #666;">
-                                <?php if ($booking['status'] === 'Cancelled'): ?>
-                                    <i class="fa fa-times-circle"></i> Booking cancelled
-                                <?php elseif ($is_past && $booking['status'] === 'Booked'): ?>
-                                    <i class="fa fa-clock"></i> Trip completed
-                                <?php elseif ($is_soon && $booking['status'] === 'Booked'): ?>
-                                    <i class="fa fa-exclamation-triangle"></i> Departing soon
-                                <?php else: ?>
-                                    <i class="fa fa-check-circle"></i> Active booking
-                                <?php endif; ?>
-                            </small>
                         </td>
                         <td>
                             <div class="bus-action-group">

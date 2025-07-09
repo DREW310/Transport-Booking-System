@@ -1,4 +1,7 @@
 <?php
+// Start output buffering to prevent header issues
+ob_start();
+
 require_once('../includes/db.php');
 require_once('header.php');
 
@@ -8,24 +11,73 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
+// Redirect admin/staff to admin dashboard (they don't need notifications)
+if ((isset($_SESSION['user']['is_staff']) && $_SESSION['user']['is_staff']) ||
+    (isset($_SESSION['user']['is_superuser']) && $_SESSION['user']['is_superuser'])) {
+    header('Location: admin_dashboard.php');
+    exit();
+}
+
 $db = getDB();
 $user_id = $_SESSION['user']['id'];
 
+// Debug: Check if we have valid database connection and user ID
+if (!$db) {
+    $error_message = "Database connection failed.";
+}
+if (!$user_id) {
+    $error_message = "User ID not found in session.";
+}
+
 // Handle mark as read action
 if (isset($_GET['mark_read']) && is_numeric($_GET['mark_read'])) {
-    $notification_id = $_GET['mark_read'];
-    $stmt = $db->prepare('UPDATE notifications SET is_read = 1 WHERE id = ? AND user_id = ?');
-    $stmt->execute([$notification_id, $user_id]);
-    header('Location: notifications.php');
-    exit();
+    try {
+        $notification_id = $_GET['mark_read'];
+        $stmt = $db->prepare('UPDATE notifications SET is_read = 1 WHERE id = ? AND user_id = ?');
+        $result = $stmt->execute([$notification_id, $user_id]);
+
+        // Check how many rows were affected
+        $affected_rows = $stmt->rowCount();
+
+        if ($result && $affected_rows > 0) {
+            // Add a small delay to ensure database is updated
+            usleep(100000); // 0.1 second
+
+            // Clear output buffer and redirect with success message
+            ob_end_clean();
+            header('Location: notifications.php?success=marked_read');
+            exit();
+        } else {
+            $error_message = "Failed to mark notification as read. Rows affected: " . $affected_rows;
+        }
+    } catch (Exception $e) {
+        $error_message = "Error: " . $e->getMessage();
+    }
 }
 
 // Handle mark all as read action
 if (isset($_GET['mark_all_read'])) {
-    $stmt = $db->prepare('UPDATE notifications SET is_read = 1 WHERE user_id = ?');
-    $stmt->execute([$user_id]);
-    header('Location: notifications.php');
-    exit();
+    try {
+        $stmt = $db->prepare('UPDATE notifications SET is_read = 1 WHERE user_id = ?');
+        $result = $stmt->execute([$user_id]);
+
+        // Check how many rows were affected
+        $affected_rows = $stmt->rowCount();
+
+        if ($result) {
+            // Add a small delay to ensure database is updated
+            usleep(100000); // 0.1 second
+
+            // Clear output buffer and redirect with success message
+            ob_end_clean();
+            header('Location: notifications.php?success=marked_all_read');
+            exit();
+        } else {
+            $error_message = "Failed to mark notifications as read. No rows affected: " . $affected_rows;
+        }
+    } catch (Exception $e) {
+        $error_message = "Error: " . $e->getMessage();
+    }
 }
 
 // Get all notifications for the user
@@ -280,12 +332,47 @@ $unread_count = $stmt->fetch(PDO::FETCH_ASSOC)['unread_count'];
 .back-link:hover {
     color: #1976d2;
 }
+
+.alert {
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 8px;
+    border: 1px solid;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
 </style>
 
 <div class="notifications-container">
     <a href="dashboard.php" class="back-link">
         <i class="fa fa-arrow-left"></i> Back to Dashboard
     </a>
+
+    <?php if (isset($error_message)): ?>
+        <div class="alert alert-danger">
+            <i class="fa fa-exclamation-triangle"></i> <?php echo htmlspecialchars($error_message); ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if (isset($_GET['success'])): ?>
+        <div class="alert alert-success">
+            <?php if ($_GET['success'] === 'marked_read'): ?>
+                <i class="fa fa-check-circle"></i> Notification marked as read successfully!
+            <?php elseif ($_GET['success'] === 'marked_all_read'): ?>
+                <i class="fa fa-check-double"></i> All notifications marked as read successfully!
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
     
     <div class="notifications-content">
         <div class="notifications-header">
@@ -399,5 +486,26 @@ $unread_count = $stmt->fetch(PDO::FETCH_ASSOC)['unread_count'];
         <?php endif; ?>
     </div>
 </div>
+
+<script>
+// Check if we just marked notifications as read and update the header badge
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('success') === 'marked_all_read' || urlParams.get('success') === 'marked_read') {
+        // Hide the notification badge in the header
+        const notificationBadge = document.querySelector('.notification-badge');
+        if (notificationBadge) {
+            notificationBadge.style.display = 'none';
+        }
+
+        // Clear the success parameter from URL after 3 seconds
+        setTimeout(function() {
+            const url = new URL(window.location);
+            url.searchParams.delete('success');
+            window.history.replaceState({}, document.title, url.pathname);
+        }, 3000);
+    }
+});
+</script>
 
 <?php require_once('footer.php'); ?>

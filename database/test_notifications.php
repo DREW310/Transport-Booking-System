@@ -51,10 +51,10 @@ try {
     ];
     
     // Insert test notifications
-    $insert_stmt = $db->prepare('INSERT INTO notifications (user_id, message, type, created_at, is_read) VALUES (?, ?, ?, NOW(), 0)');
-    
+    $insert_stmt = $db->prepare('INSERT INTO notifications (user_id, message, created_at, is_read) VALUES (?, ?, NOW(), 0)');
+
     foreach ($test_notifications as $notification) {
-        $insert_stmt->execute([$user_id, $notification['message'], $notification['type']]);
+        $insert_stmt->execute([$user_id, $notification['message']]);
         echo "✓ Added: {$notification['type']} notification\n";
     }
     

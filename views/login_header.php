@@ -40,13 +40,6 @@ if (session_status() === PHP_SESSION_NONE) session_start();
             </div>
 
             <div class="navbar-right btn-nav-row">
-                <!-- Only show View Schedule for passenger login -->
-                <?php if (basename($_SERVER['PHP_SELF']) === 'user_login.php'): ?>
-                    <a class="btn btn-nav" href="../views/schedule.php" aria-label="View Available Schedules">
-                        <i class="fa fa-calendar-alt" aria-hidden="true"></i> View Schedule
-                    </a>
-                <?php endif; ?>
-                
                 <!-- Show appropriate alternative login link -->
                 <?php if (basename($_SERVER['PHP_SELF']) === 'user_login.php'): ?>
                     <a class="btn btn-nav" href="../public/admin_login.php" aria-label="Admin Login">

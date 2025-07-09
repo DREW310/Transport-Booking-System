@@ -893,13 +893,13 @@ STUDENT LEARNING: User feedback design and visual hierarchy
 }
 
 .booking-error-card h3 {
-    color: #3E7CB0;
+    color: var(--error-red);
     margin-bottom: 1rem;
     font-size: 1.3rem;
 }
 
 .booking-error-card p {
-    color: #4A8BC2;
+    color: var(--error-red-dark);
     font-weight: 500;
     margin-bottom: 1.5rem;
 }
@@ -1054,7 +1054,7 @@ STUDENT LEARNING: Consistent UI design, form styling, user experience
 }
 
 .error-card .error-icon {
-    color: #6BB6D6;
+    color: var(--error-red);
 }
 
 .success-card h3 {
@@ -1063,7 +1063,7 @@ STUDENT LEARNING: Consistent UI design, form styling, user experience
 }
 
 .error-card h3 {
-    color: #3E7CB0;
+    color: var(--error-red);
     margin-bottom: 1rem;
 }
 
@@ -1108,15 +1108,16 @@ STUDENT LEARNING: Consistent UI design, form styling, user experience
 
 /* Error message styling */
 .error-message {
-    background: #E3F2FD;
-    border: 1px solid #6BB6D6;
+    background: var(--error-red-pale);
+    border: 1px solid var(--error-red-light);
     border-radius: 8px;
     padding: 1rem;
     margin-bottom: 1.5rem;
-    color: #3E7CB0;
+    color: var(--error-red);
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    font-weight: 500;
 }
 
 /* Authentication actions */
@@ -1276,8 +1277,8 @@ STUDENT LEARNING: Dashboard design, data visualization, business presentation
     display: flex;
     align-items: end;
     gap: 1rem;
-    min-height: 200px;
-    padding: 1rem 0;
+    min-height: 240px;
+    padding: 2rem 0 1rem 0;
     min-width: 500px;
 }
 
@@ -1290,7 +1291,7 @@ STUDENT LEARNING: Dashboard design, data visualization, business presentation
 }
 
 .bar-container {
-    height: 150px;
+    height: 170px;
     display: flex;
     flex-direction: column;
     justify-content: end;
@@ -1314,10 +1315,11 @@ STUDENT LEARNING: Dashboard design, data visualization, business presentation
 
 .bar-value {
     position: absolute;
-    top: -25px;
+    top: -30px;
     font-weight: 600;
     color: #333;
     font-size: 0.9rem;
+    white-space: nowrap;
 }
 
 .bar-label {
@@ -2325,23 +2327,115 @@ label {
     text-align: left;
 }
 .admin-login-card .btn {
+    width: 100%;
     background: #222;
     color: #fff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 7px;
+    padding: 0.8rem 0;
+    margin: 0.7rem auto 0 auto;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    transition: background 0.2s;
+    text-align: center;
 }
 .admin-login-card .btn:hover {
     background: #444;
 }
+.admin-login-card form {
+    text-align: center;
+}
 .auth-card .error, .login-card .error, .register-card .error-list {
-    color: #5A9FD4;
+    color: var(--error-red);
+    background: var(--error-red-pale);
+    border: 1px solid var(--error-red-light);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
     margin-bottom: 1rem;
     font-weight: 600;
     text-align: left;
 }
-.auth-card .success, .register-card .success {
-    color: #388e3c;
+.register-card .error-list .error-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--error-red);
+}
+.register-card .error-list ul {
+    margin: 0;
+    padding-left: 1.2rem;
+    list-style-type: disc;
+}
+.register-card .error-list li {
+    margin-bottom: 0.3rem;
+    line-height: 1.4;
+}
+.auth-card .success, .register-card .success {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 8px;
+    padding: 1.5rem;
     margin-bottom: 1rem;
     text-align: center;
+}
+.register-card .success .success-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #155724;
+    margin-bottom: 0.75rem;
+}
+.register-card .success p {
+    color: #155724;
+    margin: 0.5rem 0 1rem 0;
+    font-size: 1rem;
+}
+.register-card .success .success-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+.register-card .success .btn-success {
+    background: #28a745;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background 0.2s;
+}
+.register-card .success .btn-success:hover {
+    background: #218838;
+}
+.register-card .success .btn-secondary {
+    background: #6c757d;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background 0.2s;
+}
+.register-card .success .btn-secondary:hover {
+    background: #5a6268;
 }
 .auth-card .links, .login-card .links, .register-card .login-link {
     margin-top: 1.2rem;

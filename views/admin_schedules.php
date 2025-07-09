@@ -87,8 +87,11 @@ if (!empty($schedules)) {
                     <?php foreach ($schedules as $schedule):
                         $booked_seats = $booking_counts[$schedule['id']] ?? 0;
                         $occupancy_rate = ($booked_seats / $schedule['capacity']) * 100;
-                        $is_past = strtotime($schedule['departure_time']) < time();
-                        $is_soon = strtotime($schedule['departure_time']) < (time() + 3600); // 1 hour
+                        // Use database time comparison to avoid timezone issues
+                        $current_time_result = $db->query("SELECT NOW() as current_datetime")->fetch(PDO::FETCH_ASSOC);
+                        $current_datetime = $current_time_result['current_datetime'];
+                        $is_past = $schedule['departure_time'] < $current_datetime;
+                        $is_soon = $schedule['departure_time'] < date('Y-m-d H:i:s', strtotime($current_datetime) + 3600);
                     ?>
                     <tr style="<?php echo $is_past ? 'opacity: 0.6; background: #f8f9fa;' : ''; ?>">
                         <td>

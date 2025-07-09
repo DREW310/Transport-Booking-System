@@ -38,15 +38,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             try {
                 // Check if email and username match
-                $stmt = $db->prepare("SELECT id, username, email FROM users WHERE email = ? AND username = ?");
+                $stmt = $db->prepare("SELECT id, username, email, is_staff, is_superuser FROM users WHERE email = ? AND username = ?");
                 $stmt->execute([$email, $username]);
                 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 if ($user) {
-                    // User found, proceed to step 2
-                    $step = 2;
-                    $email = $user['email'];
-                    $username = $user['username'];
+                    // Check if user is admin/staff - they cannot use forgot password
+                    if (($user['is_staff'] ?? 0) == 1 || ($user['is_superuser'] ?? 0) == 1) {
+                        $error = 'Admin accounts cannot use password reset. Please contact the system administrator for password assistance.';
+                    } else {
+                        // Regular user found, proceed to step 2
+                        $step = 2;
+                        $email = $user['email'];
+                        $username = $user['username'];
+                    }
                 } else {
                     $error = 'Email and username combination not found. Please check your details.';
                 }
@@ -73,19 +78,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $step = 2;
         } else {
             try {
-                // Verify user still exists
-                $stmt = $db->prepare("SELECT id FROM users WHERE email = ? AND username = ?");
+                // Verify user still exists and is not admin/staff
+                $stmt = $db->prepare("SELECT id, is_staff, is_superuser FROM users WHERE email = ? AND username = ?");
                 $stmt->execute([$email, $username]);
                 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 if ($user) {
-                    // Update password
-                    $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
-                    $stmt = $db->prepare("UPDATE users SET password = ? WHERE id = ?");
-                    $stmt->execute([$hashed_password, $user['id']]);
+                    // Double-check user is not admin/staff
+                    if (($user['is_staff'] ?? 0) == 1 || ($user['is_superuser'] ?? 0) == 1) {
+                        $error = 'Admin accounts cannot use password reset. Please contact the system administrator for password assistance.';
+                        $step = 1; // Reset to step 1
+                    } else {
+                        // Update password for regular users only
+                        $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+                        $stmt = $db->prepare("UPDATE users SET password = ? WHERE id = ?");
+                        $stmt->execute([$hashed_password, $user['id']]);
 
-                    $success = true;
-                    $message = 'Password reset successfully! You can now login with your new password.';
+                        $success = true;
+                        $message = 'Password reset successfully! You can now login with your new password.';
+                    }
                 } else {
                     $error = 'User verification failed. Please start over.';
                 }

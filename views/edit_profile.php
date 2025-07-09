@@ -1,6 +1,5 @@
 <?php
 require_once('../includes/db.php');
-require_once('header.php');
 if (session_status() === PHP_SESSION_NONE) session_start();
 if (!isset($_SESSION['user'])) {
     header('Location: ../public/login.php');
@@ -15,21 +14,54 @@ $sql = 'SELECT u.username, u.email, u.is_staff, u.is_superuser, p.full_name, p.p
 $stmt = $db->prepare($sql);
 $stmt->execute([$user_id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $full_name = $_POST['full_name'];
-    $phone = $_POST['phone'];
-    $address = $_POST['address'];
-    // Update profiles table
-    $stmt = $db->prepare('UPDATE profiles SET full_name=?, phone=?, address=? WHERE user_id=?');
-    $stmt->execute([$full_name, $phone, $address, $user_id]);
-    header('Location: profile.php?success=1');
+
+// If user not found, redirect to login
+if (!$user) {
+    header('Location: ../public/login.php');
     exit();
 }
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $full_name = trim($_POST['full_name']);
+    $phone = trim($_POST['phone']);
+    $address = trim($_POST['address']);
+
+    // Validate required fields
+    if (empty($full_name)) {
+        $error = 'Full name is required.';
+    } elseif (empty($phone)) {
+        $error = 'Phone number is required.';
+    } elseif (empty($address)) {
+        $error = 'Address is required.';
+    } else {
+        try {
+            // Check if profile exists
+            $check_stmt = $db->prepare('SELECT id FROM profiles WHERE user_id = ?');
+            $check_stmt->execute([$user_id]);
+
+            if ($check_stmt->rowCount() > 0) {
+                // Update existing profile
+                $stmt = $db->prepare('UPDATE profiles SET full_name=?, phone=?, address=? WHERE user_id=?');
+                $stmt->execute([$full_name, $phone, $address, $user_id]);
+            } else {
+                // Create new profile
+                $stmt = $db->prepare('INSERT INTO profiles (user_id, full_name, phone, address) VALUES (?, ?, ?, ?)');
+                $stmt->execute([$user_id, $full_name, $phone, $address]);
+            }
+
+            header('Location: profile.php?success=1');
+            exit();
+        } catch (PDOException $e) {
+            $error = 'Database error: ' . $e->getMessage();
+        }
+    }
+}
 ?>
+<?php require_once('header.php'); ?>
 <main style="display:flex;flex-direction:column;align-items:center;min-height:80vh;">
     <div class="card" style="margin-top:2.5rem;padding:2.5rem 2rem 2rem 2.5rem;min-width:400px;max-width:600px;width:100%;box-shadow:0 4px 24px rgba(229,57,53,0.08);">
         <h1 style="margin-bottom:1.5rem;"><i class="fa fa-user icon-red"></i> Edit Profile</h1>
         <?php if ($success): ?><div class="alert alert-info">Profile updated successfully!</div><?php endif; ?>
+        <?php if (!empty($error)): ?><div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div><?php endif; ?>
         <form method="post" action="" style="display:flex;flex-direction:column;gap:1rem;align-items:stretch;">
             <div style="background:#fffde7;border-radius:8px;padding:1.5rem 2rem;margin-bottom:2rem;">
                 <div><label style="font-weight:700;color:#5A9FD4;">Username:</label> <?php echo htmlspecialchars($user['username']); ?> <span style="color:#888;">(Cannot be changed)</span></div>

@@ -36,6 +36,12 @@ if (session_status() === PHP_SESSION_NONE) session_start();
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <?php
+    // Include status badge CSS
+    require_once('../includes/status_helpers.php');
+    echo getStatusBadgeCSS();
+    ?>
+
     <!--
     FAVICON (Optional enhancement)
     PURPOSE: Browser tab icon for professional appearance
@@ -65,18 +71,6 @@ if (session_status() === PHP_SESSION_NONE) session_start();
         align-items: center;
         justify-content: center;
         font-weight: 600;
-        animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.1); }
-        100% { transform: scale(1); }
-    }
-
-    .notification-link:hover .notification-badge {
-        animation: none;
-        transform: scale(1.1);
     }
     </style>
 </head>
@@ -148,9 +142,6 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                         <a class="nav-link" href="dashboard.php" aria-label="View Dashboard">
                             <i class="fa fa-tachometer-alt" aria-hidden="true"></i> Dashboard
                         </a>
-                        <a class="nav-link" href="schedule.php" aria-label="View Bus Schedules">
-                            <i class="fa fa-calendar-alt" aria-hidden="true"></i> View Schedule
-                        </a>
                         <a class="nav-link" href="bookings.php" aria-label="View My Bookings">
                             <i class="fa fa-ticket-alt" aria-hidden="true"></i> My Bookings
                         </a>
@@ -159,39 +150,41 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                         </a>
                     <?php endif; ?>
 
-                    <!-- Notification Bell for all logged-in users -->
-                    <?php
-                    // Get unread notification count with error handling
-                    $unread_count = 0;
-                    try {
-                        // Try to get database connection (may already be included)
-                        if (!function_exists('getDB')) {
-                            if (file_exists('../includes/db.php')) {
-                                require_once('../includes/db.php');
-                            } elseif (file_exists('includes/db.php')) {
-                                require_once('includes/db.php');
-                            }
-                        }
-
-                        if (function_exists('getDB')) {
-                            $db = getDB();
-                            $stmt = $db->prepare('SELECT COUNT(*) as unread_count FROM notifications WHERE user_id = ? AND is_read = 0');
-                            $stmt->execute([$_SESSION['user']['id']]);
-                            $notification_data = $stmt->fetch(PDO::FETCH_ASSOC);
-                            $unread_count = $notification_data['unread_count'] ?? 0;
-                        }
-                    } catch (Exception $e) {
-                        // Silently fail - notification bell will just show 0
+                    <!-- Notification Bell for passengers only (not admin) -->
+                    <?php if (!$is_admin): ?>
+                        <?php
+                        // Get unread notification count with error handling
                         $unread_count = 0;
-                    }
-                    ?>
-                    <a class="nav-link notification-link" href="notifications.php" aria-label="View Notifications">
-                        <i class="fa fa-bell" aria-hidden="true"></i>
-                        <?php if ($unread_count > 0): ?>
-                            <span class="notification-badge"><?php echo $unread_count; ?></span>
-                        <?php endif; ?>
-                        <span class="nav-text">Notifications</span>
-                    </a>
+                        try {
+                            // Try to get database connection (may already be included)
+                            if (!function_exists('getDB')) {
+                                if (file_exists('../includes/db.php')) {
+                                    require_once('../includes/db.php');
+                                } elseif (file_exists('includes/db.php')) {
+                                    require_once('includes/db.php');
+                                }
+                            }
+
+                            if (function_exists('getDB')) {
+                                $db = getDB();
+                                $stmt = $db->prepare('SELECT COUNT(*) as unread_count FROM notifications WHERE user_id = ? AND is_read = 0');
+                                $stmt->execute([$_SESSION['user']['id']]);
+                                $notification_data = $stmt->fetch(PDO::FETCH_ASSOC);
+                                $unread_count = $notification_data['unread_count'] ?? 0;
+                            }
+                        } catch (Exception $e) {
+                            // Silently fail - notification bell will just show 0
+                            $unread_count = 0;
+                        }
+                        ?>
+                        <a class="nav-link notification-link" href="notifications.php" aria-label="View Notifications">
+                            <i class="fa fa-bell" aria-hidden="true"></i>
+                            <?php if ($unread_count > 0): ?>
+                                <span class="notification-badge"><?php echo $unread_count; ?></span>
+                            <?php endif; ?>
+                            <span class="nav-text">Notifications</span>
+                        </a>
+                    <?php endif; ?>
 
                     <!-- Profile link available to all users -->
                     <a class="nav-link" href="profile.php" aria-label="View My Profile">
@@ -221,9 +214,6 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 
                 <div class="navbar-right btn-nav-row">
                     <!-- Guest navigation links -->
-                    <a class="btn btn-nav" href="../views/schedule.php" aria-label="View Available Schedules">
-                        <i class="fa fa-calendar-alt" aria-hidden="true"></i> View Schedule
-                    </a>
                     <a class="btn btn-nav" href="../public/register.php" aria-label="Register New Account">
                         <i class="fa fa-user-plus" aria-hidden="true"></i> Register
                     </a>

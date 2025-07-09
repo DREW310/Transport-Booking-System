@@ -205,8 +205,8 @@ STUDENT LEARNING: Complex form handling, user experience design
         </div>
 
         <div class="table-responsive">
-            <table class="schedule-table">
-                <thead>
+            <table class="table table-striped table-bordered" style="font-size: 0.85rem;">
+                <thead style="background: #f8f9fa;">
                     <tr>
                         <th><i class="fa fa-id-card"></i> Bus ID</th>
                         <th><i class="fa fa-building"></i> Company</th>
@@ -231,31 +231,78 @@ STUDENT LEARNING: Complex form handling, user experience design
                         </tr>
                     <?php else: foreach ($schedules as $schedule): ?>
                     <tr>
-                        <td class="bus-id"><?php echo htmlspecialchars($schedule['bus_number']); ?></td>
-                        <td class="company"><?php echo htmlspecialchars($schedule['company']); ?></td>
-                        <td class="bus-type"><?php echo htmlspecialchars($schedule['bus_type']); ?></td>
-                        <td class="route">
-                            <span class="route-text">
+                        <td>
+                            <div style="font-weight: 600; color: #e53935;">
+                                <?php echo htmlspecialchars($schedule['bus_number']); ?>
+                            </div>
+                            <small style="color: #666;">
+                                Bus Number
+                            </small>
+                        </td>
+                        <td>
+                            <div style="font-weight: 500;">
+                                <?php echo htmlspecialchars($schedule['company']); ?>
+                            </div>
+                            <small style="color: #666;">
+                                Company
+                            </small>
+                        </td>
+                        <td>
+                            <div style="font-weight: 500; color: #007bff;">
+                                <?php echo htmlspecialchars($schedule['bus_type']); ?>
+                            </div>
+                            <small style="color: #666;">
+                                Bus Type
+                            </small>
+                        </td>
+                        <td>
+                            <div style="font-weight: 500; color: #28a745;">
                                 <?php echo htmlspecialchars($schedule['source']); ?>
-                                <i class="fa fa-arrow-right"></i>
+                            </div>
+                            <div style="color: #666; margin: 2px 0;">
+                                <i class="fa fa-arrow-right" style="color: #5A9FD4;"></i>
+                            </div>
+                            <div style="font-weight: 500; color: #dc3545;">
                                 <?php echo htmlspecialchars($schedule['destination']); ?>
-                            </span>
+                            </div>
                         </td>
-                        <td class="departure"><?php echo date('M j, Y g:i A', strtotime($schedule['departure_time'])); ?></td>
-                        <td class="fare">RM <?php echo number_format($schedule['fare'], 2); ?></td>
-                        <td class="seats">
-                            <span class="seats-count <?php echo $schedule['available_seats'] <= 5 ? 'low-seats' : ''; ?>">
+                        <td>
+                            <div style="font-weight: 500;">
+                                <?php echo date('M j, Y', strtotime($schedule['departure_time'])); ?>
+                            </div>
+                            <small style="color: #666;">
+                                <?php echo date('g:i A', strtotime($schedule['departure_time'])); ?>
+                            </small>
+                        </td>
+                        <td>
+                            <div style="font-weight: 600; color: #28a745;">
+                                RM <?php echo number_format($schedule['fare'], 2); ?>
+                            </div>
+                            <small style="color: #666;">
+                                Fare
+                            </small>
+                        </td>
+                        <td>
+                            <div style="font-weight: 600; color: <?php echo $schedule['available_seats'] <= 5 ? '#dc3545' : '#28a745'; ?>;">
                                 <?php echo htmlspecialchars($schedule['available_seats']); ?>
-                            </span>
+                            </div>
+                            <small style="color: #666;">
+                                <?php echo $schedule['available_seats'] <= 5 ? 'Few Left' : 'Available'; ?>
+                            </small>
                         </td>
-                        <td class="action">
-                            <?php if ($schedule['available_seats'] > 0): ?>
-                                <a href="booking.php?schedule_id=<?php echo urlencode($schedule['id']); ?>" class="book-btn">
-                                    <i class="fa fa-ticket-alt"></i> Book Now
-                                </a>
-                            <?php else: ?>
-                                <span class="sold-out">Sold Out</span>
-                            <?php endif; ?>
+                        <td>
+                            <div class="bus-action-group">
+                                <?php if ($schedule['available_seats'] > 0): ?>
+                                    <a href="booking.php?schedule_id=<?php echo urlencode($schedule['id']); ?>"
+                                       style="font-size: 0.8rem; padding: 6px 12px; background: #28a745; color: white; border: none; border-radius: 4px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; font-weight: 600; box-shadow: 0 2px 4px rgba(40,167,69,0.3); transition: all 0.2s ease;">
+                                        <i class="fa fa-ticket-alt"></i> Book Now
+                                    </a>
+                                <?php else: ?>
+                                    <span style="font-size: 0.8rem; padding: 6px 12px; background: #dc3545; color: white; border: none; border-radius: 4px; display: inline-flex; align-items: center; gap: 4px; font-weight: 600; opacity: 0.8;">
+                                        <i class="fa fa-times-circle"></i> Sold Out
+                                    </span>
+                                <?php endif; ?>
+                            </div>
                         </td>
                     </tr>
                     <?php endforeach; endif; ?>
@@ -264,6 +311,20 @@ STUDENT LEARNING: Complex form handling, user experience design
         </div>
     </div>
 </main>
+
+<style>
+.bus-action-group {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.bus-action-group a:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
+}
+</style>
+
 <script>
 // Switch source and destination
 const switchBtn = document.getElementById('switchBtn');

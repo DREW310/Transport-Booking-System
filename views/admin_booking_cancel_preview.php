@@ -216,11 +216,14 @@ if (isset($impact['error'])) {
                 <a href="admin_bookings.php" class="btn btn-secondary">
                     <i class="fa fa-arrow-left"></i> Back to Bookings
                 </a>
-                <a href="admin_booking_cancel.php?id=<?php echo $booking_id; ?>" 
-                   class="btn btn-danger"
-                   onclick="return confirm('Are you sure you want to cancel this booking? This action cannot be undone.');">
-                    <i class="fa fa-ban"></i> Confirm Cancellation
-                </a>
+                <form method="post" action="admin_booking_cancel_handler.php" style="display: inline;">
+                    <input type="hidden" name="booking_id" value="<?php echo $booking_id; ?>">
+                    <input type="hidden" name="reason" value="Cancelled by admin">
+                    <button type="submit" class="btn btn-danger"
+                            onclick="return confirm('Are you sure you want to cancel this booking? This action cannot be undone.');">
+                        <i class="fa fa-ban"></i> Confirm Cancellation
+                    </button>
+                </form>
             </div>
         </div>
     </div>

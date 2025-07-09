@@ -1,6 +1,7 @@
 <?php
 require_once('../controllers/bookingController.php');
 require_once('../controllers/feedbackController.php');
+require_once('../includes/status_helpers.php');
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 if (!isset($_SESSION['user'])) {
@@ -16,38 +17,43 @@ if ((isset($_SESSION['user']['is_staff']) && $_SESSION['user']['is_staff']) ||
 }
 
 $userId = $_SESSION['user']['id'];
+
+// Add the same booking status fix logic as in bookings.php
+require_once('../includes/db.php');
+$db = getDB();
+
+// STEP 1: Fix any incorrectly completed future bookings first
+$fix_stmt = $db->prepare('UPDATE bookings b
+                         JOIN schedules s ON b.schedule_id = s.id
+                         SET b.status = ?
+                         WHERE b.status = ?
+                         AND s.departure_time > NOW()');
+$fix_stmt->execute(['Booked', 'Completed']);
+
+// STEP 2: System-wide auto-complete past bookings - SAFE VERSION
+// Use MySQL NOW() and add 1 hour safety margin to ensure trip has truly completed
+// Only mark as completed if departure was more than 1 hour ago
+$stmt = $db->prepare('UPDATE bookings b
+                     JOIN schedules s ON b.schedule_id = s.id
+                     SET b.status = ?
+                     WHERE b.status = ?
+                     AND s.departure_time <= DATE_SUB(NOW(), INTERVAL 1 HOUR)
+                     AND b.status NOT IN (?, ?)');
+$stmt->execute(['Completed', 'Booked', 'Cancelled', 'Completed']);
+
 $bookingController = new BookingController();
 $bookings = $bookingController->getBookingsByUser($userId);
 $feedbackController = new FeedbackController();
 
-// Fetch unread notifications
-$db = getDB();
-$stmt = $db->prepare('SELECT id, message, created_at FROM notifications WHERE user_id = ? AND is_read = 0 ORDER BY created_at DESC');
-$stmt->execute([$userId]);
-$notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
-if (!empty($notifications)) {
-    // Mark as read
-    $ids = array_column($notifications, 'id');
-    $in = str_repeat('?,', count($ids) - 1) . '?';
-    $stmt = $db->prepare('UPDATE notifications SET is_read = 1 WHERE id IN (' . $in . ')');
-    $stmt->execute($ids);
-}
+// Note: Notifications are now only displayed in the notifications tab (bell icon)
+// This keeps the dashboard clean and focused on booking information
 ?>
 
 <?php require_once('header.php'); ?>
 
 <main style="display:flex;justify-content:center;align-items:flex-start;min-height:80vh;">
     <div class="card" style="margin-top:2.5rem;padding:2.5rem 2.5rem 2rem 2.5rem;min-width:600px;max-width:900px;width:100%;box-shadow:0 4px 24px rgba(229,57,53,0.08);">
-        <?php if (!empty($notifications)): ?>
-            <div class="alert alert-warning" style="margin-bottom:1.5rem;">
-                <b>Important Notification:</b><br>
-                <ul style="margin:0 0 0 1.2rem;">
-                    <?php foreach ($notifications as $n): ?>
-                        <li><?php echo htmlspecialchars($n['message'] ?? ''); ?> <span style="color:#888;font-size:0.95em;">(<?php echo date('d M Y, H:i', strtotime($n['created_at'] ?? '')); ?>)</span></li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-        <?php endif; ?>
+
         <h1 style="text-align:center;margin-bottom:1.5rem;"><i class="fa fa-bus icon-red"></i> Welcome, <span style="color:#5A9FD4;"><?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>!</span></h1>
         <h2 style="margin-bottom:1.2rem;"><i class="fa fa-ticket-alt icon-red"></i> Your Bookings</h2>
 
@@ -66,7 +72,7 @@ if (!empty($notifications)) {
         </div>
 
         <div style="text-align:right;margin-bottom:1.2rem;">
-            <a href="booking.php" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Create New Booking</a>
+            <a href="schedule.php" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Create New Booking</a>
         </div>
         <?php if (empty($bookings)): ?>
             <div class="alert alert-info">You have no bookings yet. Book your first trip now!</div>
@@ -114,13 +120,11 @@ if (!empty($notifications)) {
                                 </span>
                             </td>
                             <td>
-                                <?php if ($booking['status'] === 'booked' || $booking['status'] === 'Completed'): ?>
-                                    <span class="badge bg-success">Completed</span>
-                                <?php elseif ($booking['status'] === 'cancelled' || $booking['status'] === 'Cancelled'): ?>
-                                    <span class="badge bg-danger">Cancelled</span>
-                                <?php else: ?>
-                                    <span class="badge bg-secondary"><?php echo htmlspecialchars($booking['status'] ?? ''); ?></span>
-                                <?php endif; ?>
+                                <?php
+                                // Display status correctly - no incorrect conversion
+                                $displayStatus = $booking['status'] ?? '';
+                                echo getStatusBadge($displayStatus, 'small');
+                                ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>

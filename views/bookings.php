@@ -1,7 +1,7 @@
 <?php
 require_once('../includes/db.php');
 require_once('../includes/booking_cancellation_handler.php');
-require_once('header.php');
+require_once('../includes/status_helpers.php');
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 if (!isset($_SESSION['user'])) {
@@ -17,10 +17,24 @@ if ((isset($_SESSION['user']['is_staff']) && $_SESSION['user']['is_staff']) ||
 }
 $db = getDB();
 $user_id = $_SESSION['user']['id'];
-// Auto-complete past bookings
-$now = date('Y-m-d H:i:s');
-$stmt = $db->prepare('UPDATE bookings b JOIN schedules s ON b.schedule_id = s.id SET b.status = ? WHERE b.user_id = ? AND s.departure_time <= ? AND b.status NOT IN (?, ?)');
-$stmt->execute(['Completed', $user_id, $now, 'Cancelled', 'Completed']);
+// STEP 1: Fix any incorrectly completed future bookings first
+$fix_stmt = $db->prepare('UPDATE bookings b
+                         JOIN schedules s ON b.schedule_id = s.id
+                         SET b.status = ?
+                         WHERE b.status = ?
+                         AND s.departure_time > NOW()');
+$fix_stmt->execute(['Booked', 'Completed']);
+
+// STEP 2: System-wide auto-complete past bookings - SAFE VERSION
+// Use MySQL NOW() and add 1 hour safety margin to ensure trip has truly completed
+// Only mark as completed if departure was more than 1 hour ago
+$stmt = $db->prepare('UPDATE bookings b
+                     JOIN schedules s ON b.schedule_id = s.id
+                     SET b.status = ?
+                     WHERE b.status = ?
+                     AND s.departure_time <= DATE_SUB(NOW(), INTERVAL 1 HOUR)
+                     AND b.status NOT IN (?, ?)');
+$stmt->execute(['Completed', 'Booked', 'Cancelled', 'Completed']);
 $bookings = [];
 $sql = 'SELECT b.booking_id, b.status, b.seat_number, b.booking_time, b.payment_method,
                s.departure_time, s.route_id, s.bus_id, bu.bus_number, bu.license_plate, bu.bus_type, bu.company,
@@ -58,9 +72,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_booking_id']))
         $cancellation_error = "Booking not found or you don't have permission to cancel it.";
     }
 }
-$now = date('Y-m-d H:i:s');
-$upcoming = array_filter($bookings, function($b) use ($now) { return $b['departure_time'] > $now && $b['status'] !== 'Cancelled'; });
-$past = array_filter($bookings, function($b) use ($now) { return $b['departure_time'] <= $now || $b['status'] === 'Cancelled'; });
+// Use consistent time comparison - get current time from database
+$current_time_result = $db->query("SELECT NOW() as current_datetime")->fetch(PDO::FETCH_ASSOC);
+$now = $current_time_result['current_datetime'];
+
+$upcoming = array_filter($bookings, function($b) use ($now) {
+    return $b['departure_time'] > $now && $b['status'] !== 'Cancelled';
+});
+$past = array_filter($bookings, function($b) use ($now) {
+    return $b['departure_time'] <= $now || $b['status'] === 'Cancelled';
+});
+
+// Include header after POST processing to avoid "headers already sent" error
+require_once('header.php');
 ?>
 <main style="display:flex;flex-direction:column;align-items:center;min-height:80vh;">
     <div class="bookings-outer-card">
@@ -123,6 +147,7 @@ $past = array_filter($bookings, function($b) use ($now) { return $b['departure_t
                                         <th><i class="fa fa-chair"></i> Seat</th>
                                         <th><i class="fa fa-money-bill"></i> Fare</th>
                                         <th><i class="fa fa-credit-card"></i> Payment</th>
+                                        <th><i class="fa fa-info-circle"></i> Status</th>
                                         <th><i class="fa fa-cogs"></i> Actions</th>
                                     </tr>
                                 </thead>
@@ -153,6 +178,9 @@ $past = array_filter($bookings, function($b) use ($now) { return $b['departure_t
                                             <span style="color: #666; font-size: 0.85em;">
                                                 <?php echo htmlspecialchars($booking['payment_method'] ?? 'N/A'); ?>
                                             </span>
+                                        </td>
+                                        <td>
+                                            <?php echo getStatusBadge($booking['status'], 'small'); ?>
                                         </td>
                                         <td>
                                             <?php
@@ -247,13 +275,7 @@ $past = array_filter($bookings, function($b) use ($now) { return $b['departure_t
                                         </span>
                                     </td>
                                     <td>
-                                        <?php if ($booking['status'] === 'Completed'): ?>
-                                            <span class="badge bg-success">Completed</span>
-                                        <?php elseif ($booking['status'] === 'Cancelled'): ?>
-                                            <span class="badge bg-danger">Cancelled</span>
-                                        <?php else: ?>
-                                            <span class="badge bg-secondary"><?php echo htmlspecialchars($booking['status']); ?></span>
-                                        <?php endif; ?>
+                                        <?php echo getStatusBadge($booking['status'], 'small'); ?>
                                     </td>
                                 </tr>
                                 <?php endforeach; endif; ?>

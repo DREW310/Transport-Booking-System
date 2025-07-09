@@ -98,8 +98,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             $check_duplicate->execute([$user['id'], "Route Updated: {$source} → {$destination}%"]);
 
                             if ($check_duplicate->fetchColumn() == 0) {
-                                $notification_insert = $db->prepare('INSERT INTO notifications (user_id, message, type, created_at, is_read) VALUES (?, ?, ?, NOW(), 0)');
-                                $notification_insert->execute([$user['id'], $message, 'route-update']);
+                                $notification_insert = $db->prepare('INSERT INTO notifications (user_id, message, created_at, is_read) VALUES (?, ?, NOW(), 0)');
+                                $notification_insert->execute([$user['id'], $message]);
                             }
                         }
                     }

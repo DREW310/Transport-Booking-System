@@ -16,26 +16,45 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $phone = trim($_POST['phone']);
     $address = trim($_POST['address']);
 
-    // Username validation
-    if (!preg_match('/^[\w.@+-]{1,150}$/', $username)) {
+    // Required field validation
+    if (empty($username)) {
+        $errors[] = 'Username is required.';
+    } elseif (!preg_match('/^[\w.@+-]{1,150}$/', $username)) {
         $errors[] = 'Username must be 150 characters or fewer. Letters, digits and @/./+/-/_ only.';
     }
-    // Email validation
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+
+    if (empty($email)) {
+        $errors[] = 'Email is required.';
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors[] = 'Invalid email address.';
     }
-    // Password validation
-    if ($password !== $password2) {
+
+    if (empty($password)) {
+        $errors[] = 'Password is required.';
+    } elseif (strlen($password) < 8) {
+        $errors[] = 'Password must contain at least 8 characters.';
+    } elseif (preg_match('/^[0-9]+$/', $password)) {
+        $errors[] = 'Password cannot be entirely numeric.';
+    } elseif (stripos($password, $username) !== false || stripos($password, $full_name) !== false) {
+        $errors[] = "Password can't be too similar to your other personal information.";
+    }
+
+    if (empty($password2)) {
+        $errors[] = 'Password confirmation is required.';
+    } elseif ($password !== $password2) {
         $errors[] = 'Passwords do not match.';
     }
-    if (strlen($password) < 8) {
-        $errors[] = 'Password must contain at least 8 characters.';
+
+    if (empty($full_name)) {
+        $errors[] = 'Full Name is required.';
     }
-    if (preg_match('/^[0-9]+$/', $password)) {
-        $errors[] = 'Password cannot be entirely numeric.';
+
+    if (empty($phone)) {
+        $errors[] = 'Phone number is required.';
     }
-    if (stripos($password, $username) !== false || stripos($password, $full_name) !== false) {
-        $errors[] = "Password can't be too similar to your other personal information.";
+
+    if (empty($address)) {
+        $errors[] = 'Address is required.';
     }
     // Check for duplicate username or email
     $db = getDB();
@@ -47,11 +66,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $errors[] = 'Username or email already exists!';
     }
     if (empty($errors)) {
+        // Hash password for security
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
         // Insert into users
         $stmt = $db->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':password', $password);
+        $stmt->bindParam(':password', $hashed_password);
         if ($stmt->execute()) {
             $user_id = $db->lastInsertId();
             // Insert into profiles
@@ -61,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt2->bindParam(':phone', $phone);
             $stmt2->bindParam(':address', $address);
             $stmt2->execute();
-            $success = 'Registration successful! <a href=\'user_login.php\'>Login here</a>';
+            $success = 'Registration successful! You can now login with your new account.';
             $username = $email = $password = $password2 = $full_name = $phone = $address = '';
         } else {
             $errors[] = 'Registration failed. Please try again.';
@@ -72,8 +94,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <div class="register-card">
     <div class="icon"><i class="fa fa-user-plus"></i></div>
     <h2>Create Your Account</h2>
-    <?php if (!empty($errors)) { echo '<ul class="error-list">'; foreach ($errors as $e) echo '<li>'.$e.'</li>'; echo '</ul>'; } ?>
-    <?php if ($success) { echo '<div class="success">'.$success.'</div>'; } ?>
+    <?php if (!empty($errors)): ?>
+        <div class="error-list">
+            <div class="error-header">
+                <i class="fa fa-exclamation-triangle"></i>
+                Please correct the following errors:
+            </div>
+            <ul>
+                <?php foreach ($errors as $error): ?>
+                    <li><?php echo htmlspecialchars($error); ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
+    <?php if ($success): ?>
+        <div class="success">
+            <div class="success-header">
+                <i class="fa fa-check-circle"></i>
+                Registration Successful!
+            </div>
+            <p><?php echo htmlspecialchars($success); ?></p>
+            <div class="success-actions">
+                <a href="user_login.php" class="btn btn-success">
+                    <i class="fa fa-sign-in-alt"></i> Login Now
+                </a>
+                <a href="index.php" class="btn btn-secondary">
+                    <i class="fa fa-home"></i> Go to Home
+                </a>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <?php if (!$success): ?>
     <form action="register.php" method="post" autocomplete="off">
         <label for="username">Username:<span class="required-asterisk">*</span></label>
         <input type="text" name="username" id="username" maxlength="150" value="<?php echo htmlspecialchars($username ?? ''); ?>" required>
@@ -91,13 +143,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <label for="password2">Password confirmation:<span class="required-asterisk">*</span></label>
         <input type="password" name="password2" id="password2" required>
         <div class="help">Enter the same password as before, for verification.</div>
-        <label for="full_name">Full Name:</label>
-        <input type="text" name="full_name" id="full_name" value="<?php echo htmlspecialchars($full_name ?? ''); ?>">
-        <label for="phone">Phone:</label>
-        <input type="text" name="phone" id="phone" value="<?php echo htmlspecialchars($phone ?? ''); ?>">
-        <label for="address">Address:</label>
-        <textarea name="address" id="address"><?php echo htmlspecialchars($address ?? ''); ?></textarea>
+        <label for="full_name">Full Name:<span class="required-asterisk">*</span></label>
+        <input type="text" name="full_name" id="full_name" value="<?php echo htmlspecialchars($full_name ?? ''); ?>" required>
+        <label for="phone">Phone:<span class="required-asterisk">*</span></label>
+        <input type="text" name="phone" id="phone" value="<?php echo htmlspecialchars($phone ?? ''); ?>" required>
+        <label for="address">Address:<span class="required-asterisk">*</span></label>
+        <textarea name="address" id="address" required><?php echo htmlspecialchars($address ?? ''); ?></textarea>
         <button type="submit" class="btn"><i class="fa fa-user-plus"></i> Register</button>
     </form>
     <div class="login-link">Already have an account? <a href="user_login.php">Login here.</a></div>
+    <?php endif; ?>
 </div>

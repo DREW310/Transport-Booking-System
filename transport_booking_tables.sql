@@ -1,5 +1,4 @@
 -- Transport Booking System: MySQL Table Definitions
--- COURSEWORK PROJECT: Automated Database Setup
 -- This shows understanding of database administration
 
 -- Step 1: Auto-create database (shows advanced SQL knowledge)

@@ -27,7 +27,7 @@
 
 ---
 
-## **🔧 Create Your First Admin User**
+## ** Create Your First Admin User**
 
 After database setup, create your admin account:
 1. Go to: `http://localhost/TWT-Transport-Booking-System/create_admin.php`

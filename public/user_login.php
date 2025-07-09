@@ -12,23 +12,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
 
     $db = getDB();
-    $stmt = $db->prepare("SELECT * FROM users WHERE username = :username AND password = :password");
+    $stmt = $db->prepare("SELECT * FROM users WHERE username = :username");
     $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':password', $password);
     $stmt->execute();
 
     if ($stmt->rowCount() > 0) {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        if (($user['is_staff'] ?? 0) == 0 && ($user['is_superuser'] ?? 0) == 0) {
-            $_SESSION['user'] = $user;
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['username'] = $user['username'];
-            $_SESSION['is_staff'] = $user['is_staff'];
-            $_SESSION['is_superuser'] = $user['is_superuser'];
-            header('Location: ../views/dashboard.php');
-            exit();
+
+        // Verify password (supports both hashed and plain text for backward compatibility)
+        $password_valid = false;
+        if (password_verify($password, $user['password'])) {
+            // Password is hashed and verified
+            $password_valid = true;
+        } elseif ($password === $user['password']) {
+            // Fallback for plain text passwords (legacy support)
+            $password_valid = true;
+
+            // Upgrade to hashed password for security
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $update_stmt = $db->prepare("UPDATE users SET password = ? WHERE id = ?");
+            $update_stmt->execute([$hashed_password, $user['id']]);
+        }
+
+        if ($password_valid) {
+            if (($user['is_staff'] ?? 0) == 0 && ($user['is_superuser'] ?? 0) == 0) {
+                $_SESSION['user'] = $user;
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['username'] = $user['username'];
+                $_SESSION['is_staff'] = $user['is_staff'];
+                $_SESSION['is_superuser'] = $user['is_superuser'];
+                header('Location: ../views/dashboard.php');
+                exit();
+            } else {
+                $error = "This login is for passengers only.";
+            }
         } else {
-            $error = "This login is for passengers only.";
+            $error = "Invalid credentials!";
         }
     } else {
         $error = "Invalid credentials!";
@@ -38,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <div class="login-card">
     <div class="icon"><i class="fa fa-user"></i></div>
     <h2>Passenger Login</h2>
-    <?php if (!empty($error)) echo '<div class="error">'.$error.'</div>'; ?>
+    <?php if (!empty($error)) echo '<div class="error"><i class="fa fa-exclamation-triangle"></i>'.$error.'</div>'; ?>
     <form action="user_login.php" method="post" autocomplete="off">
         <label for="username">Username:</label>
         <input type="text" name="username" id="username" value="<?php echo htmlspecialchars($username ?? ''); ?>" required>

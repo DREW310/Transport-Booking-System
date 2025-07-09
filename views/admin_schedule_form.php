@@ -50,9 +50,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$is_completed_schedule) {
         $error = 'Please select a route.';
     } elseif (empty($departure_time)) {
         $error = 'Please select departure time.';
-    } elseif (strtotime($departure_time) <= time()) {
-        $error = 'Departure time must be in the future.';
     } else {
+        // Check if departure time is in the future using database time
+        $time_check = $db->prepare("SELECT CASE WHEN ? <= NOW() THEN 1 ELSE 0 END as is_past");
+        $time_check->execute([$departure_time]);
+        $is_past = $time_check->fetchColumn();
+
+        if ($is_past) {
+            $error = 'Departure time must be in the future.';
+        }
+    }
+
+    if (empty($error)) {
         // Fetch bus capacity for calculation
         $stmt = $db->prepare('SELECT capacity, bus_number FROM buses WHERE id = ?');
         $stmt->execute([$bus_id]);
@@ -61,8 +70,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$is_completed_schedule) {
 
         // Calculate available seats based on existing bookings (for edit mode)
         if (isset($_GET['id'])) {
-            // For existing schedule, count current bookings
-            $booking_stmt = $db->prepare('SELECT COUNT(*) FROM bookings WHERE schedule_id = ?');
+            // For existing schedule, count current bookings (exclude cancelled bookings)
+            $booking_stmt = $db->prepare('SELECT COUNT(*) FROM bookings WHERE schedule_id = ? AND status IN ("Booked", "Completed")');
             $booking_stmt->execute([$_GET['id']]);
             $booked_count = $booking_stmt->fetchColumn();
             $available_seats = $bus_capacity - $booked_count;
@@ -151,8 +160,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$is_completed_schedule) {
                             $check_duplicate->execute([$user['id'], "Schedule Updated: {$user['source']} → {$user['destination']}%"]);
 
                             if ($check_duplicate->fetchColumn() == 0) {
-                                $notification_insert = $db->prepare('INSERT INTO notifications (user_id, message, type, created_at, is_read) VALUES (?, ?, ?, NOW(), 0)');
-                                $notification_insert->execute([$user['id'], $message, 'schedule-update']);
+                                $notification_insert = $db->prepare('INSERT INTO notifications (user_id, message, created_at, is_read) VALUES (?, ?, NOW(), 0)');
+                                $notification_insert->execute([$user['id'], $message]);
                             }
                         }
                     }

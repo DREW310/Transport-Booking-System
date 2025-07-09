@@ -89,8 +89,8 @@ function cancelBookingComprehensive($booking_id, $cancelled_by_user_id, $cancell
         
         // 5. Add user notification
         $cancellation_type = $is_admin_cancellation ? 'admin' : 'user';
-        $notification_message = $is_admin_cancellation 
-            ? "Your booking (ID: {$booking['booking_id']}) has been cancelled by admin. If you have any questions, please contact support."
+        $notification_message = $is_admin_cancellation
+            ? "ADMIN CANCELLATION: Your booking (ID: {$booking['booking_id']}) for {$booking['source']} → {$booking['destination']} on " . date('M j, Y g:i A', strtotime($booking['departure_time'])) . " has been cancelled by administration. Please contact support if you have any questions."
             : "You have successfully cancelled your booking (ID: {$booking['booking_id']}). The seat has been released and is now available for other passengers.";
         
         $stmt = $db->prepare("INSERT INTO notifications (user_id, message, created_at, is_read) VALUES (?, ?, NOW(), 0)");
