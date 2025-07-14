@@ -3,7 +3,6 @@
 ===========================================
 FILE: Create New User (admin_user_create.php)
 PURPOSE: Allow superuser to create new staff/users through admin panel
-STUDENT LEARNING: User management, form handling, role-based access
 TECHNOLOGIES: PHP, MySQL, Security, Form Validation
 ===========================================
 */

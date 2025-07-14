@@ -21,7 +21,6 @@ $states = [
 /*
 ENHANCED SEARCH FUNCTIONALITY
 PURPOSE: Advanced filtering with time periods and company search
-STUDENT LEARNING: Complex SQL queries, user experience enhancement
 */
 
 // Get filter values from form
@@ -94,13 +93,11 @@ $companies = $companies_stmt->fetchAll(PDO::FETCH_COLUMN);
 <!--
 ENHANCED SCHEDULE SEARCH PAGE
 PURPOSE: Advanced search with multiple filter options
-STUDENT LEARNING: Complex form handling, user experience design
 -->
 <main class="schedule-main">
     <!--
     ENHANCED SEARCH FORM
     PURPOSE: Provide comprehensive search options for users
-    STUDENT LEARNING: Advanced form design, user interface enhancement
     -->
     <div class="schedule-search-container">
         <form class="schedule-search-form" method="get" action="">

@@ -3,7 +3,6 @@
 ===========================================
 FILE: Auth Header Template (auth_header.php)
 PURPOSE: Header for authentication pages (register, forgot password, reset password)
-STUDENT LEARNING: Clean navigation for auth pages
 TECHNOLOGIES: HTML5, CSS3, Font Awesome
 ===========================================
 */

@@ -1,7 +1,6 @@
     <!--
     HTML5 SEMANTIC ELEMENT: <footer>
     PURPOSE: Contains footer information and site credits
-    STUDENT LEARNING: HTML5 semantic structure and proper page closure
     -->
     <footer class="site-footer" role="contentinfo">
         <div class="footer-content"
@@ -22,7 +21,6 @@
             <!--
             CONTACT SECTION
             PURPOSE: Provide contact information
-            STUDENT LEARNING: Complete website structure
             -->
             <div class="footer-section">
                 <h4>Contact Us</h4>
@@ -35,7 +33,6 @@
         <!--
         FOOTER BOTTOM
         PURPOSE: Final credits and technical information
-        STUDENT LEARNING: Professional footer completion
         -->
         <div class="footer-bottom">
             <p>Built with HTML5, CSS3, JavaScript, PHP & MySQL</p>
@@ -45,13 +42,11 @@
     <!--
     JAVASCRIPT SECTION
     PURPOSE: Add interactive functionality
-    STUDENT LEARNING: JavaScript integration and DOM manipulation
     -->
     <script>
         /*
         JAVASCRIPT: Basic interactivity for better user experience
         PURPOSE: Demonstrate JavaScript concepts learned in class
-        STUDENT LEARNING: DOM manipulation, event handling, basic animations
         */
 
         // Wait for page to load completely
@@ -106,12 +101,3 @@
     </script>
 </body>
 </html>
-
-<!--
-STUDENT NOTES:
-1. HTML5 semantic footer structure improves accessibility
-2. JavaScript DOM manipulation for interactivity
-3. Event listeners demonstrate modern JavaScript concepts
-4. Proper page structure closure with </body> and </html>
-5. Comments explain each section for documentation purposes
--->

@@ -3,7 +3,6 @@
 ===========================================
 FILE: Test Notification Filtering (test_notification_filtering.php)
 PURPOSE: Test that only active bookings receive notifications
-STUDENT LEARNING: Testing notification filtering logic
 TECHNOLOGIES: PHP, MySQL, PDO
 ===========================================
 */

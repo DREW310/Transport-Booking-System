@@ -1,20 +1,6 @@
-/*
-===========================================
-TRANSPORT BOOKING SYSTEM - MAIN STYLESHEET
-PURPOSE: Styling for our transport booking system with modern, responsive design
-STUDENT LEARNING: CSS3 features, responsive design, modern layout techniques
-TECHNOLOGIES: CSS3, Flexbox, Media Queries, Animations
-===========================================
-*/
-
 /* Import our consistent color palette */
 @import url('color-palette.css');
 
-/*
-SECTION: Base Styles and Reset
-PURPOSE: Set up basic styling and reset browser defaults
-STUDENT LEARNING: CSS reset principles and base styling
-*/
 body {
     /* Background color - clean modern white-gray for professional look */
     background: #f8f9fa;
@@ -32,11 +18,6 @@ body {
     /* Set line height for better readability */
     line-height: 1.6;
 }
-/*
-SECTION: Navigation Styles
-PURPOSE: Enhanced navigation with better accessibility and modern design
-STUDENT LEARNING: CSS flexbox, positioning, and responsive navigation
-*/
 
 .navbar, .main-navbar {
     display: flex;
@@ -125,11 +106,6 @@ STUDENT LEARNING: CSS flexbox, positioning, and responsive navigation
 .btn-warning, .btn-outline-danger, .btn-outline-success, .btn-outline-secondary {
     font-weight: 600;
 }
-/*
-SECTION: Landing Page Styles
-PURPOSE: Styling for the main welcome page
-STUDENT LEARNING: CSS layout, flexbox, and visual hierarchy
-*/
 
 /* Main landing page container */
 .landing-page {
@@ -228,7 +204,6 @@ STUDENT LEARNING: CSS layout, flexbox, and visual hierarchy
     box-shadow: var(--shadow-lg);
 }
 
-/* HOMEPAGE BUTTON HOVER FIX - FORCE CONSISTENCY */
 .welcome-card .btn.btn-user:hover,
 .welcome-card .btn.btn-admin:hover {
     background: #2E5984 !important;
@@ -329,12 +304,6 @@ STUDENT LEARNING: CSS layout, flexbox, and visual hierarchy
     }
 }
 
-/*
-SECTION: Footer Styles
-PURPOSE: Professional footer design with multiple sections
-STUDENT LEARNING: CSS Grid, flexbox, and footer layout techniques
-*/
-
 .site-footer {
     background: var(--neutral-gray-800);
     color: var(--text-on-primary);
@@ -422,12 +391,6 @@ STUDENT LEARNING: CSS Grid, flexbox, and footer layout techniques
     font-size: 0.9rem;
 }
 
-/*
-SECTION: Notification Styles
-PURPOSE: User feedback notifications
-STUDENT LEARNING: CSS positioning and animation for notifications
-*/
-
 .notification {
     position: fixed;
     top: 20px;
@@ -462,11 +425,6 @@ STUDENT LEARNING: CSS positioning and animation for notifications
     }
 }
 
-/*
-SECTION: Visual Seat Selection Styles
-PURPOSE: Styling for interactive bus seat map
-STUDENT LEARNING: CSS Grid, Flexbox, Interactive UI Design, Animations
-*/
 
 /* Main seat selection container */
 .seat-selection-container {
@@ -816,12 +774,6 @@ STUDENT LEARNING: CSS Grid, Flexbox, Interactive UI Design, Animations
     }
 }
 
-/*
-SECTION: Booking Success and Error Cards
-PURPOSE: Enhanced feedback for booking results
-STUDENT LEARNING: User feedback design and visual hierarchy
-*/
-
 /* Success card styling */
 .booking-success-card {
     background: var(--success-green-pale);
@@ -919,12 +871,6 @@ STUDENT LEARNING: User feedback design and visual hierarchy
     font-weight: 500;
     margin-bottom: 1.5rem;
 }
-
-/*
-SECTION: Authentication Pages Styling
-PURPOSE: Styling for login, register, forgot password, and reset password pages
-STUDENT LEARNING: Consistent UI design, form styling, user experience
-*/
 
 /* Main authentication container */
 .auth-container {
@@ -1083,7 +1029,6 @@ STUDENT LEARNING: Consistent UI design, form styling, user experience
     margin-bottom: 1rem;
 }
 
-/* Demo section for coursework */
 .demo-section {
     background: #fff3cd;
     border: 2px solid #ffc107;
@@ -1162,12 +1107,6 @@ STUDENT LEARNING: Consistent UI design, form styling, user experience
         max-width: 250px;
     }
 }
-
-/*
-SECTION: Admin Reports Dashboard Styling
-PURPOSE: Professional business reports and analytics visualization
-STUDENT LEARNING: Dashboard design, data visualization, business presentation
-*/
 
 /* Reports container */
 .reports-container {
@@ -1535,12 +1474,6 @@ STUDENT LEARNING: Dashboard design, data visualization, business presentation
         align-items: center;
     }
 }
-
-/*
-SECTION: Enhanced Search Form Styling
-PURPOSE: Improved search interface with additional filters
-STUDENT LEARNING: Advanced form design, user experience enhancement
-*/
 
 /* Schedule Page Layout */
 .schedule-main {

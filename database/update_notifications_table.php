@@ -3,7 +3,6 @@
 ===========================================
 FILE: Database Update Script (update_notifications_table.php)
 PURPOSE: Add type column to notifications table
-STUDENT LEARNING: Database schema updates, data migration
 TECHNOLOGIES: PHP, MySQL, PDO
 ===========================================
 */

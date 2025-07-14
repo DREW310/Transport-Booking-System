@@ -3,7 +3,6 @@
 ===========================================
 FILE: Login Header Template (login_header.php)
 PURPOSE: Header for login pages with appropriate navigation
-STUDENT LEARNING: Template inclusion, clean navigation for login pages
 TECHNOLOGIES: HTML5, CSS3, Font Awesome
 ===========================================
 */

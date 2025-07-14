@@ -3,7 +3,6 @@
 ===========================================
 FILE: Test Notifications Generator (test_notifications.php)
 PURPOSE: Generate sample notifications to test the enhanced display
-STUDENT LEARNING: Testing notification system with different types
 TECHNOLOGIES: PHP, MySQL, PDO
 ===========================================
 */

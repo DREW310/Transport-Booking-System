@@ -3,7 +3,6 @@
 ===========================================
 FILE: Create Test Completed Booking (create_test_completed_booking.php)
 PURPOSE: Create a test completed booking to test business rules
-STUDENT LEARNING: Testing business logic with completed bookings
 TECHNOLOGIES: PHP, MySQL, PDO
 ===========================================
 */

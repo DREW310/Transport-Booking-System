@@ -3,7 +3,6 @@
 ===========================================
 FILE: Test Notification Rules (test_notification_rules.php)
 PURPOSE: Test that completed bookings don't receive notifications
-STUDENT LEARNING: Testing business logic for notification rules
 TECHNOLOGIES: PHP, MySQL, PDO
 ===========================================
 */

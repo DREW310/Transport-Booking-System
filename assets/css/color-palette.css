@@ -1,12 +1,4 @@
 /*
-===========================================
-TRANSPORT BOOKING SYSTEM - COLOR PALETTE
-PURPOSE: Unified color scheme for consistent, professional design
-STUDENT LEARNING: Design systems, color theory, user experience
-===========================================
-*/
-
-/*
 DESIGN PHILOSOPHY:
 - Professional and trustworthy (blues and teals)
 - Accessible and readable (high contrast ratios)
@@ -106,15 +98,6 @@ DESIGN PHILOSOPHY:
     --focus-ring: 0 0 0 3px rgba(37, 99, 235, 0.1);
     --transition-default: all 0.2s ease-in-out;
 }
-
-/*
-USAGE GUIDELINES:
-1. Always use CSS custom properties (variables) instead of hardcoded colors
-2. Maintain consistent color usage across components
-3. Test color combinations for accessibility (WCAG AA compliance)
-4. Use semantic color names (primary, success, error) rather than color names (blue, green, red)
-5. Ensure sufficient contrast ratios for text readability
-*/
 
 /*
 ACCESSIBILITY NOTES:

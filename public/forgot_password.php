@@ -4,7 +4,6 @@
 STUDENT PROJECT: Simple Password Reset
 FILE: forgot_password.php
 PURPOSE: Simple password reset without email complexity
-STUDENT LEARNING: Basic form processing, database operations, security
 TECHNOLOGIES: PHP, MySQL, PDO, HTML5
 ===========================================
 */

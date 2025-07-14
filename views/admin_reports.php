@@ -1,18 +1,9 @@
 <?php
 /*
 ===========================================
-STUDENT PROJECT: Business Reports Dashboard
 FILE: admin_reports.php
 WHAT THIS FILE DOES: Shows business statistics and charts for administrators
 WHY ADMINS NEED THIS: To understand how the business is performing
-WHAT I LEARNED: SQL aggregate functions, data visualization, business intelligence
-COURSE CONCEPTS USED:
-- Advanced SQL queries with SUM(), COUNT(), AVG() functions
-- JOIN operations across multiple tables
-- Data visualization with HTML/CSS charts
-- Business logic and analytics
-- Dashboard design and user interface
-- PHP date/time functions and formatting
 ===========================================
 */
 
@@ -29,15 +20,14 @@ require_once('../includes/db.php');
 $db = getDB();
 
 /*
-STUDENT EXPLANATION: Business Analytics Section
+EXPLANATION: Business Analytics Section
 WHAT THIS DOES: Calculates important business numbers like total money earned
 WHY WE NEED THIS: Admins need to know how well the business is doing
 HOW IT WORKS: We use SQL functions to add up and count data from multiple tables
-WHAT I LEARNED: Advanced SQL, business intelligence, data analysis
 */
 
 // CALCULATION 1: Total Revenue and Booking Statistics
-// STUDENT NOTE: This SQL query joins 3 tables to get complete booking information
+// NOTE: This SQL query joins 3 tables to get complete booking information
 // We use SUM() to add up all fares, COUNT() to count bookings, AVG() for average
 $revenue_sql = "SELECT
     SUM(r.fare) as total_revenue,
@@ -123,7 +113,6 @@ $monthly_data = $monthly_stmt->fetchAll(PDO::FETCH_ASSOC);
 <!-- 
 HTML STRUCTURE: Admin Reports Dashboard
 PURPOSE: Display business analytics and reports
-STUDENT LEARNING: Data presentation, dashboard design, business intelligence
 -->
 <main class="reports-container">
     <div class="reports-header">
@@ -134,7 +123,6 @@ STUDENT LEARNING: Data presentation, dashboard design, business intelligence
     <!-- 
     SECTION: Key Performance Indicators (KPIs)
     PURPOSE: Display main business metrics at a glance
-    STUDENT LEARNING: Business metrics presentation, data visualization
     -->
     <div class="kpi-grid">
         <div class="kpi-card revenue">
@@ -185,7 +173,6 @@ STUDENT LEARNING: Data presentation, dashboard design, business intelligence
     <!-- 
     SECTION: Daily Bookings Chart
     PURPOSE: Show booking trends over the last week
-    STUDENT LEARNING: Data visualization, trend analysis
     -->
     <div class="report-section">
         <div class="section-header">
@@ -228,7 +215,6 @@ STUDENT LEARNING: Data presentation, dashboard design, business intelligence
     <!-- 
     SECTION: Popular Routes Table
     PURPOSE: Show most booked routes and their performance
-    STUDENT LEARNING: Data ranking, business analysis
     -->
     <div class="report-section">
         <div class="section-header">
@@ -281,7 +267,6 @@ STUDENT LEARNING: Data presentation, dashboard design, business intelligence
     <!-- 
     SECTION: Company Performance
     PURPOSE: Compare different bus companies
-    STUDENT LEARNING: Comparative analysis, business metrics
     -->
     <div class="report-section">
         <div class="section-header">

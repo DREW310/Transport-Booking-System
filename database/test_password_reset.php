@@ -3,7 +3,6 @@
 ===========================================
 FILE: Test Simple Password Reset (test_password_reset.php)
 PURPOSE: Demonstrate the simple password reset functionality
-STUDENT LEARNING: Testing password reset without email complexity
 TECHNOLOGIES: PHP, MySQL, PDO
 ===========================================
 */

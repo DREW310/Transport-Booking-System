@@ -69,7 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!--
     FORGOT PASSWORD LINK
     PURPOSE: Provide access to password recovery
-    STUDENT LEARNING: User experience and navigation design
     -->
     <div class="auth-links">
         <p><a href="forgot_password.php">Forgot your password?</a></p>

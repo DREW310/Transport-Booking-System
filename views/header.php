@@ -3,7 +3,6 @@
 ===========================================
 FILE: Header Template (header.php)
 PURPOSE: Common header section for all pages with navigation and HTML structure
-STUDENT LEARNING: Template inclusion, session management, responsive navigation
 TECHNOLOGIES: HTML5, CSS3, PHP Sessions, Font Awesome
 ===========================================
 */
@@ -17,7 +16,6 @@ if (session_status() === PHP_SESSION_NONE) session_start();
     <!--
     HTML5 META TAGS
     PURPOSE: Proper document structure and mobile responsiveness
-    STUDENT LEARNING: HTML5 document structure and responsive design
     -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,7 +29,6 @@ if (session_status() === PHP_SESSION_NONE) session_start();
     <!--
     CSS STYLESHEETS
     PURPOSE: Load our custom styles and icon library
-    STUDENT LEARNING: External CSS linking and icon libraries
     -->
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -78,13 +75,11 @@ if (session_status() === PHP_SESSION_NONE) session_start();
     <!--
     HTML5 SEMANTIC ELEMENT: <header>
     PURPOSE: Contains the site header and navigation
-    STUDENT LEARNING: HTML5 semantic structure for better accessibility
     -->
     <header role="banner">
         <!--
         HTML5 SEMANTIC ELEMENT: <nav>
         PURPOSE: Main navigation area
-        STUDENT LEARNING: Semantic navigation structure
         -->
         <nav class="navbar main-navbar" role="navigation" aria-label="Main Navigation">
 
@@ -92,7 +87,6 @@ if (session_status() === PHP_SESSION_NONE) session_start();
             /*
             PHP CONDITIONAL: Check if user is logged in
             PURPOSE: Show different navigation based on user status
-            STUDENT LEARNING: PHP session handling and conditional display
             */
             if (isset($_SESSION['user'])):
             ?>
@@ -117,7 +111,6 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                     /*
                     PHP CONDITIONAL: Check if user is admin
                     PURPOSE: Show admin dashboard link only to administrators
-                    STUDENT LEARNING: Role-based access control
                     */
                     if ((isset($_SESSION['user']['is_staff']) && $_SESSION['user']['is_staff']) ||
                         (isset($_SESSION['user']['is_superuser']) && $_SESSION['user']['is_superuser'])):
@@ -131,7 +124,6 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                     /*
                     ROLE-BASED NAVIGATION
                     PURPOSE: Show different navigation options based on user role
-                    STUDENT LEARNING: Proper access control and user experience design
                     */
                     $is_admin = (isset($_SESSION['user']['is_staff']) && $_SESSION['user']['is_staff']) ||
                                 (isset($_SESSION['user']['is_superuser']) && $_SESSION['user']['is_superuser']);

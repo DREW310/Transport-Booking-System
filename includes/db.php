@@ -1,16 +1,9 @@
 <?php
 /*
 ===========================================
-STUDENT PROJECT: Database Connection File
 FILE: db.php
 WHAT THIS FILE DOES: Connects our PHP code to the MySQL database
 WHY WE NEED THIS: All our data (users, bookings, buses) is stored in the database
-WHAT I LEARNED: PDO database connections, error handling, security best practices
-COURSE CONCEPTS USED:
-- PDO (PHP Data Objects) for secure database connections
-- Try-catch blocks for error handling
-- Database configuration and connection management
-- Security practices for database access
 ===========================================
 */
 
@@ -18,11 +11,10 @@ COURSE CONCEPTS USED:
 require_once('config.php');
 
 /*
-STUDENT EXPLANATION: Database Connection Function
+EXPLANATION: Database Connection Function
 FUNCTION NAME: getDB()
 WHAT THIS DOES: Creates a connection between PHP and MySQL database
 WHY WE USE PDO: It's more secure than old mysql functions
-WHAT I LEARNED: Database connections, error handling, security practices
 */
 function getDB() {
     // STEP 1: Start with empty connection
@@ -31,11 +23,6 @@ function getDB() {
     // STEP 2: Try to connect to database (use try-catch for error handling)
     try {
         /*
-        STUDENT NOTE: Why PDO is better than old mysql functions:
-        - PDO prevents SQL injection attacks automatically
-        - PDO works with different types of databases (MySQL, PostgreSQL, etc.)
-        - PDO has better error handling
-        - PDO is the modern, recommended way to connect to databases
 
         MY LEARNING PROCESS WITH DATABASE CONNECTIONS:
 
@@ -47,14 +34,14 @@ function getDB() {
         MISTAKE 2: First PDO attempt without error handling
         - Connection failed silently, spent hours debugging
         - Learned importance of try-catch blocks
-        - Now I always wrap database operations in error handling
+        - Now we always wrap database operations in error handling
 
         MISTAKE 3: Hardcoded database credentials in multiple files
         - Made it hard to change settings
         - Learned about centralized configuration
-        - Now I use this single db.php file for all connections
+        - Now we use this single db.php file for all connections
 
-        WHAT I UNDERSTAND NOW:
+        WHAT WE UNDERSTAND NOW:
         - PDO is more secure than old methods
         - Always use prepared statements for user input
         - Error handling is crucial for debugging
@@ -98,13 +85,4 @@ function getDB() {
     // Return the successful connection
     return $dbConnection;
 }
-
-/*
-STUDENT NOTES:
-1. PDO (PHP Data Objects) is the modern way to connect to databases
-2. Always use try-catch for database connections
-3. Setting error mode to EXCEPTION helps with debugging
-4. UTF-8 charset ensures proper character encoding
-5. Never expose database credentials in error messages in production
-*/
 ?>

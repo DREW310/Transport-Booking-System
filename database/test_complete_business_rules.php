@@ -3,7 +3,6 @@
 ===========================================
 FILE: Complete Business Rules Test (test_complete_business_rules.php)
 PURPOSE: Test all business rules for buses, routes, and schedules
-STUDENT LEARNING: Comprehensive testing of business logic
 TECHNOLOGIES: PHP, MySQL, PDO
 ===========================================
 */

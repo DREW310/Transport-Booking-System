@@ -112,7 +112,6 @@ function cancelBookingComprehensive($booking_id, $cancelled_by_user_id, $cancell
         $log_message = "Booking cancellation: " . json_encode($log_details);
         error_log($log_message); // This logs to PHP error log for audit purposes
         
-        // Note: Email notifications removed - only system notifications used
         // Email notifications reserved for password recovery only
         
         $db->commit();

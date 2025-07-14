@@ -3,7 +3,6 @@
 ===========================================
 FILE: Feedback Model (feedback.php)
 PURPOSE: Handle all feedback-related database operations
-STUDENT LEARNING: Demonstrates OOP concepts, database interaction with PDO, and MVC architecture
 TECHNOLOGIES: PHP, MySQL, PDO
 ===========================================
 */
@@ -14,7 +13,6 @@ require_once('../includes/db.php');
 /*
 CLASS: Feedback
 PURPOSE: This class handles all feedback-related operations in our transport booking system
-STUDENT LEARNING: Shows how to create a class, use methods, and interact with database
 */
 class Feedback {
     
@@ -25,7 +23,6 @@ class Feedback {
     /*
     CONSTRUCTOR: __construct()
     PURPOSE: Initialize the database connection when object is created
-    STUDENT LEARNING: Demonstrates constructor concept and dependency injection
     */
     public function __construct() {
         // Get database connection using our custom function
@@ -36,7 +33,6 @@ class Feedback {
     METHOD: submitFeedback()
     PURPOSE: Add new feedback to the database
     PARAMETERS: $userId, $busId, $bookingId, $rating, $review
-    STUDENT LEARNING: Shows how to use prepared statements for security
     */
     public function submitFeedback($userId, $busId, $bookingId, $rating, $comment, $tags = '') {
         try {
@@ -67,7 +63,6 @@ class Feedback {
     METHOD: getFeedbackByBus()
     PURPOSE: Get all feedback for a specific bus
     PARAMETER: $busId - the ID of the bus
-    STUDENT LEARNING: Shows how to retrieve data and use JOIN operations
     */
     public function getFeedbackByBus($busId) {
         try {
@@ -95,7 +90,6 @@ class Feedback {
     /*
     METHOD: getAllFeedback()
     PURPOSE: Get all feedback for admin dashboard
-    STUDENT LEARNING: Shows how to create admin functionality and data management
     */
     public function getAllFeedback() {
         try {
@@ -123,7 +117,6 @@ class Feedback {
     METHOD: deleteFeedback()
     PURPOSE: Allow admin to delete inappropriate feedback
     PARAMETER: $feedbackId - ID of feedback to delete
-    STUDENT LEARNING: Shows DELETE operations and admin controls
     */
     public function deleteFeedback($feedbackId) {
         try {
@@ -141,7 +134,6 @@ class Feedback {
     METHOD: getAverageRating()
     PURPOSE: Calculate average rating for a bus
     PARAMETER: $busId - ID of the bus
-    STUDENT LEARNING: Shows aggregate functions (AVG) in SQL
     */
     public function getAverageRating($busId) {
         try {

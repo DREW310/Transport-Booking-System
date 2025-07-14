@@ -3,7 +3,6 @@
 ===========================================
 FILE: Main Landing Page (index.php)
 PURPOSE: Welcome page for Transport Booking System with login options
-STUDENT LEARNING: Demonstrates HTML5 semantic elements, responsive design, and user interface
 TECHNOLOGIES: HTML5, CSS3, Font Awesome Icons
 ===========================================
 */
@@ -38,13 +37,11 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 <!--
 HTML5 SEMANTIC ELEMENT: <main>
 PURPOSE: Defines the main content area of the page
-STUDENT LEARNING: HTML5 semantic elements make our code more meaningful and accessible
 -->
 <main class="landing-page">
     <!--
     HTML5 SEMANTIC ELEMENT: <section>
     PURPOSE: Groups related content together
-    STUDENT LEARNING: Sections help organize content logically
     -->
     <section class="welcome-section">
         <!-- Welcome card container with modern styling -->
@@ -52,14 +49,12 @@ STUDENT LEARNING: HTML5 semantic elements make our code more meaningful and acce
             <!--
             ICON: Font Awesome bus icon
             PURPOSE: Visual representation of transport theme
-            STUDENT LEARNING: Using icon libraries for better UI
             -->
             <i class="fa fa-bus welcome-icon" aria-label="Bus Icon"></i>
 
             <!--
             HTML5 ELEMENT: <h1> - Main heading
             PURPOSE: Primary heading for SEO and accessibility
-            STUDENT LEARNING: Proper heading hierarchy is important
             -->
             <h1 class="welcome-title">
                 Welcome to<br>
@@ -69,7 +64,6 @@ STUDENT LEARNING: HTML5 semantic elements make our code more meaningful and acce
             <!--
             SECTION: Login Options
             PURPOSE: Provide different login paths for users and admins
-            STUDENT LEARNING: User role separation and interface design
             -->
             <div class="btn-row">
                 <!--
@@ -94,7 +88,6 @@ STUDENT LEARNING: HTML5 semantic elements make our code more meaningful and acce
             <!--
             REGISTRATION LINK
             PURPOSE: Guide new users to registration
-            STUDENT LEARNING: User flow and navigation design
             -->
             <div class="register-link">
                 <p>New user? <a href="register.php" class="register-btn">Register here</a></p>
@@ -104,15 +97,6 @@ STUDENT LEARNING: HTML5 semantic elements make our code more meaningful and acce
 
 
 </main>
-
-<!--
-STUDENT NOTES:
-1. HTML5 semantic elements (<main>, <section>) improve code structure
-2. ARIA labels help with accessibility for screen readers
-3. Font Awesome icons enhance visual appeal
-4. Proper heading hierarchy (h1, h2, h3) is important for SEO
-5. Role attributes help assistive technologies understand button purposes
--->
 
 </body>
 </html>

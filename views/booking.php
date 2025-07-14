@@ -1,17 +1,9 @@
 <?php
 /*
 ===========================================
-STUDENT PROJECT: Bus Booking with Visual Seat Map
 FILE: booking.php
 WHAT THIS FILE DOES: Lets users pick seats on a visual bus map and book tickets
 WHY THIS IS COOL: Instead of boring dropdowns, users see a real bus layout!
-WHAT I LEARNED: JavaScript DOM manipulation, CSS animations, PHP form processing
-COURSE CONCEPTS USED:
-- HTML5 semantic elements and data attributes
-- CSS3 animations, grid layouts, and responsive design
-- JavaScript event handling and DOM manipulation
-- PHP form processing and database operations
-- User experience design and interface creation
 ===========================================
 */
 
@@ -68,7 +60,6 @@ $new_booking_id = '';
 /*
 BOOKING PROCESSING
 PURPOSE: Handle form submission and create booking record
-STUDENT LEARNING: Form processing, database operations, validation
 */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get form data with validation
@@ -127,14 +118,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         /*
         BOOKING RESULT DISPLAY
         PURPOSE: Show booking confirmation or error messages
-        STUDENT LEARNING: Conditional PHP display and user feedback
         */
         if ($success):
         ?>
             <!--
             SUCCESS MESSAGE
             PURPOSE: Confirm successful booking with details
-            STUDENT LEARNING: User feedback and information display
             -->
             <div class="booking-success-card">
                 <div class="success-icon">
@@ -181,7 +170,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!--
             ERROR MESSAGE
             PURPOSE: Display booking errors clearly
-            STUDENT LEARNING: Error handling and user feedback
             -->
             <div class="booking-error-card">
                 <div class="error-icon">
@@ -200,7 +188,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!--
         STUDENT PROJECT: Visual Seat Selection System
         PURPOSE: Interactive seat map for better user experience
-        LEARNING: HTML5 structure, CSS3 styling, JavaScript DOM manipulation
         -->
 
         <div class="seat-selection-container">
@@ -209,7 +196,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!--
             SEAT MAP LEGEND
             PURPOSE: Help users understand seat status
-            STUDENT LEARNING: User interface design and accessibility
             -->
             <div class="seat-legend">
                 <div class="legend-item">
@@ -229,7 +215,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!--
             BUS LAYOUT VISUALIZATION
             PURPOSE: Visual representation of bus interior
-            STUDENT LEARNING: CSS Grid layout and visual design
             -->
             <div class="bus-container">
                 <!-- Driver Section -->
@@ -243,7 +228,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     /*
                     PHP LOGIC: Generate seat map dynamically
                     PURPOSE: Create visual seat layout based on bus capacity
-                    STUDENT LEARNING: PHP loops, conditional statements, and HTML generation
                     */
 
                     // Calculate rows (assuming 4 seats per row: 2 on each side)
@@ -300,7 +284,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!--
             BOOKING FORM
             PURPOSE: Submit selected seat for booking with payment method
-            STUDENT LEARNING: Form handling, JavaScript integration, and user input
             -->
             <form method="post" id="bookingForm" action="">
                 <!-- Hidden input to store selected seat -->
@@ -316,7 +299,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <!--
                 PAYMENT METHOD SELECTION (MOCK)
                 PURPOSE: Simulate payment method selection for coursework
-                STUDENT LEARNING: Form elements, user choice handling
                 -->
                 <div class="payment-section" id="paymentSection" style="display: none;">
                     <h4><i class="fa fa-credit-card"></i> Payment Method</h4>
@@ -361,45 +343,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!--
         JAVASCRIPT: Seat Selection Logic
         PURPOSE: Handle user interactions with seat map
-        STUDENT LEARNING: DOM manipulation, event handling, basic JavaScript
         -->
         <script>
-        /*
-        STUDENT PROJECT: Interactive Seat Selection
-        LEARNING OBJECTIVES:
-        1. DOM manipulation with getElementById and querySelector
-        2. Event listeners and event handling
-        3. CSS class manipulation for visual feedback
-        4. Form validation and user interaction
-
-        MY PERSONAL CODING JOURNEY WITH THIS FEATURE:
-
-        WEEK 1 - FIRST ATTEMPT (Failed):
-        - Tried to make each seat clickable with individual onclick functions
-        - Code became very messy with 40+ individual functions
-        - Realized this approach doesn't scale well
-
-        WEEK 2 - LEARNING PHASE:
-        - Discovered querySelectorAll() and forEach() methods
-        - Learned about event listeners vs onclick attributes
-        - Still struggled with updating the UI dynamically
-
-        WEEK 3 - BREAKTHROUGH:
-        - Finally understood how to use CSS classes for visual states
-        - Learned about data attributes to store seat information
-        - Got the price calculation working properly
-
-        CHALLENGES I OVERCAME:
-        - Making sure only one seat can be selected at a time
-        - Preventing selection of already booked seats
-        - Updating the total price when seat selection changes
-        - Making the interface work on mobile devices
-        - Handling edge cases (what if user clicks same seat twice?)
-
-        WHAT I'M PROUD OF:
-        This seat selection feels like a real booking website!
-        The visual feedback makes it very user-friendly.
-        */
 
         // Wait for page to load completely
         document.addEventListener('DOMContentLoaded', function() {
@@ -419,7 +364,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             /*
             FUNCTION: Handle seat selection
             PURPOSE: Manage seat selection and visual feedback
-            STUDENT LEARNING: Function creation and DOM manipulation
             */
             availableSeats.forEach(function(seat) {
                 seat.addEventListener('click', function() {
@@ -468,7 +412,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         /*
         FUNCTION: Confirm booking
         PURPOSE: Final confirmation before submitting booking
-        STUDENT LEARNING: User confirmation and form submission
         */
         function confirmBooking() {
             const selectedSeat = document.getElementById('selectedSeat').value;
